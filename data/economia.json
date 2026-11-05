@@ -1,0 +1,153 @@
+
+[
+  {
+    "id": "cepal-001",
+    "titulo": "Articulación productiva y Cadenas Globales de Valor",
+    "autores": ["CEPAL"],
+    "tipo": "digital",
+    "link_drive": "https://drive.google.com/file/d/11BfUmJLKr4LhiWRnkzPB8mcZMoAK47rT/view?usp=sharing"
+  },
+  {
+    "id": "kalecki-001",
+    "titulo": "Aspectos políticos del pleno empleo",
+    "autores": ["Michal Kalecki"],
+    "editorial": "Revista de Economía Crítica",
+    "anio": 2011,
+    "tipo": "digital",
+    "link_drive": "https://drive.google.com/file/d/11aEMovWEZt_w3R9N3H-qsjx3dHPm8HtO/view?usp=sharing"
+  },
+  {
+    "id": "lopez-gayosso-001",
+    "titulo": "Caracterización del proceso de financiarización en empresas productivas de México",
+    "autores": ["Paola López Gayosso", "Everardo Chiapa Aguillón"],
+    "editorial": "Vértice Universitario",
+    "anio": 2026,
+    "tipo": "digital",
+    "link_drive": "https://drive.google.com/file/d/18BwB_32t6ePaYRVqjq81joeiU_063V1S/view?usp=sharing"
+  },
+  {
+    "id": "morones-carrillo-001",
+    "titulo": "Crecimiento económico en México: restricción por la balanza de pagos",
+    "autores": ["Ana Lourdes Morones Carrillo"],
+    "editorial": "Ensayos. Revista de Economía",
+    "anio": 2016,
+    "tipo": "digital",
+    "link_drive": "https://drive.google.com/file/d/1AeIYMMBDy4aA4sTIoFbcUIdHIDnCFr3B/view?usp=sharing"
+  },
+  {
+    "id": "rodriguez-garcia-001",
+    "titulo": "Determinación del umbral de pobreza en Guanajuato: un enfoque innovador mediante la ley de Engel y el criterio de la segunda derivada",
+    "autores": [
+      "Juan Manuel Rodríguez García",
+      "Sergio Ernesto Medina Cuellar",
+      "Marco Antonio Sánchez Jiménez"
+    ],
+    "editorial": "Acta Universitaria",
+    "anio": 2026,
+    "tipo": "digital",
+    "link_drive": "https://drive.google.com/file/d/1BAwo-ZYl7PLhUz_zWn181nSwvU3c39Cs/view?usp=sharing"
+  },
+  {
+    "id": "benetti-001",
+    "titulo": "Economía monetaria-economía de trueque: la cuestión de la unidad de cuenta común",
+    "autores": ["Carlo Benetti"],
+    "editorial": "Lecturas de Economía",
+    "anio": 1990,
+    "tipo": "digital",
+    "link_drive": "https://drive.google.com/file/d/1GNiCH6gRu0h-O0Hqi4hpLaOftfewJjZJ/view?usp=sharing"
+  },
+  {
+    "id": "banco-de-mexico-001",
+    "titulo": "Efectos de la Política Monetaria sobre la Economía",
+    "autores": ["Banco de México"],
+    "editorial": "Banco de México",
+    "anio": 2022,
+    "tipo": "digital",
+    "link_drive": "https://drive.google.com/file/d/1QPdHXinS-PtImj4tKP4TiEB12a7h0Z6j/view?usp=sharing"
+  },
+  {
+    "id": "prebisch-001",
+    "titulo": "El desarrollo económico de la América Latina y algunos de sus principales problemas",
+    "autores": ["Raúl Prebisch"],
+    "editorial": "CEPAL",
+    "anio": 2012,
+    "tipo": "digital",
+    "link_drive": "https://drive.google.com/file/d/1TXSXpR4LKVKPw5-5HmhhKYyKmeCzG1t8/view?usp=sharing"
+  },
+  {
+    "id": "noyola-001",
+    "titulo": "El desarrollo económico y la inflación en México y otros países latinoamericanos",
+    "autores": ["Juan Noyola Vázquez"],
+    "editorial": "Ola Financiera (UNAM)",
+    "anio": 2009,
+    "tipo": "digital",
+    "link_drive": "https://drive.google.com/file/d/1Uxo-BSW8IO-PXmxt5LKC34-d4Ufd2d4e/view?usp=sharing"
+  },
+  {
+    "id": "trevignani-001",
+    "titulo": "El desarrollo encadenado: un análisis crítico del enfoque de Cadenas Globales de Valor",
+    "autores": ["Manuel Facundo Trevignani", "Víctor Ramiro Fernández"],
+    "editorial": "Ediciones UNL",
+    "anio": 2025,
+    "tipo": "digital",
+    "link_drive": "https://drive.google.com/file/d/1WdwvzqSQkfQhCWVBXPGsHJ5NNjr26jsZ/view?usp=sharing"
+  },
+  {
+    "id": "banco-de-mexico-002",
+    "titulo": "El mercado de valores gubernamentales en México",
+    "autores": ["Banco de México"],
+    "editorial": "Banco de México",
+    "anio": 2014,
+    "tipo": "digital",
+    "link_drive": "https://drive.google.com/file/d/1dUjGfsMF8ceodb-2oVy4eGNoIDh-lvbP/view?usp=sharing"
+  },
+  {
+    "id": "friedman-001",
+    "titulo": "El papel de la política monetaria",
+    "autores": ["Milton Friedman"],
+    "editorial": "Información Comercial Española (ICE)",
+    "anio": 1969,
+    "tipo": "digital",
+    "link_drive": "https://drive.google.com/file/d/1erVjtuyPnKRA8rqiHjZRMZRF54sTWm_d/view?usp=sharing"
+  },
+  {
+    "id": "kalecki-002",
+    "titulo": "El problema del financiamiento del desarrollo económico",
+    "autores": ["Michal Kalecki"],
+    "editorial": "El Trimestre Económico",
+    "anio": 1954,
+    "tipo": "digital",
+    "link_drive": "https://drive.google.com/file/d/1jFLdP5dG5yGe4pmhHx7ggAkFygdayqWk/view?usp=sharing"
+  },
+  {
+    "id": "abeles-001",
+    "titulo": "Estudios sobre financierización en América Latina",
+    "autores": [
+      "Martín Abeles",
+      "Esteban Pérez Caldentey",
+      "Sebastián Valdecantos"
+    ],
+    "editorial": "CEPAL",
+    "anio": 2018,
+    "tipo": "digital",
+    "link_drive": "https://drive.google.com/file/d/1mfxZ9UsuW8m5-nCGPFTcYBIFhXD0kphE/view?usp=sharing"
+  },
+  {
+    "id": "florez-rios-001",
+    "titulo": "Evolución de la Teoría Financiera en el Siglo XX",
+    "autores": ["Luz Stella Flórez Ríos"],
+    "editorial": "Ecos de Economía",
+    "anio": 2008,
+    "tipo": "digital",
+    "link_drive": "https://drive.google.com/file/d/1ohkFUUUNZb4B9mcvhe35Bh8M5I8TBBH4/view?usp=sharing"
+  },
+  {
+    "id": "yasuhara-001",
+    "titulo": "Inestabilidad financiera en América Latina desde la perspectiva Kaleckiana y Minskyana",
+    "autores": ["Tsuyoshi Yasuhara"],
+    "editorial": "Problemas del Desarrollo (UNAM)",
+    "anio": 2013,
+    "tipo": "digital",
+    "link_drive": "https://drive.google.com/file/d/1qH9BSfvsF-zdDdJRXfOagACkqmkRjWvQ/view?usp=sharing"
+  }
+]

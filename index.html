@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca personal</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/app.js" defer></script>
+</head>
+
+<body>
+
+    <header class="encabezado">
+        <h1>Biblioteca</h1>
+        <p>Mi colección personal de lecturas</p>
+    </header>
+
+    <nav class="navegacion">
+        <button class="nav-btn activo" data-vista="coleccion">
+            Colección
+        </button>
+
+        <button class="nav-btn" data-vista="leidos">
+            Leídos
+        </button>
+
+        <button class="nav-btn" data-vista="agregar">
+            Agregar
+        </button>
+    </nav>
+
+    <main class="contenedor">
+
+        <!-- VISTA: COLECCIÓN GENERAL -->
+        <section id="vista-coleccion" class="vista activa">
+
+            <h2>Mi colección</h2>
+
+            <input
+                type="search"
+                id="busqueda"
+                placeholder="Buscar por título o autor..."
+            >
+
+            <select id="filtro-disciplina">
+                <option value="todas">Todas las disciplinas</option>
+                <option value="economia">Economía</option>
+                <option value="matematicas">Matemáticas</option>
+                <option value="otros">Otros</option>
+            </select>
+
+            <div id="lista-coleccion" class="lista-materiales">
+                <!-- Los materiales aparecerán aquí -->
+            </div>
+
+        </section>
+
+
+        <!-- VISTA: MATERIALES LEÍDOS -->
+        <section id="vista-leidos" class="vista">
+
+            <h2>Materiales leídos</h2>
+
+            <div id="lista-leidos" class="lista-materiales">
+                <!-- Los materiales leídos aparecerán aquí -->
+            </div>
+
+        </section>
+
+
+        <!-- VISTA: AGREGAR MATERIAL -->
+        <section id="vista-agregar" class="vista">
+
+            <h2>Agregar material</h2>
+
+            <form id="form-material">
+
+                <label for="disciplina">Disciplina</label>
+                <select id="disciplina" required>
+                    <option value="">Selecciona una disciplina</option>
+                    <option value="economia">Economía</option>
+                    <option value="matematicas">Matemáticas</option>
+                    <option value="otros">Otros</option>
+                </select>
+
+                <label for="titulo">Título</label>
+                <input type="text" id="titulo" required>
+
+                <label for="autores">Autor o autores</label>
+                <textarea
+                    id="autores"
+                    placeholder="Escribe un autor por línea"
+                    required
+                ></textarea>
+
+                <label for="editorial">Editorial</label>
+                <input type="text" id="editorial">
+
+                <label for="anio">Año</label>
+                <input type="number" id="anio" min="1" max="2100">
+
+                <label for="tipo">Tipo de material</label>
+                <select id="tipo" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="fisico">Físico</option>
+                    <option value="digital">Digital</option>
+                </select>
+
+                <label for="link-drive">Enlace de Google Drive</label>
+                <input
+                    type="url"
+                    id="link-drive"
+                    placeholder="https://drive.google.com/..."
+                >
+
+                <button type="submit" id="btn-guardar">
+                    Guardar material
+                </button>
+
+                <p id="mensaje-formulario" aria-live="polite"></p>
+
+            </form>
+
+        </section>
+
+    </main>
+
+    <footer class="pie">
+        <p>Biblioteca personal</p>
+    </footer>
+
+</body>
+</html>
