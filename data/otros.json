@@ -1,56 +1,69 @@
 [
-  {
-    "id": "espinosa-noriega-001",
-    "titulo": "Dependencia comercial, concentración y vulnerabilidad",
-    "autores": ["Víctor Espinosa Noriega"],
-    "editorial": "",
-    "anio": "",
-    "tipo": "digital",
-    "linkDrive": "https://drive.google.com/file/d/1CK7PvGClb_bSlY36c0GRMoOAvCe94kyz/view?usp=drive_link"
-  },
-  {
-    "id": "molina-001",
-    "titulo": "El establecimiento del IVA en México: un problema político-económico, 1968-1980",
-    "autores": ["María del Ángel Molina"],
-    "editorial": "",
-    "anio": "",
-    "tipo": "digital",
-    "linkDrive": "https://drive.google.com/file/d/1z7tOnl71oSxszypNNVlK2UNwmRgneF8s/view?usp=drive_link"
-  },
-  {
-    "id": "cardenas-gracia-001",
-    "titulo": "Estado de bienestar",
-    "autores": ["Jaime Cárdenas Gracia"],
-    "editorial": "",
-    "anio": "",
-    "tipo": "digital",
-    "linkDrive": "https://drive.google.com/file/d/1RmqcnUh_Sy1d38khqkPmsjnoa3obD2IU/view?usp=drive_link"
-  },
-  {
-    "id": "lenin-001",
-    "titulo": "Imperialismo: fase superior del capitalismo",
-    "autores": ["V. I. Lenin"],
-    "editorial": "",
-    "anio": "",
-    "tipo": "digital",
-    "linkDrive": "https://drive.google.com/file/d/1CUBbHf164ZQKk1JRbySDQ3rbbc0Wd-bt/view?usp=drive_link"
-  },
-  {
-    "id": "tello-ibarra-001",
-    "titulo": "La revolución de los ricos",
-    "autores": ["Carlos Tello", "Jorge Ibarra"],
-    "editorial": "",
-    "anio": "",
-    "tipo": "digital",
-    "linkDrive": "https://drive.google.com/file/d/1WzO26X3Glm-1xUSpI3ChYdUZZSb0Ojby/view?usp=drive_link"
-  },
-  {
-    "id": "miranda-ruiz-001",
-    "titulo": "Medición de riesgo de mercado: límites de sensibilidades para no exceder una pérdida máxima establecida",
-    "autores": ["Christian G. Miranda Ruiz"],
-    "editorial": "",
-    "anio": "",
-    "tipo": "digital",
-    "linkDrive": "https://drive.google.com/file/d/15ESgGXd2waQ264u_-Awk7ZagD3uUJNdQ/view?usp=drive_link"
-  }
+    {
+        "id": "espinosa-noriega-001",
+        "titulo": "Dependencia comercial, concentración y vulnerabilidad",
+        "autores": [
+            "Víctor Espinosa Noriega"
+        ],
+        "editorial": "",
+        "anio": "",
+        "tipo": "digital",
+        "linkDrive": "https://drive.google.com/file/d/1CK7PvGClb_bSlY36c0GRMoOAvCe94kyz/view?usp=drive_link"
+    },
+    {
+        "id": "molina-001",
+        "titulo": "El establecimiento del IVA en México: un problema político-económico, 1968-1980",
+        "autores": [
+            "María del Ángel Molina"
+        ],
+        "editorial": "",
+        "anio": "",
+        "tipo": "digital",
+        "linkDrive": "https://drive.google.com/file/d/1z7tOnl71oSxszypNNVlK2UNwmRgneF8s/view?usp=drive_link"
+    },
+    {
+        "id": "cardenas-gracia-001",
+        "titulo": "Estado de bienestar",
+        "autores": [
+            "Jaime Cárdenas Gracia"
+        ],
+        "editorial": "",
+        "anio": "",
+        "tipo": "digital",
+        "linkDrive": "https://drive.google.com/file/d/1RmqcnUh_Sy1d38khqkPmsjnoa3obD2IU/view?usp=drive_link"
+    },
+    {
+        "id": "lenin-001",
+        "titulo": "Imperialismo: fase superior del capitalismo",
+        "autores": [
+            "V. I. Lenin"
+        ],
+        "editorial": "",
+        "anio": "",
+        "tipo": "digital",
+        "linkDrive": "https://drive.google.com/file/d/1CUBbHf164ZQKk1JRbySDQ3rbbc0Wd-bt/view?usp=drive_link"
+    },
+    {
+        "id": "tello-ibarra-001",
+        "titulo": "La revolución de los ricos",
+        "autores": [
+            "Carlos Tello",
+            "Jorge Ibarra"
+        ],
+        "editorial": "",
+        "anio": "",
+        "tipo": "digital",
+        "linkDrive": "https://drive.google.com/file/d/1WzO26X3Glm-1xUSpI3ChYdUZZSb0Ojby/view?usp=drive_link"
+    },
+    {
+        "id": "miranda-ruiz-001",
+        "titulo": "Medición de riesgo de mercado: límites de sensibilidades para no exceder una pérdida máxima establecida",
+        "autores": [
+            "Christian G. Miranda Ruiz"
+        ],
+        "editorial": "",
+        "anio": "",
+        "tipo": "digital",
+        "linkDrive": "https://drive.google.com/file/d/15ESgGXd2waQ264u_-Awk7ZagD3uUJNdQ/view?usp=drive_link"
+    }
 ]

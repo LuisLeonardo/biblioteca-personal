@@ -1,13 +1,11 @@
-const RUTAS = {
-    economia: "data/economia.json",
-    matematicas: "data/matematicas.json",
-    otros: "data/otros.json",
-    leidos: "data/leidos.json"
-};
+const API_BASE =
+    "https://biblioteca-api.2242023198.workers.dev";
 
-const CLAVES_STORAGE = {
-    agregados: "biblioteca_agregados",
-    leidos: "biblioteca_leidos"
+const RUTAS_API = {
+    economia: `${API_BASE}/catalogo/economia`,
+    matematicas: `${API_BASE}/catalogo/matematicas`,
+    otros: `${API_BASE}/catalogo/otros`,
+    leidos: `${API_BASE}/leidos`
 };
 
 const DOMINIOS_DRIVE = [
@@ -24,103 +22,55 @@ const NOMBRES_DISCIPLINA = {
 let catalogo = [];
 let leidos = [];
 let vistaActual = "coleccion";
-
 let temporizadorBusqueda = null;
+
+document.addEventListener(
+    "DOMContentLoaded",
+    iniciar
+);
 
 
 /* =========================================================
    INICIO
-========================================================= */
-
-document.addEventListener("DOMContentLoaded", iniciar);
-
+   ========================================================= */
 
 async function iniciar() {
-    cargarDatosLocales();
-    await cargarCatalogos();
     configurarEventos();
+
+    await cargarCatalogos();
+
     actualizarContadores();
+
     mostrarVista("coleccion");
 }
 
 
 /* =========================================================
-   DATOS LOCALES
-========================================================= */
-
-function cargarDatosLocales() {
-    try {
-        const agregados =
-            JSON.parse(
-                localStorage.getItem(
-                    CLAVES_STORAGE.agregados
-                )
-            ) || [];
-
-        window.materialesAgregados =
-            Array.isArray(agregados)
-                ? agregados
-                : [];
-
-    } catch (error) {
-        console.error(
-            "Error al cargar materiales agregados:",
-            error
-        );
-
-        window.materialesAgregados = [];
-    }
-
-
-    try {
-        const lecturas =
-            JSON.parse(
-                localStorage.getItem(
-                    CLAVES_STORAGE.leidos
-                )
-            ) || [];
-
-        leidos =
-            Array.isArray(lecturas)
-                ? lecturas
-                : [];
-
-    } catch (error) {
-        console.error(
-            "Error al cargar materiales leídos:",
-            error
-        );
-
-        leidos = [];
-    }
-}
-
-
-/* =========================================================
-   CARGAR CATÁLOGOS
-========================================================= */
+   CARGA DE DATOS
+   ========================================================= */
 
 async function cargarCatalogos() {
+    mostrarEstadoCarga();
 
     const resultados =
         await Promise.allSettled([
             cargarJSON(
-                RUTAS.economia,
+                RUTAS_API.economia,
                 "Economía"
             ),
 
             cargarJSON(
-                RUTAS.matematicas,
+                RUTAS_API.matematicas,
                 "Matemáticas"
             ),
 
             cargarJSON(
-                RUTAS.otros,
+                RUTAS_API.otros,
                 "Otros"
             ),
 
             cargarJSON(
-                RUTAS.leidos,
+                RUTAS_API.leidos,
                 "Leídos"
             )
         ]);
@@ -131,33 +81,29 @@ async function cargarCatalogos() {
             ? resultados[0].value
             : [];
 
+
     const matematicas =
         resultados[1].status === "fulfilled"
             ? resultados[1].value
             : [];
+
 
     const otros =
         resultados[2].status === "fulfilled"
             ? resultados[2].value
             : [];
 
-    const lecturasJSON =
+
+    const lecturas =
         resultados[3].status === "fulfilled"
             ? resultados[3].value
             : [];
 
 
-    if (
-        resultados[3].status === "fulfilled" &&
-        Array.isArray(lecturasJSON)
-    ) {
-        leidos = [
-            ...new Set([
-                ...leidos,
-                ...lecturasJSON
-            ])
-        ];
-    }
+    leidos =
+        Array.isArray(lecturas)
+            ? [...new Set(lecturas)]
+            : [];
 
 
     catalogo =
@@ -168,18 +114,20 @@ async function cargarCatalogos() {
         );
 
 
+    const nombres = [
+        "Economía",
+        "Matemáticas",
+        "Otros",
+        "Leídos"
+    ];
+
+
     resultados.forEach(
         (resultado, indice) => {
 
             if (
                 resultado.status === "rejected"
             ) {
-                const nombres = [
-                    "Economía",
-                    "Matemáticas",
-                    "Otros",
-                    "Leídos"
-                ];
 
                 console.error(
                     `Error cargando ${nombres[indice]}:`,
@@ -188,16 +136,38 @@ async function cargarCatalogos() {
             }
         }
     );
+
+
+    if (
+        catalogo.length === 0
+    ) {
+
+        mostrarErrorCarga(
+            "No se pudo cargar ningún catálogo. Revisa la conexión con el servidor."
+        );
+
+        return;
+    }
+
+
+    console.log(
+        "Biblioteca cargada:",
+        catalogo.length,
+        "materiales"
+    );
 }
 
-
-async function cargarJSON(ruta, nombre) {
-
+async function cargarJSON(
+    ruta,
+    nombre
+) {
     const respuesta =
-        await fetch(ruta, {
-            cache: "no-store"
-        });
-
+        await fetch(
+            ruta,
+            {
+                cache: "no-store"
+            }
+        );
 
     if (!respuesta.ok) {
         throw new Error(
@@ -205,35 +175,30 @@ async function cargarJSON(ruta, nombre) {
         );
     }
 
-
     const datos =
         await respuesta.json();
 
-
     if (!Array.isArray(datos)) {
         throw new Error(
-            `${nombre} no contiene un arreglo JSON válido.`
+            `${nombre} no contiene un arreglo válido.`
         );
     }
-
 
     return datos;
 }
 
 
 /* =========================================================
-   CONSTRUIR CATÁLOGO
-========================================================= */
+   CONSTRUCCIÓN DEL CATÁLOGO
+   ========================================================= */
 
 function construirCatalogoCompleto(
     economia,
     matematicas,
     otros
 ) {
-
     const mapa =
         new Map();
-
 
     incorporarCatalogo(
         mapa,
@@ -241,66 +206,17 @@ function construirCatalogoCompleto(
         "economia"
     );
 
-
     incorporarCatalogo(
         mapa,
         matematicas,
         "matematicas"
     );
 
-
     incorporarCatalogo(
         mapa,
         otros,
         "otros"
     );
-
-
-    const agregados =
-        Array.isArray(
-            window.materialesAgregados
-        )
-            ? window.materialesAgregados
-            : [];
-
-
-    agregados.forEach(material => {
-
-        const disciplina =
-            material.disciplina || "otros";
-
-
-        const id =
-            material.id ||
-            `${disciplina}-${crearSlug(
-                material.titulo
-            )}`;
-
-
-        const linkDrive =
-            obtenerEnlaceDrive(material);
-
-
-        mapa.set(id, {
-
-            ...material,
-
-            id,
-
-            disciplina,
-
-            agregado: true,
-
-            linkDrive,
-
-            textoBusqueda:
-                construirTextoBusqueda({
-                    ...material,
-                    linkDrive
-                })
-        });
-    });
-
 
     return Array.from(
         mapa.values()
@@ -313,77 +229,74 @@ function incorporarCatalogo(
     materiales,
     disciplina
 ) {
-
-    if (!Array.isArray(materiales)) {
+    if (
+        !Array.isArray(materiales)
+    ) {
         return;
     }
 
+    materiales.forEach(
+        material => {
+            if (
+                !material ||
+                typeof material !== "object"
+            ) {
+                return;
+            }
 
-    materiales.forEach(material => {
+            const id =
+                material.id ||
+                generarIdTemporal(
+                    disciplina,
+                    material.titulo
+                );
 
-        if (
-            !material ||
-            typeof material !== "object"
-        ) {
-            return;
-        }
+            const linkDrive =
+                obtenerEnlaceDrive(
+                    material
+                );
 
-
-        const id =
-            material.id ||
-            `${disciplina}-${crearSlug(
-                material.titulo
-            )}`;
-
-
-        const linkDrive =
-            obtenerEnlaceDrive(material);
-
-
-        mapa.set(id, {
-
-            ...material,
-
-            id,
-
-            disciplina,
-
-            agregado: false,
-
-            linkDrive,
-
-            textoBusqueda:
-                construirTextoBusqueda({
+            mapa.set(
+                id,
+                {
                     ...material,
-                    linkDrive
-                })
-        });
-    });
+
+                    id,
+
+                    disciplina,
+
+                    linkDrive,
+
+                    textoBusqueda:
+                        construirTextoBusqueda(
+                            {
+                                ...material,
+                                linkDrive
+                            }
+                        )
+                }
+            );
+        }
+    );
 }
 
 
 function construirTextoBusqueda(
     material
 ) {
-
     const autores =
-        Array.isArray(material.autores)
+        Array.isArray(
+            material.autores
+        )
             ? material.autores.join(" ")
             : material.autores || "";
 
-
     return [
-
         material.titulo || "",
-
         autores,
-
         material.editorial || "",
-
         material.anio || "",
-
         material.disciplina || ""
-
     ]
         .join(" ")
         .toLowerCase();
@@ -392,24 +305,26 @@ function construirTextoBusqueda(
 
 /* =========================================================
    EVENTOS
-========================================================= */
+   ========================================================= */
 
 function configurarEventos() {
 
     document
-        .querySelectorAll("[data-vista]")
-        .forEach(boton => {
-
-            boton.addEventListener(
-                "click",
-                () => {
-
-                    mostrarVista(
-                        boton.dataset.vista
-                    );
-                }
-            );
-        });
+        .querySelectorAll(
+            "[data-vista]"
+        )
+        .forEach(
+            boton => {
+                boton.addEventListener(
+                    "click",
+                    () => {
+                        mostrarVista(
+                            boton.dataset.vista
+                        );
+                    }
+                );
+            }
+        );
 
 
     const busqueda =
@@ -417,17 +332,13 @@ function configurarEventos() {
             "#busqueda"
         );
 
-
     if (busqueda) {
-
         busqueda.addEventListener(
             "input",
             () => {
-
                 clearTimeout(
                     temporizadorBusqueda
                 );
-
 
                 temporizadorBusqueda =
                     setTimeout(
@@ -446,9 +357,7 @@ function configurarEventos() {
             "#filtro-disciplina"
         );
 
-
     if (filtro) {
-
         filtro.addEventListener(
             "change",
             renderizarColeccion
@@ -461,9 +370,7 @@ function configurarEventos() {
             "#form-material"
         );
 
-
     if (formulario) {
-
         formulario.addEventListener(
             "submit",
             manejarFormulario
@@ -478,24 +385,22 @@ function configurarEventos() {
 }
 
 
-function manejarClickGlobal(evento) {
+function manejarClickGlobal(
+    evento
+) {
 
     const botonLeido =
         evento.target.closest(
             "[data-accion='leido']"
         );
 
-
     if (botonLeido) {
-
         const id =
             botonLeido.dataset.id;
-
 
         if (id) {
             alternarLeido(id);
         }
-
 
         return;
     }
@@ -506,12 +411,9 @@ function manejarClickGlobal(evento) {
             "[data-accion='eliminar']"
         );
 
-
     if (botonEliminar) {
-
         const id =
             botonEliminar.dataset.id;
-
 
         if (id) {
             eliminarMaterial(id);
@@ -521,39 +423,76 @@ function manejarClickGlobal(evento) {
 
 
 /* =========================================================
-   VISTAS
-========================================================= */
+   NAVEGACIÓN
+   ========================================================= */
 
-function mostrarVista(vista) {
-    vistaActual = vista;
+function mostrarVista(
+    vista
+) {
+    vistaActual =
+        vista;
 
-    document.querySelectorAll(".vista").forEach((seccion) => {
-        seccion.classList.remove("activa");
-    });
 
-    const seccionActiva = document.getElementById(`vista-${vista}`);
+    document
+        .querySelectorAll(
+            ".vista"
+        )
+        .forEach(
+            seccion => {
+                seccion.classList.remove(
+                    "activa"
+                );
+            }
+        );
+
+
+    const seccionActiva =
+        document.getElementById(
+            `vista-${vista}`
+        );
 
     if (seccionActiva) {
-        seccionActiva.classList.add("activa");
+        seccionActiva.classList.add(
+            "activa"
+        );
     }
 
-    document.querySelectorAll(".nav-btn").forEach((boton) => {
-        boton.classList.remove("activo");
-    });
 
-    const botonActivo = document.querySelector(
-        `.nav-btn[data-vista="${vista}"]`
-    );
+    document
+        .querySelectorAll(
+            ".nav-btn"
+        )
+        .forEach(
+            boton => {
+                boton.classList.remove(
+                    "activo"
+                );
+            }
+        );
+
+
+    const botonActivo =
+        document.querySelector(
+            `.nav-btn[data-vista="${vista}"]`
+        );
 
     if (botonActivo) {
-        botonActivo.classList.add("activo");
+        botonActivo.classList.add(
+            "activo"
+        );
     }
 
-    if (vista === "coleccion") {
+
+    if (
+        vista === "coleccion"
+    ) {
         renderizarColeccion();
     }
 
-    if (vista === "leidos") {
+
+    if (
+        vista === "leidos"
+    ) {
         renderizarLeidos();
     }
 }
@@ -561,15 +500,13 @@ function mostrarVista(vista) {
 
 /* =========================================================
    COLECCIÓN
-========================================================= */
+   ========================================================= */
 
 function renderizarColeccion() {
-
     const contenedor =
         document.querySelector(
             "#lista-coleccion"
         );
-
 
     if (!contenedor) {
         return;
@@ -580,7 +517,6 @@ function renderizarColeccion() {
         document.querySelector(
             "#busqueda"
         );
-
 
     const filtro =
         document.querySelector(
@@ -595,7 +531,8 @@ function renderizarColeccion() {
 
 
     const disciplina =
-        filtro?.value || "todas";
+        filtro?.value ||
+        "todas";
 
 
     const resultados =
@@ -625,7 +562,6 @@ function renderizarColeccion() {
     if (
         resultados.length === 0
     ) {
-
         contenedor.innerHTML = `
             <div class="estado-vacio">
                 <h3>No se encontraron materiales</h3>
@@ -650,15 +586,13 @@ function renderizarColeccion() {
 
 /* =========================================================
    LEÍDOS
-========================================================= */
+   ========================================================= */
 
 function renderizarLeidos() {
-
     const contenedor =
         document.querySelector(
             "#lista-leidos"
         );
-
 
     if (!contenedor) {
         return;
@@ -677,7 +611,6 @@ function renderizarLeidos() {
     if (
         materialesLeidos.length === 0
     ) {
-
         contenedor.innerHTML = `
             <div class="estado-vacio">
                 <h3>Aún no hay materiales leídos</h3>
@@ -702,7 +635,7 @@ function renderizarLeidos() {
 
 /* =========================================================
    FICHA DE MATERIAL
-========================================================= */
+   ========================================================= */
 
 function crearFichaMaterial(
     material
@@ -730,14 +663,9 @@ function crearFichaMaterial(
             material.editorial,
             material.anio
         ]
-            .filter(Boolean)
-            .join(" · ");
+        .filter(Boolean)
+        .join(" · ");
 
-
-    /*
-     * Obtiene el enlace desde linkDrive
-     * o desde alguna variante compatible.
-     */
 
     const enlace =
         obtenerEnlaceDrive(
@@ -845,13 +773,11 @@ function crearFichaMaterial(
                             material.id
                         )}"
                     >
-
                         ${
                             estaLeido
                                 ? "Leído"
                                 : "Marcar como leído"
                         }
-
                     </button>
 
 
@@ -867,21 +793,117 @@ function crearFichaMaterial(
 
 
 /* =========================================================
-   LEÍDO / NO LEÍDO
-========================================================= */
+   MARCAR COMO LEÍDO
+   ========================================================= */
 
-function alternarLeido(id) {
+async function alternarLeido(
+    id
+) {
+
+    const boton =
+        document.querySelector(
+            `[data-accion="leido"][data-id="${CSS.escape(id)}"]`
+        );
+
+
+    if (boton) {
+        boton.disabled = true;
+    }
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                RUTAS_API.leidos,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        id
+                    })
+                }
+            );
+
+
+        const datos =
+            await respuesta.json();
+
+
+        if (!respuesta.ok) {
+            throw new Error(
+                datos.error ||
+                "No se pudo actualizar el estado de lectura."
+            );
+        }
+
+
+        if (
+            Array.isArray(
+                datos.leidos
+            )
+        ) {
+            leidos = [
+                ...new Set(
+                    datos.leidos
+                )
+            ];
+        } else {
+            actualizarLeidosLocalmente(
+                id
+            );
+        }
+
+
+        actualizarContadores();
+
+
+        if (
+            vistaActual === "leidos"
+        ) {
+            renderizarLeidos();
+        } else {
+            renderizarColeccion();
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Error actualizando leído:",
+            error
+        );
+
+        alert(
+            "No se pudo actualizar el estado de lectura."
+        );
+
+    } finally {
+
+        if (boton) {
+            boton.disabled = false;
+        }
+    }
+}
+
+
+function actualizarLeidosLocalmente(
+    id
+) {
 
     const indice =
         leidos.indexOf(id);
 
 
-    if (indice === -1) {
-
+    if (
+        indice === -1
+    ) {
         leidos.push(id);
-
     } else {
-
         leidos.splice(
             indice,
             1
@@ -890,53 +912,19 @@ function alternarLeido(id) {
 
 
     leidos =
-        [...new Set(leidos)];
-
-
-    guardarLeidos();
-
-    actualizarContadores();
-
-
-    if (
-        vistaActual === "leidos"
-    ) {
-
-        renderizarLeidos();
-
-    } else {
-
-        renderizarColeccion();
-    }
-}
-
-
-function guardarLeidos() {
-
-    try {
-
-        localStorage.setItem(
-            CLAVES_STORAGE.leidos,
-            JSON.stringify(
+        [
+            ...new Set(
                 leidos
             )
-        );
-
-    } catch (error) {
-
-        console.error(
-            "No se pudieron guardar las lecturas:",
-            error
-        );
-    }
+        ];
 }
 
 
 /* =========================================================
    AGREGAR MATERIAL
-========================================================= */
+   ========================================================= */
 
-function manejarFormulario(
+async function manejarFormulario(
     evento
 ) {
 
@@ -989,19 +977,12 @@ function manejarFormulario(
         ).value.trim();
 
 
-    const mensaje =
-        document.querySelector(
-            "#mensaje-formulario"
-        );
-
-
     if (
         !disciplina ||
         !titulo ||
         !autoresTexto ||
         !tipo
     ) {
-
         mostrarMensajeFormulario(
             "Completa los campos obligatorios.",
             true
@@ -1017,7 +998,9 @@ function manejarFormulario(
     if (anioTexto) {
 
         anio =
-            Number(anioTexto);
+            Number(
+                anioTexto
+            );
 
 
         if (
@@ -1100,21 +1083,11 @@ function manejarFormulario(
     }
 
 
-    const id =
-        generarIdUnico(
-            disciplina,
-            titulo
-        );
-
-
-    /*
-     * El formulario pide un autor por línea,
-     * por eso aquí se separan por saltos de línea.
-     */
-
     const autores =
         autoresTexto
-            .split(/\r?\n/)
+            .split(
+                /\r?\n/
+            )
             .map(
                 autor =>
                     autor.trim()
@@ -1122,9 +1095,18 @@ function manejarFormulario(
             .filter(Boolean);
 
 
+    const id =
+        await generarIdUnico(
+            disciplina,
+            autores
+        );
+
+
     const nuevoMaterial = {
 
         id,
+
+        disciplina,
 
         titulo,
 
@@ -1136,81 +1118,204 @@ function manejarFormulario(
 
         tipo,
 
-        linkDrive,
-
-        disciplina,
-
-        agregado: true
+        linkDrive
     };
 
 
-    window.materialesAgregados.push(
-        nuevoMaterial
-    );
+    const boton =
+        document.querySelector(
+            "#btn-guardar"
+        );
 
 
-    guardarMaterialesAgregados();
+    if (boton) {
+        boton.disabled = true;
+        boton.textContent =
+            "Guardando...";
+    }
 
-
-    catalogo.push({
-
-        ...nuevoMaterial,
-
-        textoBusqueda:
-            construirTextoBusqueda(
-                nuevoMaterial
-            )
-    });
-
-
-    formulario.reset();
-
-
-    actualizarContadores();
-
-
-    mostrarMensajeFormulario(
-        "Material agregado correctamente.",
-        false
-    );
-
-
-    mostrarVista(
-        "coleccion"
-    );
-}
-
-
-/* =========================================================
-   GUARDAR AGREGADOS
-========================================================= */
-
-function guardarMaterialesAgregados() {
 
     try {
 
-        localStorage.setItem(
-            CLAVES_STORAGE.agregados,
-            JSON.stringify(
-                window.materialesAgregados
-            )
+        const respuesta =
+            await fetch(
+                `${API_BASE}/material`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(
+                            nuevoMaterial
+                        )
+                }
+            );
+
+
+        const datos =
+            await respuesta.json();
+
+
+        if (!respuesta.ok) {
+            throw new Error(
+                datos.error ||
+                "No se pudo guardar el material."
+            );
+        }
+
+
+        catalogo.push({
+
+            ...nuevoMaterial,
+
+            linkDrive:
+                obtenerEnlaceDrive(
+                    nuevoMaterial
+                ),
+
+            textoBusqueda:
+                construirTextoBusqueda(
+                    nuevoMaterial
+                )
+        });
+
+
+        formulario.reset();
+
+
+        actualizarContadores();
+
+
+        mostrarMensajeFormulario(
+            "Material agregado correctamente.",
+            false
         );
+
+
+        mostrarVista(
+            "coleccion"
+        );
+
+
+        renderizarColeccion();
 
     } catch (error) {
 
         console.error(
-            "No se pudieron guardar los materiales:",
+            "Error guardando material:",
             error
         );
+
+
+        mostrarMensajeFormulario(
+            "No se pudo guardar el material. Revisa la conexión con el servidor.",
+            true
+        );
+
+    } finally {
+
+        if (boton) {
+            boton.disabled = false;
+            boton.textContent =
+                "Guardar material";
+        }
+    }
+}
+
+
+/* =========================================================
+   GENERACIÓN DE IDs
+   =========================================================
+
+   Formato:
+
+   autor-001
+   autor-002
+   banco-de-mexico-001
+
+   Si hay varios autores, se usa el primer autor.
+   ========================================================= */
+
+async function generarIdUnico(
+    disciplina,
+    autores
+) {
+
+    let baseAutor =
+        Array.isArray(autores) &&
+        autores.length > 0
+            ? autores[0]
+            : "material";
+
+
+    baseAutor =
+        crearSlug(
+            baseAutor
+        );
+
+
+    if (!baseAutor) {
+        baseAutor =
+            "material";
+    }
+
+
+    const base =
+        baseAutor;
+
+
+    let numero =
+        1;
+
+
+    while (true) {
+
+        const numeroTexto =
+            String(
+                numero
+            ).padStart(
+                3,
+                "0"
+            );
+
+
+        const candidato =
+            `${base}-${numeroTexto}`;
+
+
+        const existe =
+            catalogo.some(
+                material =>
+                    material.id ===
+                    candidato
+            );
+
+
+        if (!existe) {
+            return candidato;
+        }
+
+
+        numero++;
     }
 }
 
 
 /* =========================================================
    ELIMINAR MATERIAL
-========================================================= */
+   =========================================================
 
-function eliminarMaterial(
+   El Worker actual todavía NO tiene endpoint DELETE.
+
+   Por eso esta función queda preparada, pero no intenta
+   borrar algo que el servidor todavía no puede borrar.
+   ========================================================= */
+
+async function eliminarMaterial(
     id
 ) {
 
@@ -1221,71 +1326,20 @@ function eliminarMaterial(
         );
 
 
-    if (
-        !material ||
-        !material.agregado
-    ) {
+    if (!material) {
         return;
     }
 
 
-    const confirmar =
-        confirm(
-            `¿Eliminar "${material.titulo}" de la biblioteca?`
-        );
-
-
-    if (!confirmar) {
-        return;
-    }
-
-
-    window.materialesAgregados =
-        window.materialesAgregados.filter(
-            item =>
-                item.id !== id
-        );
-
-
-    guardarMaterialesAgregados();
-
-
-    catalogo =
-        catalogo.filter(
-            item =>
-                item.id !== id
-        );
-
-
-    leidos =
-        leidos.filter(
-            leidoId =>
-                leidoId !== id
-        );
-
-
-    guardarLeidos();
-
-
-    actualizarContadores();
-
-
-    if (
-        vistaActual === "leidos"
-    ) {
-
-        renderizarLeidos();
-
-    } else {
-
-        renderizarColeccion();
-    }
+    alert(
+        "La eliminación desde la biblioteca todavía no está habilitada. Los materiales se eliminan directamente del catálogo de GitHub hasta que añadamos el endpoint DELETE."
+    );
 }
 
 
 /* =========================================================
-   ENLACES DE DRIVE
-========================================================= */
+   GOOGLE DRIVE
+   ========================================================= */
 
 function obtenerEnlaceDrive(
     material
@@ -1327,7 +1381,6 @@ function obtenerEnlaceDrive(
                 enlace
             )
         ) {
-
             return enlace;
         }
     }
@@ -1349,19 +1402,21 @@ function urlSegura(
     try {
 
         const texto =
-            String(url)
-                .trim();
+            String(
+                url
+            ).trim();
 
 
         const enlace =
-            new URL(texto);
+            new URL(
+                texto
+            );
 
 
         if (
             enlace.protocol !== "http:" &&
             enlace.protocol !== "https:"
         ) {
-
             return "";
         }
 
@@ -1387,7 +1442,9 @@ function esEnlaceDrive(
     try {
 
         const enlace =
-            new URL(url);
+            new URL(
+                url
+            );
 
 
         return DOMINIOS_DRIVE.includes(
@@ -1402,47 +1459,19 @@ function esEnlaceDrive(
 
 
 /* =========================================================
-   IDS
-========================================================= */
+   UTILIDADES
+   ========================================================= */
 
-function generarIdUnico(
+function generarIdTemporal(
     disciplina,
     titulo
 ) {
 
-    const base =
+    return (
         `${disciplina}-${crearSlug(
             titulo
-        )}`;
-
-
-    let id =
-        base;
-
-
-    let contador =
-        1;
-
-
-    while (
-        catalogo.some(
-            material =>
-                material.id === id
-        ) ||
-        window.materialesAgregados.some(
-            material =>
-                material.id === id
-        )
-    ) {
-
-        contador++;
-
-        id =
-            `${base}-${contador}`;
-    }
-
-
-    return id;
+        )}`
+    );
 }
 
 
@@ -1475,7 +1504,9 @@ function normalizarTexto(
     return String(
         texto || ""
     )
-        .normalize("NFD")
+        .normalize(
+            "NFD"
+        )
         .replace(
             /[\u0300-\u036f]/g,
             ""
@@ -1485,17 +1516,41 @@ function normalizarTexto(
 }
 
 
+function escapeHTML(
+    valor
+) {
+
+    return String(
+        valor ?? ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+}
+
+
 /* =========================================================
    CONTADORES
-========================================================= */
+   ========================================================= */
 
 function actualizarContadores() {
-
-    /*
-     * Estos elementos son opcionales.
-     * Si todavía no existen en el HTML,
-     * simplemente no hace nada.
-     */
 
     const total =
         catalogo.length;
@@ -1523,14 +1578,12 @@ function actualizarContadores() {
 
 
     if (contadorTotal) {
-
         contadorTotal.textContent =
             total;
     }
 
 
     if (contadorLeidos) {
-
         contadorLeidos.textContent =
             totalLeidos;
     }
@@ -1538,8 +1591,8 @@ function actualizarContadores() {
 
 
 /* =========================================================
-   MENSAJE DEL FORMULARIO
-========================================================= */
+   MENSAJES
+   ========================================================= */
 
 function mostrarMensajeFormulario(
     mensaje,
@@ -1586,34 +1639,50 @@ function mostrarMensajeFormulario(
 
 
 /* =========================================================
-   SEGURIDAD HTML
-========================================================= */
+   ESTADOS DE CARGA
+   ========================================================= */
 
-function escapeHTML(
-    valor
+function mostrarEstadoCarga() {
+
+    const coleccion =
+        document.querySelector(
+            "#lista-coleccion"
+        );
+
+
+    if (coleccion) {
+
+        coleccion.innerHTML = `
+            <div class="estado-vacio">
+                <h3>Cargando biblioteca...</h3>
+                <p>
+                    Conectando con el catálogo.
+                </p>
+            </div>
+        `;
+    }
+}
+
+
+function mostrarErrorCarga(
+    mensaje
 ) {
 
-    return String(
-        valor ?? ""
-    )
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
+    const coleccion =
+        document.querySelector(
+            "#lista-coleccion"
         );
+
+
+    if (coleccion) {
+
+        coleccion.innerHTML = `
+            <div class="estado-vacio">
+                <h3>Error al cargar la biblioteca</h3>
+                <p>
+                    ${escapeHTML(mensaje)}
+                </p>
+            </div>
+        `;
+    }
 }
