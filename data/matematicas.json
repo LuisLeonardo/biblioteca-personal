@@ -1,1 +1,44 @@
-[]
+[
+  {
+    "id": "grus-001",
+    "titulo": "Ciencia de datos desde cero: principios básicos con Python",
+    "autores": ["Joel Grus"],
+    "editorial": "O'Reilly Media",
+    "anio": 2016,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1wLVcgXQn-Id9uCAXFiK7phX_1CZUDTzC/view?usp=drive_link"
+  },
+  {
+    "id": "daniel-chichil-001",
+    "titulo": "Manual de matemáticas para el crédito, el ahorro y la inversión",
+    "autores": ["Victoria Yolanda Daniel Chichil"],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1-nvjc9-9N4L3ecp4ChZRz59xtumYryQX/view?usp=drive_link"
+  },
+  {
+    "id": "tan-001",
+    "titulo": "Matemáticas aplicadas",
+    "autores": ["Soo Tang Tan"],
+    "editorial": "Cengage Learning",
+    "anio": 2012,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1iNgeEGmVA-AKpHh1nJ-KudHPkV_g08V5/view?usp=drive_link"
+  },
+  {
+    "id": "garibaldi-oddi-azuaga-behnisch-aristimuno-001",
+    "titulo": "Modelos estadísticos en lenguaje R: edición ampliada",
+    "autores": [
+      "Lucas Alejandro Garibaldi",
+      "Facundo José Oddi",
+      "Gonzalo Daniel Azuaga",
+      "Aliosha Nicolás Behnisch",
+      "Francisco Javier Aristimuño"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1VUiVz6hACOYvogj26CcgoivRbFiuJE3M/view?usp=drive_link"
+  }
+]

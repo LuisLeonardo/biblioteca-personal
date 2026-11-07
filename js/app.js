@@ -1,10 +1,3 @@
-
-"use strict";
-
-/* =================================
-   CONFIGURACIÓN
-================================= */
-
 const RUTAS = {
     economia: "data/economia.json",
     matematicas: "data/matematicas.json",
@@ -12,276 +5,859 @@ const RUTAS = {
     leidos: "data/leidos.json"
 };
 
-const CLAVE_LEIDOS = "biblioteca-leidos-v1";
-const CLAVE_AGREGADOS = "biblioteca-agregados-v1";
+const CLAVES_STORAGE = {
+    agregados: "biblioteca_agregados",
+    leidos: "biblioteca_leidos"
+};
 
-const NOMBRES_DISCIPLINAS = {
+const DOMINIOS_DRIVE = [
+    "drive.google.com",
+    "docs.google.com"
+];
+
+const NOMBRES_DISCIPLINA = {
     economia: "Economía",
     matematicas: "Matemáticas",
     otros: "Otros"
 };
 
-let catalogos = {
-    economia: [],
-    matematicas: [],
-    otros: []
-};
+let catalogo = [];
+let leidos = [];
+let vistaActual = "coleccion";
 
-let leidos = new Set();
-let materialesAgregados = {};
-let todosLosMateriales = [];
+let temporizadorBusqueda = null;
 
 
-/* =================================
-   ELEMENTOS HTML
-================================= */
+/* =========================================================
+   INICIO
+========================================================= */
 
-const listaColeccion = document.querySelector("#lista-coleccion");
-const listaLeidos = document.querySelector("#lista-leidos");
-const busqueda = document.querySelector("#busqueda");
-const filtroDisciplina = document.querySelector("#filtro-disciplina");
-const formulario = document.querySelector("#form-material");
-
-const campoTipo = document.querySelector("#tipo");
-const campoLink = document.querySelector("#link-drive");
-const mensajeFormulario = document.querySelector("#mensaje-formulario");
+document.addEventListener("DOMContentLoaded", iniciar);
 
 
-/* =================================
-   FUNCIONES AUXILIARES
-================================= */
-
-// Evita insertar directamente texto del usuario como HTML.
-function escaparHTML(valor) {
-    return String(valor ?? "").replace(/[&<>"']/g, caracter => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-    })[caracter]);
+async function iniciar() {
+    cargarDatosLocales();
+    await cargarCatalogos();
+    configurarEventos();
+    actualizarContadores();
+    mostrarVista("coleccion");
 }
 
 
-// Facilita búsquedas sin distinguir mayúsculas ni acentos.
-function normalizarTexto(texto) {
-    return String(texto ?? "")
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .toLocaleLowerCase("es");
-}
+/* =========================================================
+   DATOS LOCALES
+========================================================= */
 
-
-// Genera identificadores únicos para los nuevos materiales.
-function generarId(disciplina, titulo) {
-    const slug = normalizarTexto(titulo)
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-|-$/g, "")
-        .slice(0, 30);
-
-    const aleatorio = typeof crypto !== "undefined" && crypto.randomUUID
-        ? crypto.randomUUID().slice(0, 8)
-        : Math.random().toString(36).slice(2, 10);
-
-    return `${disciplina}-${slug}-${Date.now().toString(36)}-${aleatorio}`;
-}
-
-
-// Lee información guardada en el navegador.
-function leerLocal(clave, valorPredeterminado) {
+function cargarDatosLocales() {
     try {
-        const contenido = localStorage.getItem(clave);
+        const agregados =
+            JSON.parse(
+                localStorage.getItem(
+                    CLAVES_STORAGE.agregados
+                )
+            ) || [];
 
-        return contenido === null
-            ? valorPredeterminado
-            : JSON.parse(contenido);
+        window.materialesAgregados =
+            Array.isArray(agregados)
+                ? agregados
+                : [];
 
     } catch (error) {
-        console.error("No se pudo leer el almacenamiento local:", error);
-        return valorPredeterminado;
+        console.error(
+            "Error al cargar materiales agregados:",
+            error
+        );
+
+        window.materialesAgregados = [];
     }
-}
 
 
-// Guarda información en el navegador.
-function guardarLocal(clave, valor) {
     try {
-        localStorage.setItem(clave, JSON.stringify(valor));
-        return true;
+        const lecturas =
+            JSON.parse(
+                localStorage.getItem(
+                    CLAVES_STORAGE.leidos
+                )
+            ) || [];
+
+        leidos =
+            Array.isArray(lecturas)
+                ? lecturas
+                : [];
 
     } catch (error) {
-        console.error("No se pudo guardar la información:", error);
-        return false;
+        console.error(
+            "Error al cargar materiales leídos:",
+            error
+        );
+
+        leidos = [];
     }
 }
 
 
-// Comprueba que el enlace sea una dirección HTTPS de Google Drive.
-function obtenerLinkDrive(enlace) {
-    try {
-        const url = new URL(enlace);
+/* =========================================================
+   CARGAR CATÁLOGOS
+========================================================= */
 
-        if (
-            url.protocol === "https:" &&
-            url.hostname === "drive.google.com"
-        ) {
-            return url.href;
-        }
+async function cargarCatalogos() {
 
-        return "";
+    const resultados =
+        await Promise.allSettled([
+            cargarJSON(
+                RUTAS.economia,
+                "Economía"
+            ),
 
-    } catch {
-        return "";
-    }
-}
+            cargarJSON(
+                RUTAS.matematicas,
+                "Matemáticas"
+            ),
 
+            cargarJSON(
+                RUTAS.otros,
+                "Otros"
+            ),
 
-/* =================================
-   CARGA DE LOS CATÁLOGOS
-================================= */
-
-async function cargarArchivo(ruta) {
-    const respuesta = await fetch(ruta);
-
-    if (!respuesta.ok) {
-        throw new Error(`No se pudo cargar ${ruta}`);
-    }
-
-    return await respuesta.json();
-}
-
-
-async function cargarBiblioteca() {
-    try {
-        const [
-            economia,
-            matematicas,
-            otros,
-            leidosBase
-        ] = await Promise.all([
-            cargarArchivo(RUTAS.economia),
-            cargarArchivo(RUTAS.matematicas),
-            cargarArchivo(RUTAS.otros),
-            cargarArchivo(RUTAS.leidos)
+            cargarJSON(
+                RUTAS.leidos,
+                "Leídos"
+            )
         ]);
 
-        catalogos = {
-            economia: Array.isArray(economia) ? economia : [],
-            matematicas: Array.isArray(matematicas) ? matematicas : [],
-            otros: Array.isArray(otros) ? otros : []
-        };
 
-        // Recupera los materiales agregados anteriormente.
-        materialesAgregados = leerLocal(CLAVE_AGREGADOS, {});
+    const economia =
+        resultados[0].status === "fulfilled"
+            ? resultados[0].value
+            : [];
 
-        // Incorpora las altas locales a sus respectivos catálogos.
-        Object.keys(catalogos).forEach(disciplina => {
-            const agregados = Array.isArray(materialesAgregados[disciplina])
-                ? materialesAgregados[disciplina]
-                : [];
+    const matematicas =
+        resultados[1].status === "fulfilled"
+            ? resultados[1].value
+            : [];
 
-            catalogos[disciplina].push(...agregados);
-        });
+    const otros =
+        resultados[2].status === "fulfilled"
+            ? resultados[2].value
+            : [];
 
-        // Si ya existe una lista local de lectura, tiene prioridad.
-        // De lo contrario, se utiliza leidos.json.
-        const leidosLocales = leerLocal(CLAVE_LEIDOS, null);
+    const lecturasJSON =
+        resultados[3].status === "fulfilled"
+            ? resultados[3].value
+            : [];
 
-        const listaInicial = Array.isArray(leidosLocales)
-            ? leidosLocales
-            : Array.isArray(leidosBase)
-                ? leidosBase
-                : [];
 
-        leidos = new Set(listaInicial);
-
-        actualizarMateriales();
-
-        renderizarColeccion();
-        renderizarLeidos();
-
-    } catch (error) {
-        console.error(error);
-
-        listaColeccion.textContent =
-            "No se pudo cargar la biblioteca. Revisa los archivos JSON y las rutas.";
-
-        listaLeidos.textContent =
-            "No se pudo cargar la lista de materiales leídos.";
+    if (
+        resultados[3].status === "fulfilled" &&
+        Array.isArray(lecturasJSON)
+    ) {
+        leidos = [
+            ...new Set([
+                ...leidos,
+                ...lecturasJSON
+            ])
+        ];
     }
+
+
+    catalogo =
+        construirCatalogoCompleto(
+            economia,
+            matematicas,
+            otros
+        );
+
+
+    resultados.forEach(
+        (resultado, indice) => {
+
+            if (
+                resultado.status === "rejected"
+            ) {
+                const nombres = [
+                    "Economía",
+                    "Matemáticas",
+                    "Otros",
+                    "Leídos"
+                ];
+
+                console.error(
+                    `Error cargando ${nombres[indice]}:`,
+                    resultado.reason
+                );
+            }
+        }
+    );
 }
 
 
-// Reúne los materiales de todas las disciplinas.
-function actualizarMateriales() {
-    todosLosMateriales = [];
+async function cargarJSON(ruta, nombre) {
 
-    Object.entries(catalogos).forEach(([disciplina, materiales]) => {
-        materiales.forEach(material => {
-            todosLosMateriales.push({
-                ...material,
-                _disciplina: disciplina
-            });
+    const respuesta =
+        await fetch(ruta, {
+            cache: "no-store"
+        });
+
+
+    if (!respuesta.ok) {
+        throw new Error(
+            `No se pudo cargar ${nombre}: ${respuesta.status}`
+        );
+    }
+
+
+    const datos =
+        await respuesta.json();
+
+
+    if (!Array.isArray(datos)) {
+        throw new Error(
+            `${nombre} no contiene un arreglo JSON válido.`
+        );
+    }
+
+
+    return datos;
+}
+
+
+/* =========================================================
+   CONSTRUIR CATÁLOGO
+========================================================= */
+
+function construirCatalogoCompleto(
+    economia,
+    matematicas,
+    otros
+) {
+
+    const mapa =
+        new Map();
+
+
+    incorporarCatalogo(
+        mapa,
+        economia,
+        "economia"
+    );
+
+
+    incorporarCatalogo(
+        mapa,
+        matematicas,
+        "matematicas"
+    );
+
+
+    incorporarCatalogo(
+        mapa,
+        otros,
+        "otros"
+    );
+
+
+    const agregados =
+        Array.isArray(
+            window.materialesAgregados
+        )
+            ? window.materialesAgregados
+            : [];
+
+
+    agregados.forEach(material => {
+
+        const disciplina =
+            material.disciplina || "otros";
+
+
+        const id =
+            material.id ||
+            `${disciplina}-${crearSlug(
+                material.titulo
+            )}`;
+
+
+        const linkDrive =
+            obtenerEnlaceDrive(material);
+
+
+        mapa.set(id, {
+
+            ...material,
+
+            id,
+
+            disciplina,
+
+            agregado: true,
+
+            linkDrive,
+
+            textoBusqueda:
+                construirTextoBusqueda({
+                    ...material,
+                    linkDrive
+                })
+        });
+    });
+
+
+    return Array.from(
+        mapa.values()
+    );
+}
+
+
+function incorporarCatalogo(
+    mapa,
+    materiales,
+    disciplina
+) {
+
+    if (!Array.isArray(materiales)) {
+        return;
+    }
+
+
+    materiales.forEach(material => {
+
+        if (
+            !material ||
+            typeof material !== "object"
+        ) {
+            return;
+        }
+
+
+        const id =
+            material.id ||
+            `${disciplina}-${crearSlug(
+                material.titulo
+            )}`;
+
+
+        const linkDrive =
+            obtenerEnlaceDrive(material);
+
+
+        mapa.set(id, {
+
+            ...material,
+
+            id,
+
+            disciplina,
+
+            agregado: false,
+
+            linkDrive,
+
+            textoBusqueda:
+                construirTextoBusqueda({
+                    ...material,
+                    linkDrive
+                })
         });
     });
 }
 
 
-/* =================================
-   CONSTRUCCIÓN DE LAS TARJETAS
-================================= */
+function construirTextoBusqueda(
+    material
+) {
 
-function crearTarjeta(material) {
-    const id = escaparHTML(material.id);
-    const titulo = escaparHTML(material.titulo);
+    const autores =
+        Array.isArray(material.autores)
+            ? material.autores.join(" ")
+            : material.autores || "";
 
-    const autores = Array.isArray(material.autores)
-        ? material.autores.join(", ")
-        : "";
 
-    const metadatos = [
-        escaparHTML(autores),
-        material.editorial ? escaparHTML(material.editorial) : "",
-        material.anio ? escaparHTML(material.anio) : "",
-        NOMBRES_DISCIPLINAS[material._disciplina] || "",
-        material.tipo === "digital" ? "Digital" : "Físico"
-    ].filter(Boolean);
+    return [
 
-    const marcado = leidos.has(material.id);
+        material.titulo || "",
 
-    const link = material.tipo === "digital"
-        ? obtenerLinkDrive(material.link_drive)
-        : "";
+        autores,
+
+        material.editorial || "",
+
+        material.anio || "",
+
+        material.disciplina || ""
+
+    ]
+        .join(" ")
+        .toLowerCase();
+}
+
+
+/* =========================================================
+   EVENTOS
+========================================================= */
+
+function configurarEventos() {
+
+    document
+        .querySelectorAll("[data-vista]")
+        .forEach(boton => {
+
+            boton.addEventListener(
+                "click",
+                () => {
+
+                    mostrarVista(
+                        boton.dataset.vista
+                    );
+                }
+            );
+        });
+
+
+    const busqueda =
+        document.querySelector(
+            "#busqueda"
+        );
+
+
+    if (busqueda) {
+
+        busqueda.addEventListener(
+            "input",
+            () => {
+
+                clearTimeout(
+                    temporizadorBusqueda
+                );
+
+
+                temporizadorBusqueda =
+                    setTimeout(
+                        () => {
+                            renderizarColeccion();
+                        },
+                        150
+                    );
+            }
+        );
+    }
+
+
+    const filtro =
+        document.querySelector(
+            "#filtro-disciplina"
+        );
+
+
+    if (filtro) {
+
+        filtro.addEventListener(
+            "change",
+            renderizarColeccion
+        );
+    }
+
+
+    const formulario =
+        document.querySelector(
+            "#form-material"
+        );
+
+
+    if (formulario) {
+
+        formulario.addEventListener(
+            "submit",
+            manejarFormulario
+        );
+    }
+
+
+    document.addEventListener(
+        "click",
+        manejarClickGlobal
+    );
+}
+
+
+function manejarClickGlobal(evento) {
+
+    const botonLeido =
+        evento.target.closest(
+            "[data-accion='leido']"
+        );
+
+
+    if (botonLeido) {
+
+        const id =
+            botonLeido.dataset.id;
+
+
+        if (id) {
+            alternarLeido(id);
+        }
+
+
+        return;
+    }
+
+
+    const botonEliminar =
+        evento.target.closest(
+            "[data-accion='eliminar']"
+        );
+
+
+    if (botonEliminar) {
+
+        const id =
+            botonEliminar.dataset.id;
+
+
+        if (id) {
+            eliminarMaterial(id);
+        }
+    }
+}
+
+
+/* =========================================================
+   VISTAS
+========================================================= */
+
+function mostrarVista(vista) {
+    vistaActual = vista;
+
+    document.querySelectorAll(".vista").forEach((seccion) => {
+        seccion.classList.remove("activa");
+    });
+
+    const seccionActiva = document.getElementById(`vista-${vista}`);
+
+    if (seccionActiva) {
+        seccionActiva.classList.add("activa");
+    }
+
+    document.querySelectorAll(".nav-btn").forEach((boton) => {
+        boton.classList.remove("activo");
+    });
+
+    const botonActivo = document.querySelector(
+        `.nav-btn[data-vista="${vista}"]`
+    );
+
+    if (botonActivo) {
+        botonActivo.classList.add("activo");
+    }
+
+    if (vista === "coleccion") {
+        renderizarColeccion();
+    }
+
+    if (vista === "leidos") {
+        renderizarLeidos();
+    }
+}
+
+
+/* =========================================================
+   COLECCIÓN
+========================================================= */
+
+function renderizarColeccion() {
+
+    const contenedor =
+        document.querySelector(
+            "#lista-coleccion"
+        );
+
+
+    if (!contenedor) {
+        return;
+    }
+
+
+    const busqueda =
+        document.querySelector(
+            "#busqueda"
+        );
+
+
+    const filtro =
+        document.querySelector(
+            "#filtro-disciplina"
+        );
+
+
+    const texto =
+        busqueda?.value
+            ?.trim()
+            .toLowerCase() || "";
+
+
+    const disciplina =
+        filtro?.value || "todas";
+
+
+    const resultados =
+        catalogo.filter(
+            material => {
+
+                const coincideTexto =
+                    !texto ||
+                    material.textoBusqueda.includes(
+                        texto
+                    );
+
+
+                const coincideDisciplina =
+                    disciplina === "todas" ||
+                    material.disciplina === disciplina;
+
+
+                return (
+                    coincideTexto &&
+                    coincideDisciplina
+                );
+            }
+        );
+
+
+    if (
+        resultados.length === 0
+    ) {
+
+        contenedor.innerHTML = `
+            <div class="estado-vacio">
+                <h3>No se encontraron materiales</h3>
+                <p>
+                    Prueba con otro título, autor o disciplina.
+                </p>
+            </div>
+        `;
+
+        return;
+    }
+
+
+    contenedor.innerHTML =
+        resultados
+            .map(
+                crearFichaMaterial
+            )
+            .join("");
+}
+
+
+/* =========================================================
+   LEÍDOS
+========================================================= */
+
+function renderizarLeidos() {
+
+    const contenedor =
+        document.querySelector(
+            "#lista-leidos"
+        );
+
+
+    if (!contenedor) {
+        return;
+    }
+
+
+    const materialesLeidos =
+        catalogo.filter(
+            material =>
+                leidos.includes(
+                    material.id
+                )
+        );
+
+
+    if (
+        materialesLeidos.length === 0
+    ) {
+
+        contenedor.innerHTML = `
+            <div class="estado-vacio">
+                <h3>Aún no hay materiales leídos</h3>
+                <p>
+                    Marca un material como leído y aparecerá aquí.
+                </p>
+            </div>
+        `;
+
+        return;
+    }
+
+
+    contenedor.innerHTML =
+        materialesLeidos
+            .map(
+                crearFichaMaterial
+            )
+            .join("");
+}
+
+
+/* =========================================================
+   FICHA DE MATERIAL
+========================================================= */
+
+function crearFichaMaterial(
+    material
+) {
+
+    const estaLeido =
+        leidos.includes(
+            material.id
+        );
+
+
+    const autores =
+        Array.isArray(
+            material.autores
+        )
+            ? material.autores.join(
+                ", "
+            )
+            : material.autores ||
+              "Autor no registrado";
+
+
+    const datosBibliograficos =
+        [
+            material.editorial,
+            material.anio
+        ]
+            .filter(Boolean)
+            .join(" · ");
+
+
+    /*
+     * Obtiene el enlace desde linkDrive
+     * o desde alguna variante compatible.
+     */
+
+    const enlace =
+        obtenerEnlaceDrive(
+            material
+        );
+
+
+    const botonDrive =
+        enlace
+            ? `
+                <a
+                    class="boton boton-drive"
+                    href="${escapeHTML(enlace)}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Abrir documento
+                </a>
+            `
+            : "";
+
+
+    const botonEliminar =
+        material.agregado
+            ? `
+                <button
+                    class="boton boton-eliminar"
+                    type="button"
+                    data-accion="eliminar"
+                    data-id="${escapeHTML(
+                        material.id
+                    )}"
+                >
+                    Eliminar
+                </button>
+            `
+            : "";
+
 
     return `
-        <article class="material-card">
+        <article
+            class="material-card ${
+                estaLeido
+                    ? "material-leido"
+                    : ""
+            }"
+            data-id="${escapeHTML(
+                material.id
+            )}"
+        >
 
-            <div class="material-info">
-                <h3>${titulo}</h3>
-                <p>${metadatos.join(" · ")}</p>
-            </div>
+            <div class="material-contenido">
 
-            <div class="material-acciones">
+                <div class="material-disciplina">
+                    ${escapeHTML(
+                        NOMBRES_DISCIPLINA[
+                            material.disciplina
+                        ] || "Otros"
+                    )}
+                </div>
 
-                <button
-                    type="button"
-                    class="btn-leido ${marcado ? "leido" : ""}"
-                    data-id="${id}"
-                    aria-pressed="${marcado}"
-                >
-                    Leído
-                </button>
+
+                <h3 class="material-titulo">
+                    ${escapeHTML(
+                        material.titulo ||
+                        "Título no registrado"
+                    )}
+                </h3>
+
+
+                <p class="material-autores">
+                    ${escapeHTML(
+                        autores
+                    )}
+                </p>
+
 
                 ${
-                    link
-                        ? `<a
-                            class="link-material"
-                            href="${escaparHTML(link)}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >Abrir en Drive</a>`
+                    datosBibliograficos
+                        ? `
+                            <p class="material-datos">
+                                ${escapeHTML(
+                                    datosBibliograficos
+                                )}
+                            </p>
+                        `
                         : ""
                 }
+
+
+                <div class="material-acciones">
+
+                    ${botonDrive}
+
+
+                    <button
+                        class="boton boton-leido ${
+                            estaLeido
+                                ? "boton-leido-activo"
+                                : ""
+                        }"
+                        type="button"
+                        data-accion="leido"
+                        data-id="${escapeHTML(
+                            material.id
+                        )}"
+                    >
+
+                        ${
+                            estaLeido
+                                ? "Leído"
+                                : "Marcar como leído"
+                        }
+
+                    </button>
+
+
+                    ${botonEliminar}
+
+                </div>
 
             </div>
 
@@ -290,266 +866,754 @@ function crearTarjeta(material) {
 }
 
 
-/* =================================
-   VISTA: COLECCIÓN
-================================= */
+/* =========================================================
+   LEÍDO / NO LEÍDO
+========================================================= */
 
-function renderizarColeccion() {
-    const termino = normalizarTexto(busqueda.value);
-    const disciplinaSeleccionada = filtroDisciplina.value;
+function alternarLeido(id) {
 
-    const resultados = todosLosMateriales
-        .filter(material => {
-            const titulo = normalizarTexto(material.titulo);
-            const autores = normalizarTexto(
-                Array.isArray(material.autores)
-                    ? material.autores.join(" ")
-                    : ""
-            );
-
-            const editorial = normalizarTexto(material.editorial);
-
-            const coincideBusqueda =
-                titulo.includes(termino) ||
-                autores.includes(termino) ||
-                editorial.includes(termino);
-
-            const coincideDisciplina =
-                disciplinaSeleccionada === "todas" ||
-                material._disciplina === disciplinaSeleccionada;
-
-            return coincideBusqueda && coincideDisciplina;
-        })
-        .sort((a, b) =>
-            a.titulo.localeCompare(b.titulo, "es")
-        );
-
-    listaColeccion.innerHTML = resultados
-        .map(crearTarjeta)
-        .join("");
-}
+    const indice =
+        leidos.indexOf(id);
 
 
-/* =================================
-   VISTA: LEÍDOS
-================================= */
+    if (indice === -1) {
 
-function renderizarLeidos() {
-    const materialesLeidos = todosLosMateriales
-        .filter(material => leidos.has(material.id))
-        .sort((a, b) =>
-            a.titulo.localeCompare(b.titulo, "es")
-        );
+        leidos.push(id);
 
-    listaLeidos.innerHTML = materialesLeidos
-        .map(crearTarjeta)
-        .join("");
-}
-
-
-/* =================================
-   CAMBIAR ESTADO DE LECTURA
-================================= */
-
-document.addEventListener("click", evento => {
-    const boton = evento.target.closest(".btn-leido");
-
-    if (!boton) return;
-
-    const id = boton.dataset.id;
-
-    if (leidos.has(id)) {
-        leidos.delete(id);
     } else {
-        leidos.add(id);
-    }
 
-    const guardado = guardarLocal(
-        CLAVE_LEIDOS,
-        [...leidos]
-    );
-
-    if (!guardado) {
-        console.error("El cambio no pudo guardarse en el navegador.");
-    }
-
-    renderizarColeccion();
-    renderizarLeidos();
-});
-
-
-/* =================================
-   NAVEGACIÓN ENTRE VISTAS
-================================= */
-
-function mostrarVista(nombre) {
-    document.querySelectorAll(".vista").forEach(vista => {
-        vista.classList.toggle(
-            "activa",
-            vista.id === `vista-${nombre}`
+        leidos.splice(
+            indice,
+            1
         );
-    });
-
-    document.querySelectorAll(".nav-btn").forEach(boton => {
-        boton.classList.toggle(
-            "activo",
-            boton.dataset.vista === nombre
-        );
-    });
-
-    if (nombre === "coleccion") {
-        renderizarColeccion();
     }
 
-    if (nombre === "leidos") {
-        renderizarLeidos();
-    }
-}
+
+    leidos =
+        [...new Set(leidos)];
 
 
-document.querySelectorAll(".nav-btn").forEach(boton => {
-    boton.addEventListener("click", () => {
-        mostrarVista(boton.dataset.vista);
-    });
-});
+    guardarLeidos();
 
+    actualizarContadores();
 
-/* =================================
-   BUSCADOR Y FILTRO
-================================= */
-
-busqueda.addEventListener("input", renderizarColeccion);
-
-filtroDisciplina.addEventListener("change", renderizarColeccion);
-
-
-/* =================================
-   FORMULARIO: TIPO DE MATERIAL
-================================= */
-
-function actualizarCampoDrive() {
-    const esDigital = campoTipo.value === "digital";
-
-    campoLink.required = esDigital;
-    campoLink.disabled = !esDigital;
-
-    if (!esDigital) {
-        campoLink.value = "";
-    }
-}
-
-campoTipo.addEventListener("change", actualizarCampoDrive);
-
-actualizarCampoDrive();
-
-
-/* =================================
-   FORMULARIO: AGREGAR MATERIAL
-================================= */
-
-formulario.addEventListener("submit", evento => {
-    evento.preventDefault();
-
-    const disciplina = document.querySelector("#disciplina").value;
-    const titulo = document.querySelector("#titulo").value.trim();
-
-    const autores = document.querySelector("#autores").value
-        .split("\n")
-        .map(autor => autor.trim())
-        .filter(Boolean);
-
-    const editorial = document.querySelector("#editorial").value.trim();
-    const anioTexto = document.querySelector("#anio").value.trim();
-    const tipo = campoTipo.value;
-
-    const linkDrive = campoLink.value.trim();
-
-    // Comprueba que los datos obligatorios estén presentes.
-    if (!disciplina || !titulo || autores.length === 0 || !tipo) {
-        mensajeFormulario.textContent =
-            "Completa los campos obligatorios.";
-
-        return;
-    }
-
-    if (tipo === "digital" && !obtenerLinkDrive(linkDrive)) {
-        mensajeFormulario.textContent =
-            "Introduce un enlace válido de Google Drive.";
-
-        campoLink.focus();
-        return;
-    }
-
-    const anio = anioTexto ? Number(anioTexto) : null;
 
     if (
-        anio !== null &&
-        (!Number.isInteger(anio) || anio < 1 || anio > 2100)
+        vistaActual === "leidos"
     ) {
-        mensajeFormulario.textContent =
-            "Introduce un año válido.";
+
+        renderizarLeidos();
+
+    } else {
+
+        renderizarColeccion();
+    }
+}
+
+
+function guardarLeidos() {
+
+    try {
+
+        localStorage.setItem(
+            CLAVES_STORAGE.leidos,
+            JSON.stringify(
+                leidos
+            )
+        );
+
+    } catch (error) {
+
+        console.error(
+            "No se pudieron guardar las lecturas:",
+            error
+        );
+    }
+}
+
+
+/* =========================================================
+   AGREGAR MATERIAL
+========================================================= */
+
+function manejarFormulario(
+    evento
+) {
+
+    evento.preventDefault();
+
+
+    const formulario =
+        evento.currentTarget;
+
+
+    const disciplina =
+        document.querySelector(
+            "#disciplina"
+        ).value.trim();
+
+
+    const titulo =
+        document.querySelector(
+            "#titulo"
+        ).value.trim();
+
+
+    const autoresTexto =
+        document.querySelector(
+            "#autores"
+        ).value.trim();
+
+
+    const editorial =
+        document.querySelector(
+            "#editorial"
+        ).value.trim();
+
+
+    const anioTexto =
+        document.querySelector(
+            "#anio"
+        ).value.trim();
+
+
+    const tipo =
+        document.querySelector(
+            "#tipo"
+        ).value.trim();
+
+
+    const linkDriveTexto =
+        document.querySelector(
+            "#link-drive"
+        ).value.trim();
+
+
+    const mensaje =
+        document.querySelector(
+            "#mensaje-formulario"
+        );
+
+
+    if (
+        !disciplina ||
+        !titulo ||
+        !autoresTexto ||
+        !tipo
+    ) {
+
+        mostrarMensajeFormulario(
+            "Completa los campos obligatorios.",
+            true
+        );
 
         return;
     }
 
-    // Crea la ficha bibliográfica.
-    const material = {
-        id: generarId(disciplina, titulo),
-        titulo: titulo,
-        autores: autores,
-        tipo: tipo
+
+    let anio = "";
+
+
+    if (anioTexto) {
+
+        anio =
+            Number(anioTexto);
+
+
+        if (
+            !Number.isInteger(anio) ||
+            anio < 1 ||
+            anio > 2100
+        ) {
+
+            mostrarMensajeFormulario(
+                "El año no es válido.",
+                true
+            );
+
+            return;
+        }
+    }
+
+
+    let linkDrive = "";
+
+
+    if (
+        tipo === "digital"
+    ) {
+
+        if (!linkDriveTexto) {
+
+            mostrarMensajeFormulario(
+                "Los materiales digitales necesitan un enlace de Drive.",
+                true
+            );
+
+            return;
+        }
+
+
+        linkDrive =
+            urlSegura(
+                linkDriveTexto
+            );
+
+
+        if (
+            !linkDrive ||
+            !esEnlaceDrive(
+                linkDrive
+            )
+        ) {
+
+            mostrarMensajeFormulario(
+                "El enlace debe ser de Google Drive o Google Docs.",
+                true
+            );
+
+            return;
+        }
+    }
+
+
+    const existe =
+        catalogo.some(
+            material =>
+                normalizarTexto(
+                    material.titulo
+                ) ===
+                normalizarTexto(
+                    titulo
+                )
+        );
+
+
+    if (existe) {
+
+        mostrarMensajeFormulario(
+            "Ese título ya existe en la biblioteca.",
+            true
+        );
+
+        return;
+    }
+
+
+    const id =
+        generarIdUnico(
+            disciplina,
+            titulo
+        );
+
+
+    /*
+     * El formulario pide un autor por línea,
+     * por eso aquí se separan por saltos de línea.
+     */
+
+    const autores =
+        autoresTexto
+            .split(/\r?\n/)
+            .map(
+                autor =>
+                    autor.trim()
+            )
+            .filter(Boolean);
+
+
+    const nuevoMaterial = {
+
+        id,
+
+        titulo,
+
+        autores,
+
+        editorial,
+
+        anio,
+
+        tipo,
+
+        linkDrive,
+
+        disciplina,
+
+        agregado: true
     };
 
-    // Los campos opcionales solo se incorporan si tienen contenido.
-    if (editorial) {
-        material.editorial = editorial;
-    }
 
-    if (anio !== null) {
-        material.anio = anio;
-    }
-
-    if (tipo === "digital") {
-        material.link_drive = obtenerLinkDrive(linkDrive);
-    }
-
-    // Guarda la ficha en el catálogo correspondiente.
-    if (!Array.isArray(materialesAgregados[disciplina])) {
-        materialesAgregados[disciplina] = [];
-    }
-
-    materialesAgregados[disciplina].push(material);
-
-    const guardado = guardarLocal(
-        CLAVE_AGREGADOS,
-        materialesAgregados
+    window.materialesAgregados.push(
+        nuevoMaterial
     );
 
-    if (!guardado) {
-        materialesAgregados[disciplina].pop();
 
-        mensajeFormulario.textContent =
-            "No se pudo guardar. Revisa el almacenamiento del navegador.";
+    guardarMaterialesAgregados();
 
+
+    catalogo.push({
+
+        ...nuevoMaterial,
+
+        textoBusqueda:
+            construirTextoBusqueda(
+                nuevoMaterial
+            )
+    });
+
+
+    formulario.reset();
+
+
+    actualizarContadores();
+
+
+    mostrarMensajeFormulario(
+        "Material agregado correctamente.",
+        false
+    );
+
+
+    mostrarVista(
+        "coleccion"
+    );
+}
+
+
+/* =========================================================
+   GUARDAR AGREGADOS
+========================================================= */
+
+function guardarMaterialesAgregados() {
+
+    try {
+
+        localStorage.setItem(
+            CLAVES_STORAGE.agregados,
+            JSON.stringify(
+                window.materialesAgregados
+            )
+        );
+
+    } catch (error) {
+
+        console.error(
+            "No se pudieron guardar los materiales:",
+            error
+        );
+    }
+}
+
+
+/* =========================================================
+   ELIMINAR MATERIAL
+========================================================= */
+
+function eliminarMaterial(
+    id
+) {
+
+    const material =
+        catalogo.find(
+            item =>
+                item.id === id
+        );
+
+
+    if (
+        !material ||
+        !material.agregado
+    ) {
         return;
     }
 
-    // Actualiza la biblioteca sin recargar la página.
-    catalogos[disciplina].push(material);
 
-    actualizarMateriales();
-    renderizarColeccion();
-
-    formulario.reset();
-    actualizarCampoDrive();
-
-    mensajeFormulario.textContent =
-        "Material agregado correctamente en este navegador.";
-});
+    const confirmar =
+        confirm(
+            `¿Eliminar "${material.titulo}" de la biblioteca?`
+        );
 
 
-/* =================================
-   INICIO DE LA APLICACIÓN
-================================= */
+    if (!confirmar) {
+        return;
+    }
 
-cargarBiblioteca();
+
+    window.materialesAgregados =
+        window.materialesAgregados.filter(
+            item =>
+                item.id !== id
+        );
+
+
+    guardarMaterialesAgregados();
+
+
+    catalogo =
+        catalogo.filter(
+            item =>
+                item.id !== id
+        );
+
+
+    leidos =
+        leidos.filter(
+            leidoId =>
+                leidoId !== id
+        );
+
+
+    guardarLeidos();
+
+
+    actualizarContadores();
+
+
+    if (
+        vistaActual === "leidos"
+    ) {
+
+        renderizarLeidos();
+
+    } else {
+
+        renderizarColeccion();
+    }
+}
+
+
+/* =========================================================
+   ENLACES DE DRIVE
+========================================================= */
+
+function obtenerEnlaceDrive(
+    material
+) {
+
+    if (!material) {
+        return "";
+    }
+
+
+    const posiblesEnlaces = [
+
+        material.linkDrive,
+
+        material.link_drive,
+
+        material.link,
+
+        material.url,
+
+        material.drive
+    ];
+
+
+    for (
+        const posible
+        of posiblesEnlaces
+    ) {
+
+        const enlace =
+            urlSegura(
+                posible
+            );
+
+
+        if (
+            enlace &&
+            esEnlaceDrive(
+                enlace
+            )
+        ) {
+
+            return enlace;
+        }
+    }
+
+
+    return "";
+}
+
+
+function urlSegura(
+    url
+) {
+
+    if (!url) {
+        return "";
+    }
+
+
+    try {
+
+        const texto =
+            String(url)
+                .trim();
+
+
+        const enlace =
+            new URL(texto);
+
+
+        if (
+            enlace.protocol !== "http:" &&
+            enlace.protocol !== "https:"
+        ) {
+
+            return "";
+        }
+
+
+        return enlace.href;
+
+    } catch {
+
+        return "";
+    }
+}
+
+
+function esEnlaceDrive(
+    url
+) {
+
+    if (!url) {
+        return false;
+    }
+
+
+    try {
+
+        const enlace =
+            new URL(url);
+
+
+        return DOMINIOS_DRIVE.includes(
+            enlace.hostname.toLowerCase()
+        );
+
+    } catch {
+
+        return false;
+    }
+}
+
+
+/* =========================================================
+   IDS
+========================================================= */
+
+function generarIdUnico(
+    disciplina,
+    titulo
+) {
+
+    const base =
+        `${disciplina}-${crearSlug(
+            titulo
+        )}`;
+
+
+    let id =
+        base;
+
+
+    let contador =
+        1;
+
+
+    while (
+        catalogo.some(
+            material =>
+                material.id === id
+        ) ||
+        window.materialesAgregados.some(
+            material =>
+                material.id === id
+        )
+    ) {
+
+        contador++;
+
+        id =
+            `${base}-${contador}`;
+    }
+
+
+    return id;
+}
+
+
+function crearSlug(
+    texto
+) {
+
+    return normalizarTexto(
+        texto
+    )
+        .replace(
+            /[^a-z0-9]+/g,
+            "-"
+        )
+        .replace(
+            /^-+|-+$/g,
+            ""
+        )
+        .slice(
+            0,
+            60
+        );
+}
+
+
+function normalizarTexto(
+    texto
+) {
+
+    return String(
+        texto || ""
+    )
+        .normalize("NFD")
+        .replace(
+            /[\u0300-\u036f]/g,
+            ""
+        )
+        .toLowerCase()
+        .trim();
+}
+
+
+/* =========================================================
+   CONTADORES
+========================================================= */
+
+function actualizarContadores() {
+
+    /*
+     * Estos elementos son opcionales.
+     * Si todavía no existen en el HTML,
+     * simplemente no hace nada.
+     */
+
+    const total =
+        catalogo.length;
+
+
+    const totalLeidos =
+        catalogo.filter(
+            material =>
+                leidos.includes(
+                    material.id
+                )
+        ).length;
+
+
+    const contadorTotal =
+        document.querySelector(
+            "#contador-total"
+        );
+
+
+    const contadorLeidos =
+        document.querySelector(
+            "#contador-leidos"
+        );
+
+
+    if (contadorTotal) {
+
+        contadorTotal.textContent =
+            total;
+    }
+
+
+    if (contadorLeidos) {
+
+        contadorLeidos.textContent =
+            totalLeidos;
+    }
+}
+
+
+/* =========================================================
+   MENSAJE DEL FORMULARIO
+========================================================= */
+
+function mostrarMensajeFormulario(
+    mensaje,
+    error
+) {
+
+    const elemento =
+        document.querySelector(
+            "#mensaje-formulario"
+        );
+
+
+    if (!elemento) {
+        return;
+    }
+
+
+    elemento.textContent =
+        mensaje;
+
+
+    elemento.classList.toggle(
+        "error",
+        error
+    );
+
+
+    elemento.classList.toggle(
+        "exito",
+        !error
+    );
+
+
+    setTimeout(
+        () => {
+
+            elemento.textContent =
+                "";
+
+        },
+        4000
+    );
+}
+
+
+/* =========================================================
+   SEGURIDAD HTML
+========================================================= */
+
+function escapeHTML(
+    valor
+) {
+
+    return String(
+        valor ?? ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+}
