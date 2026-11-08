@@ -1,0 +1,24 @@
+{
+    "actualizacionDias": 7,
+    "maxResultadosPorFuente": 30,
+    "fuentes": [
+        {
+            "id": "openalex",
+            "nombre": "OpenAlex",
+            "tipo": "api",
+            "activa": true
+        },
+        {
+            "id": "crossref",
+            "nombre": "Crossref",
+            "tipo": "api",
+            "activa": true
+        },
+        {
+            "id": "doaj",
+            "nombre": "DOAJ",
+            "tipo": "api",
+            "activa": true
+        }
+    ]
+}
