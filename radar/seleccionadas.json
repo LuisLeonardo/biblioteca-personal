@@ -90,5 +90,20 @@
     "categoria": "Otros",
     "tipo": "book",
     "openalexId": "https://openalex.org/W7225446271"
+  },
+  {
+    "id": "doi:10.15446/cuad.econ.v45n98.129692",
+    "titulo": "La economía ante la complejidad: preguntas, métodos y nuevos desafíos",
+    "autores": "Jonathan Daniel Gómez-Zapata",
+    "fecha": "2026-09-09",
+    "url": "https://doi.org/10.15446/cuad.econ.v45n98.129692",
+    "doi": "https://doi.org/10.15446/cuad.econ.v45n98.129692",
+    "idioma": "es",
+    "accesoAbierto": true,
+    "fuenteId": "cuadernos-economia",
+    "fuenteNombre": "Cuadernos de Economía",
+    "categoria": "Otros",
+    "tipo": "articulo",
+    "openalexId": "https://openalex.org/W7212305960"
   }
 ]
