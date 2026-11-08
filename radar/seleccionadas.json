@@ -215,26 +215,5 @@
     "consultable": true,
     "idioma": "es",
     "seleccionadoEn": "2026-11-08T21:03:26.943Z"
-  },
-  {
-    "id": "doi:10.1016/j.jeconom.2026.106300",
-    "titulo": "Heterogeneous predictability on mutual fund alphas: A sparse clustering GMM approach",
-    "autores": [
-      "Liyuan Cui",
-      "Guanhao Feng",
-      "Jiangshan Yang"
-    ],
-    "fecha": "2026-08-08",
-    "fuente": "Journal of Econometrics",
-    "fuenteId": "journal-econometrics",
-    "categoria": "econometria",
-    "pais": "Internacional",
-    "tipo": "article",
-    "doi": "10.1016/j.jeconom.2026.106300",
-    "url": "https://doi.org/10.1016/j.jeconom.2026.106300",
-    "accesoAbierto": true,
-    "consultable": true,
-    "idioma": "en",
-    "seleccionadoEn": "2026-11-08T21:08:58.920Z"
   }
 ]
