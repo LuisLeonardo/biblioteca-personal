@@ -1,3 +1,23 @@
 {
-    "ids": []
+    "ids": [],
+    "seleccionadas": [
+        {
+            "id": "https-doi-org-10-22201-fe-01851667p-2026-338-96192",
+            "titulo": "CORRUPCIÓN Y CONSUMO DE GOBIERNO: UMBRALES DE EFICIENCIA EN AMÉRICA LATINA",
+            "autores": [
+                "Horacio Catalán"
+            ],
+            "fecha": "2026-10-14",
+            "fuente": "Investigación Económica",
+            "fuenteId": "investigacion-economica",
+            "categoria": "economia-latinoamericana",
+            "pais": "México",
+            "tipo": "article",
+            "doi": "https://doi.org/10.22201/fe.01851667p.2026.338.96192",
+            "url": "https://doi.org/10.22201/fe.01851667p.2026.338.96192",
+            "accesoAbierto": true,
+            "consultable": true,
+            "seleccionadoEn": "2026-11-08T03:09:08.179Z"
+        }
+    ]
 }
