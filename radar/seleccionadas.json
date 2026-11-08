@@ -195,5 +195,25 @@
     "consultable": true,
     "idioma": "en",
     "seleccionadoEn": "2026-11-08T21:03:04.322Z"
+  },
+  {
+    "id": "doi:10.20430/ete.v93i369.3187",
+    "titulo": "Los determinantes de las ganancias en México y los Estados Unidos: una revaloración teórica y empírica de la ecuación de las ganancias de Kalecki (1935)",
+    "autores": [
+      "Francisco A. Martínez Hernández",
+      "Saúl Herrera Aguilar"
+    ],
+    "fecha": "2026-01-05",
+    "fuente": "El Trimestre Económico",
+    "fuenteId": "el-trimestre-economico",
+    "categoria": "economia",
+    "pais": "México",
+    "tipo": "article",
+    "doi": "10.20430/ete.v93i369.3187",
+    "url": "https://doi.org/10.20430/ete.v93i369.3187",
+    "accesoAbierto": true,
+    "consultable": true,
+    "idioma": "es",
+    "seleccionadoEn": "2026-11-08T21:03:26.943Z"
   }
 ]
