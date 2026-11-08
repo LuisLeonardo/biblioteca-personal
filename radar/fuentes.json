@@ -1,435 +1,460 @@
 {
-    "actualizacionDias": 7,
-    "maxResultadosPorFuente": 20,
-    "fuentes": [
-        {
-            "id": "revista-cepal",
-            "nombre": "Revista CEPAL",
-            "tipo": "revista",
-            "categoria": "economia-latinoamericana",
-            "pais": "América Latina",
-            "issn": "0252-0257",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "el-trimestre-economico",
-            "nombre": "El Trimestre Económico",
-            "tipo": "revista",
-            "categoria": "economia-latinoamericana",
-            "pais": "México",
-            "issn": "0041-3011",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "investigacion-economica",
-            "nombre": "Investigación Económica",
-            "tipo": "revista",
-            "categoria": "economia-latinoamericana",
-            "pais": "México",
-            "issn": "0185-1667",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "latin-american-economic-review",
-            "nombre": "Latin American Economic Review",
-            "tipo": "revista",
-            "categoria": "economia-latinoamericana",
-            "pais": "América Latina",
-            "issn": "2196-436X",
-            "activa": true,
-            "prioridad": 2
-        },
-        {
-            "id": "estudios-de-economia",
-            "nombre": "Estudios de Economía",
-            "tipo": "revista",
-            "categoria": "economia-latinoamericana",
-            "pais": "Chile",
-            "issn": "0304-2758",
-            "activa": true,
-            "prioridad": 2
-        },
-        {
-            "id": "cuadernos-de-economia",
-            "nombre": "Cuadernos de Economía",
-            "tipo": "revista",
-            "categoria": "economia-latinoamericana",
-            "pais": "Colombia",
-            "issn": "0121-4772",
-            "activa": true,
-            "prioridad": 2
-        },
-        {
-            "id": "revista-economia-politica",
-            "nombre": "Revista de Economía Política",
-            "tipo": "revista",
-            "categoria": "economia-latinoamericana",
-            "pais": "Brasil",
-            "issn": "0101-3157",
-            "activa": true,
-            "prioridad": 2
-        },
-        {
-            "id": "economia-e-sociedade",
-            "nombre": "Economia e Sociedade",
-            "tipo": "revista",
-            "categoria": "economia-latinoamericana",
-            "pais": "Brasil",
-            "issn": "0104-0618",
-            "activa": true,
-            "prioridad": 2
-        },
-        {
-            "id": "desarrollo-economico",
-            "nombre": "Desarrollo Económico",
-            "tipo": "revista",
-            "categoria": "economia-latinoamericana",
-            "pais": "Argentina",
-            "issn": "0046-001X",
-            "activa": true,
-            "prioridad": 2
-        },
-        {
-            "id": "problemas-del-desarrollo",
-            "nombre": "Problemas del Desarrollo",
-            "tipo": "revista",
-            "categoria": "economia-latinoamericana",
-            "pais": "México",
-            "issn": "0301-7036",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "economia-unam",
-            "nombre": "Economía UNAM",
-            "tipo": "revista",
-            "categoria": "economia-latinoamericana",
-            "pais": "México",
-            "issn": "1665-952X",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "economia-teoria-practica",
-            "nombre": "Economía: Teoría y Práctica",
-            "tipo": "revista",
-            "categoria": "economia-latinoamericana",
-            "pais": "México",
-            "issn": "0188-3380",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "estudios-economicos-colmex",
-            "nombre": "Estudios Económicos",
-            "tipo": "revista",
-            "categoria": "economia-latinoamericana",
-            "pais": "México",
-            "issn": "0186-7202",
-            "activa": true,
-            "prioridad": 2
-        },
-        {
-            "id": "revista-economia-aplicada",
-            "nombre": "Revista de Economía Aplicada",
-            "tipo": "revista",
-            "categoria": "economia-internacional",
-            "pais": "España",
-            "issn": "1133-455X",
-            "activa": true,
-            "prioridad": 2
-        },
-        {
-            "id": "brazilian-journal-political-economy",
-            "nombre": "Brazilian Journal of Political Economy",
-            "tipo": "revista",
-            "categoria": "economia-politica",
-            "pais": "Brasil",
-            "issn": "0101-3157",
-            "activa": true,
-            "prioridad": 1
-        },
-
-        {
-            "id": "revista-colombiana-estadistica",
-            "nombre": "Revista Colombiana de Estadística",
-            "tipo": "revista",
-            "categoria": "metodos-cuantitativos",
-            "pais": "Colombia",
-            "issn": "0120-1751",
-            "activa": true,
-            "prioridad": 3
-        },
-        {
-            "id": "revista-matematica-teoria-aplicaciones",
-            "nombre": "Revista de Matemática: Teoría y Aplicaciones",
-            "tipo": "revista",
-            "categoria": "matematica-economica",
-            "pais": "Costa Rica",
-            "issn": "1409-2433",
-            "activa": true,
-            "prioridad": 3
-        },
-        {
-            "id": "investigacion-operacional",
-            "nombre": "Investigación Operacional",
-            "tipo": "revista",
-            "categoria": "metodos-cuantitativos",
-            "pais": "Cuba",
-            "issn": "0257-4306",
-            "activa": true,
-            "prioridad": 3
-        },
-        {
-            "id": "journal-mathematical-economics",
-            "nombre": "Journal of Mathematical Economics",
-            "tipo": "revista",
-            "categoria": "matematica-economica",
-            "pais": "Internacional",
-            "issn": "0304-4068",
-            "activa": true,
-            "prioridad": 2
-        },
-        {
-            "id": "journal-econometrics",
-            "nombre": "Journal of Econometrics",
-            "tipo": "revista",
-            "categoria": "econometria",
-            "pais": "Internacional",
-            "issn": "0304-4076",
-            "activa": true,
-            "prioridad": 2
-        },
-
-        {
-            "id": "american-economic-review",
-            "nombre": "American Economic Review",
-            "tipo": "revista",
-            "categoria": "economia-internacional",
-            "pais": "Estados Unidos",
-            "issn": "0002-8282",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "quarterly-journal-economics",
-            "nombre": "Quarterly Journal of Economics",
-            "tipo": "revista",
-            "categoria": "economia-internacional",
-            "pais": "Estados Unidos",
-            "issn": "0033-5533",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "econometrica",
-            "nombre": "Econometrica",
-            "tipo": "revista",
-            "categoria": "econometria-teoria",
-            "pais": "Estados Unidos",
-            "issn": "0012-9682",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "journal-political-economy",
-            "nombre": "Journal of Political Economy",
-            "tipo": "revista",
-            "categoria": "economia-politica",
-            "pais": "Estados Unidos",
-            "issn": "0022-3808",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "review-economic-studies",
-            "nombre": "Review of Economic Studies",
-            "tipo": "revista",
-            "categoria": "economia-internacional",
-            "pais": "Reino Unido",
-            "issn": "0034-6527",
-            "activa": true,
-            "prioridad": 1
-        },
-
-        {
-            "id": "cepal-publicaciones",
-            "nombre": "CEPAL — Publicaciones",
-            "tipo": "organismo",
-            "categoria": "organismos-internacionales",
-            "pais": "América Latina",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "bid-publicaciones",
-            "nombre": "BID — Publicaciones",
-            "tipo": "organismo",
-            "categoria": "organismos-internacionales",
-            "pais": "América Latina",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "banco-mundial-publicaciones",
-            "nombre": "Banco Mundial — Investigación",
-            "tipo": "organismo",
-            "categoria": "organismos-internacionales",
-            "pais": "Internacional",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "fmi-publicaciones",
-            "nombre": "FMI — Publicaciones",
-            "tipo": "organismo",
-            "categoria": "organismos-internacionales",
-            "pais": "Internacional",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "oit-publicaciones",
-            "nombre": "OIT — Investigación",
-            "tipo": "organismo",
-            "categoria": "organismos-internacionales",
-            "pais": "Internacional",
-            "activa": true,
-            "prioridad": 1
-        },
-
-        {
-            "id": "international-affairs",
-            "nombre": "International Affairs",
-            "tipo": "revista",
-            "categoria": "relaciones-internacionales",
-            "pais": "Reino Unido",
-            "issn": "0020-5850",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "international-security",
-            "nombre": "International Security",
-            "tipo": "revista",
-            "categoria": "seguridad-internacional",
-            "pais": "Estados Unidos",
-            "issn": "0162-2889",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "review-international-studies",
-            "nombre": "Review of International Studies",
-            "tipo": "revista",
-            "categoria": "relaciones-internacionales",
-            "pais": "Reino Unido",
-            "issn": "0260-2105",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "international-studies-review",
-            "nombre": "International Studies Review",
-            "tipo": "revista",
-            "categoria": "relaciones-internacionales",
-            "pais": "Estados Unidos",
-            "issn": "1521-9488",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "journal-peace-research",
-            "nombre": "Journal of Peace Research",
-            "tipo": "revista",
-            "categoria": "paz-conflicto-seguridad",
-            "pais": "Noruega",
-            "issn": "0022-3433",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "political-geography",
-            "nombre": "Political Geography",
-            "tipo": "revista",
-            "categoria": "geopolitica",
-            "pais": "Reino Unido",
-            "issn": "0962-6298",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "geopolitics",
-            "nombre": "Geopolitics",
-            "tipo": "revista",
-            "categoria": "geopolitica",
-            "pais": "Reino Unido",
-            "issn": "1465-0045",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "foreign-affairs",
-            "nombre": "Foreign Affairs",
-            "tipo": "revista",
-            "categoria": "politica-exterior-geopolitica",
-            "pais": "Estados Unidos",
-            "issn": "0015-7120",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "latin-american-politics-society",
-            "nombre": "Latin American Politics and Society",
-            "tipo": "revista",
-            "categoria": "politica-latinoamericana",
-            "pais": "América Latina",
-            "issn": "1531-426X",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "estudios-internacionales",
-            "nombre": "Estudios Internacionales",
-            "tipo": "revista",
-            "categoria": "relaciones-internacionales",
-            "pais": "Chile",
-            "issn": "0719-3769",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "foro-internacional",
-            "nombre": "Foro Internacional",
-            "tipo": "revista",
-            "categoria": "relaciones-internacionales",
-            "pais": "México",
-            "issn": "0185-013X",
-            "activa": true,
-            "prioridad": 1
-        },
-        {
-            "id": "revista-mexicana-politica-exterior",
-            "nombre": "Revista Mexicana de Política Exterior",
-            "tipo": "revista",
-            "categoria": "politica-exterior",
-            "pais": "México",
-            "issn": "0185-6022",
-            "activa": true,
-            "prioridad": 1
-        },
-
-        {
-            "id": "banco-de-mexico",
-            "nombre": "Banco de México — Publicaciones e Investigación",
-            "tipo": "organismo",
-            "categoria": "banco-central-politica-monetaria",
-            "pais": "México",
-            "activa": true,
-            "prioridad": 1
-        }
-    ]
+  "actualizacionDias": 7,
+  "maxResultadosPorFuente": 20,
+  "fuentes": [
+    {
+      "id": "revista-cepal",
+      "nombre": "Revista CEPAL",
+      "tipo": "revista",
+      "categoria": "economia-desarrollo",
+      "pais": "Chile",
+      "issn": "0251-2920",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "el-trimestre-economico",
+      "nombre": "El Trimestre Económico",
+      "tipo": "revista",
+      "categoria": "economia",
+      "pais": "México",
+      "issn": "0041-3011",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "investigacion-economica",
+      "nombre": "Investigación Económica",
+      "tipo": "revista",
+      "categoria": "economia",
+      "pais": "México",
+      "issn": "0185-1667",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "oikos",
+      "nombre": "Oikos — Revista de Economía Política Internacional",
+      "tipo": "revista",
+      "categoria": "economia-politica-internacional",
+      "pais": "Brasil",
+      "issn": "1808-0235",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "revista-economia-mundial",
+      "nombre": "Revista de Economía Mundial",
+      "tipo": "revista",
+      "categoria": "economia-internacional",
+      "pais": "España",
+      "issn": "2340-4264",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "cuadernos-de-economia",
+      "nombre": "Cuadernos de Economía",
+      "tipo": "revista",
+      "categoria": "economia",
+      "pais": "Colombia",
+      "issn": "0121-4772",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "revista-economia",
+      "nombre": "Revista de Economía",
+      "tipo": "revista",
+      "categoria": "economia",
+      "pais": "Chile",
+      "issn": "0716-5927",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "economia-e-sociedade",
+      "nombre": "Economia e Sociedade",
+      "tipo": "revista",
+      "categoria": "economia",
+      "pais": "Brasil",
+      "issn": "0104-0618",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "desarrollo-economico",
+      "nombre": "Desarrollo Económico",
+      "tipo": "revista",
+      "categoria": "desarrollo-economico",
+      "pais": "Argentina",
+      "issn": "0046-001X",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "problemas-del-desarrollo",
+      "nombre": "Problemas del Desarrollo",
+      "tipo": "revista",
+      "categoria": "desarrollo-economico",
+      "pais": "México",
+      "issn": "0301-7036",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "economia-informa",
+      "nombre": "Economía Informa",
+      "tipo": "revista",
+      "categoria": "economia-mexicana",
+      "pais": "México",
+      "issn": "0185-0849",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "economia-teoria-practica",
+      "nombre": "Economía: Teoría y Práctica",
+      "tipo": "revista",
+      "categoria": "economia",
+      "pais": "México",
+      "issn": "0188-8250",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "estudios-economicos-colmex",
+      "nombre": "Estudios Económicos",
+      "tipo": "revista",
+      "categoria": "economia",
+      "pais": "México",
+      "issn": "0185-0458",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "revista-economia-rosario",
+      "nombre": "Revista de Economía del Rosario",
+      "tipo": "revista",
+      "categoria": "economia-latinoamericana",
+      "pais": "Colombia",
+      "issn": "2145-454X",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "brazilian-journal-political-economy",
+      "nombre": "Brazilian Journal of Political Economy",
+      "tipo": "revista",
+      "categoria": "economia-politica",
+      "pais": "Brasil",
+      "issn": "3086-4461",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "revista-colombiana-estadistica",
+      "nombre": "Revista Colombiana de Estadística",
+      "tipo": "revista",
+      "categoria": "estadistica",
+      "pais": "Colombia",
+      "issn": "0120-1751",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "revista-matematica-teoria-aplicaciones",
+      "nombre": "Revista de Matemática: Teoría y Aplicaciones",
+      "tipo": "revista",
+      "categoria": "matematicas",
+      "pais": "Costa Rica",
+      "issn": "1409-2433",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "journal-mathematical-economics",
+      "nombre": "Journal of Mathematical Economics",
+      "tipo": "revista",
+      "categoria": "economia-matematica",
+      "pais": "Internacional",
+      "issn": "0304-4068",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "journal-econometrics",
+      "nombre": "Journal of Econometrics",
+      "tipo": "revista",
+      "categoria": "econometria",
+      "pais": "Internacional",
+      "issn": "0304-4076",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "american-economic-review",
+      "nombre": "American Economic Review",
+      "tipo": "revista",
+      "categoria": "economia",
+      "pais": "Estados Unidos",
+      "issn": "0002-8282",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "quarterly-journal-economics",
+      "nombre": "Quarterly Journal of Economics",
+      "tipo": "revista",
+      "categoria": "economia",
+      "pais": "Estados Unidos",
+      "issn": "0033-5533",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "econometrica",
+      "nombre": "Econometrica",
+      "tipo": "revista",
+      "categoria": "econometria",
+      "pais": "Estados Unidos",
+      "issn": "0012-9682",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "journal-political-economy",
+      "nombre": "Journal of Political Economy",
+      "tipo": "revista",
+      "categoria": "economia-politica",
+      "pais": "Estados Unidos",
+      "issn": "0022-3808",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "review-economic-studies",
+      "nombre": "Review of Economic Studies",
+      "tipo": "revista",
+      "categoria": "economia",
+      "pais": "Reino Unido",
+      "issn": "0034-6527",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "cepal-publicaciones",
+      "nombre": "CEPAL — Publicaciones",
+      "tipo": "organismo",
+      "categoria": "economia-desarrollo",
+      "pais": "Chile",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "bid-publicaciones",
+      "nombre": "BID — Publicaciones",
+      "tipo": "organismo",
+      "categoria": "desarrollo-economia",
+      "pais": "Estados Unidos",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "banco-mundial-publicaciones",
+      "nombre": "Banco Mundial — Publicaciones",
+      "tipo": "organismo",
+      "categoria": "desarrollo-economia",
+      "pais": "Estados Unidos",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "fmi-publicaciones",
+      "nombre": "FMI — Publicaciones",
+      "tipo": "organismo",
+      "categoria": "economia-internacional",
+      "pais": "Estados Unidos",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "oit-publicaciones",
+      "nombre": "OIT — Publicaciones",
+      "tipo": "organismo",
+      "categoria": "economia-laboral",
+      "pais": "Suiza",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "international-affairs",
+      "nombre": "International Affairs",
+      "tipo": "revista",
+      "categoria": "relaciones-internacionales",
+      "pais": "Reino Unido",
+      "issn": "0020-5850",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "international-security",
+      "nombre": "International Security",
+      "tipo": "revista",
+      "categoria": "relaciones-internacionales",
+      "pais": "Estados Unidos",
+      "issn": "0162-2889",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "review-international-studies",
+      "nombre": "Review of International Studies",
+      "tipo": "revista",
+      "categoria": "relaciones-internacionales",
+      "pais": "Reino Unido",
+      "issn": "0260-2105",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "international-studies-review",
+      "nombre": "International Studies Review",
+      "tipo": "revista",
+      "categoria": "relaciones-internacionales",
+      "pais": "Estados Unidos",
+      "issn": "1521-9488",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "journal-peace-research",
+      "nombre": "Journal of Peace Research",
+      "tipo": "revista",
+      "categoria": "paz-conflictos",
+      "pais": "Noruega",
+      "issn": "0022-3433",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "political-geography",
+      "nombre": "Political Geography",
+      "tipo": "revista",
+      "categoria": "geopolitica",
+      "pais": "Reino Unido",
+      "issn": "0962-6298",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "geopolitics",
+      "nombre": "Geopolitics",
+      "tipo": "revista",
+      "categoria": "geopolitica",
+      "pais": "Reino Unido",
+      "issn": "1465-0045",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "foreign-affairs",
+      "nombre": "Foreign Affairs",
+      "tipo": "revista",
+      "categoria": "relaciones-internacionales",
+      "pais": "Estados Unidos",
+      "issn": "0015-7120",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "latin-american-politics-society",
+      "nombre": "Latin American Politics and Society",
+      "tipo": "revista",
+      "categoria": "politica-latinoamericana",
+      "pais": "Estados Unidos",
+      "issn": "1531-426X",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "estudios-internacionales",
+      "nombre": "Estudios Internacionales",
+      "tipo": "revista",
+      "categoria": "relaciones-internacionales",
+      "pais": "Chile",
+      "issn": "0719-3769",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "foro-internacional",
+      "nombre": "Foro Internacional",
+      "tipo": "revista",
+      "categoria": "relaciones-internacionales",
+      "pais": "México",
+      "issn": "0185-013X",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "revista-mexicana-politica-exterior",
+      "nombre": "Revista Mexicana de Política Exterior",
+      "tipo": "revista",
+      "categoria": "politica-exterior",
+      "pais": "México",
+      "issn": "0185-6022",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "banco-de-mexico",
+      "nombre": "Banco de México",
+      "tipo": "organismo",
+      "categoria": "politica-monetaria",
+      "pais": "México",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "desarrollo-y-sociedad",
+      "nombre": "Desarrollo y Sociedad",
+      "tipo": "revista",
+      "categoria": "desarrollo-economico",
+      "pais": "Colombia",
+      "issn": "1900-7760",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "ensayos-politica-economica",
+      "nombre": "Ensayos sobre Política Económica",
+      "tipo": "revista",
+      "categoria": "politica-economica",
+      "pais": "Colombia",
+      "issn": "2665-1327",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "revista-economia-critica",
+      "nombre": "Revista de Economía Crítica",
+      "tipo": "revista",
+      "categoria": "economia-critica",
+      "pais": "España",
+      "issn": "2013-5254",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "sociedad-y-economia",
+      "nombre": "Sociedad y Economía",
+      "tipo": "revista",
+      "categoria": "economia-ciencias-sociales",
+      "pais": "Colombia",
+      "issn": "1657-6357",
+      "activa": true,
+      "prioridad": 2
+    }
+  ]
 }
