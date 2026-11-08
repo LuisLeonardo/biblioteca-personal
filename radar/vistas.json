@@ -1,62 +1,105 @@
-[
-  {
-    "id": "doi:https://doi.org/10.59709/ftas.11.1.5",
-    "fecha": "2026-11-06",
-    "registrado": "2026-11-08T22:01:49.632Z"
-  },
-  {
-    "id": "doi:https://doi.org/10.59709/ftas.11.1.7",
-    "fecha": "2026-11-06",
-    "registrado": "2026-11-08T22:01:49.632Z"
-  },
-  {
-    "id": "doi:https://doi.org/10.5377/calera.v26i47.23953",
-    "fecha": "2026-11-06",
-    "registrado": "2026-11-08T22:01:49.632Z"
-  },
-  {
-    "id": "doi:https://doi.org/10.37838/unicen/est.37-108",
-    "fecha": "2026-11-06",
-    "registrado": "2026-11-08T22:01:49.632Z"
-  },
-  {
-    "id": "doi:https://doi.org/10.22201/iij.24487899e.2026.43.21291",
-    "fecha": "2026-11-06",
-    "registrado": "2026-11-08T22:01:49.632Z"
-  },
-  {
-    "id": "doi:https://doi.org/10.3389/fsufs.2026.1984635",
-    "fecha": "2026-11-06",
-    "registrado": "2026-11-08T22:01:49.632Z"
-  },
-  {
-    "id": "doi:https://doi.org/10.1002/pan3.70477",
-    "fecha": "2026-11-06",
-    "registrado": "2026-11-08T22:01:49.632Z"
-  },
-  {
-    "id": "doi:https://doi.org/10.47606/acven/ph0609",
-    "fecha": "2026-11-06",
-    "registrado": "2026-11-08T22:01:49.632Z"
-  },
-  {
-    "id": "doi:https://doi.org/10.22296/2317-1529.rbeur.202634",
-    "fecha": "2026-11-05",
-    "registrado": "2026-11-08T22:01:49.632Z"
-  },
-  {
-    "id": "doi:https://doi.org/10.54899/dcs.v23i100.067",
-    "fecha": "2026-11-05",
-    "registrado": "2026-11-08T22:01:49.632Z"
-  },
-  {
-    "id": "doi:https://doi.org/10.11144/javeriana.rgps25.bsus",
-    "fecha": "2026-11-04",
-    "registrado": "2026-11-08T22:01:49.632Z"
-  },
-  {
-    "id": "doi:https://doi.org/10.66717/9788595612594",
-    "fecha": "2026-11-03",
-    "registrado": "2026-11-08T22:01:49.632Z"
-  }
-]
+{
+  "ids": [
+    {
+      "id": "doi:https://doi.org/10.59709/ftas.11.1.5",
+      "fecha": "2026-11-06",
+      "registrado": "2026-11-08T22:01:49.632Z"
+    },
+    {
+      "id": "doi:https://doi.org/10.59709/ftas.11.1.7",
+      "fecha": "2026-11-06",
+      "registrado": "2026-11-08T22:01:49.632Z"
+    },
+    {
+      "id": "doi:https://doi.org/10.5377/calera.v26i47.23953",
+      "fecha": "2026-11-06",
+      "registrado": "2026-11-08T22:01:49.632Z"
+    },
+    {
+      "id": "doi:https://doi.org/10.37838/unicen/est.37-108",
+      "fecha": "2026-11-06",
+      "registrado": "2026-11-08T22:01:49.632Z"
+    },
+    {
+      "id": "doi:https://doi.org/10.22201/iij.24487899e.2026.43.21291",
+      "fecha": "2026-11-06",
+      "registrado": "2026-11-08T22:01:49.632Z"
+    },
+    {
+      "id": "doi:https://doi.org/10.3389/fsufs.2026.1984635",
+      "fecha": "2026-11-06",
+      "registrado": "2026-11-08T22:01:49.632Z"
+    },
+    {
+      "id": "doi:https://doi.org/10.1002/pan3.70477",
+      "fecha": "2026-11-06",
+      "registrado": "2026-11-08T22:01:49.632Z"
+    },
+    {
+      "id": "doi:https://doi.org/10.47606/acven/ph0609",
+      "fecha": "2026-11-06",
+      "registrado": "2026-11-08T22:01:49.632Z"
+    },
+    {
+      "id": "doi:https://doi.org/10.22296/2317-1529.rbeur.202634",
+      "fecha": "2026-11-05",
+      "registrado": "2026-11-08T22:01:49.632Z"
+    },
+    {
+      "id": "doi:https://doi.org/10.54899/dcs.v23i100.067",
+      "fecha": "2026-11-05",
+      "registrado": "2026-11-08T22:01:49.632Z"
+    },
+    {
+      "id": "doi:https://doi.org/10.11144/javeriana.rgps25.bsus",
+      "fecha": "2026-11-04",
+      "registrado": "2026-11-08T22:01:49.632Z"
+    },
+    {
+      "id": "doi:https://doi.org/10.66717/9788595612594",
+      "fecha": "2026-11-03",
+      "registrado": "2026-11-08T22:01:49.632Z"
+    },
+    "doi:10.18356/c3a8fcf5-es",
+    "doi:10.18356/16820908-2025-147-3",
+    "doi:10.18356/16820908-2025-147-8",
+    "doi:10.59709/ftas.11.1.5",
+    "doi:10.59709/ftas.11.1.7",
+    "doi:10.22296/2317-1529.rbeur.202634",
+    "doi:10.5377/calera.v26i47.23953",
+    "doi:10.37838/unicen/est.37-108",
+    "doi:10.11144/javeriana.rgps25.bsus",
+    "doi:10.66717/9788595612594",
+    "doi:10.22201/iij.24487899e.2026.43.21291",
+    "doi:10.3389/fsufs.2026.1984635",
+    "doi:10.1002/pan3.70477",
+    "doi:10.47606/acven/ph0609",
+    "doi:10.54899/dcs.v23i100.067",
+    "doi:10.20430/ete.v93i372.3350",
+    "doi:10.20430/ete.v93i372.3230",
+    "doi:10.20430/ete.v93i372.3056",
+    "doi:10.22201/fe.01851667p.2026.338.96494",
+    "doi:10.22201/fe.01851667p.2026.338.96468",
+    "doi:10.22201/fe.01851667p.2026.338.96078",
+    "doi:10.22201/iiec.20078951e.2026.227.70619",
+    "doi:10.22201/iiec.20078951e.2026.227.70548",
+    "doi:10.22201/iiec.20078951e.2026.227.70641",
+    "doi:10.33776/euhu/rem.v73i.9400",
+    "doi:10.33776/euhu/rem.v73i.9120",
+    "doi:10.33776/euhu/rem.v73i.9123",
+    "doi:10.12804/revistas.urosario.edu.co/economia/a.16783",
+    "doi:10.12804/revistas.urosario.edu.co/economia/a.16368",
+    "doi:10.12804/revistas.urosario.edu.co/economia/a.16206",
+    "doi:10.13043/dys.103.3",
+    "doi:10.13043/dys.103.4",
+    "doi:10.13043/dys.103.2",
+    "doi:10.32468/espe112",
+    "doi:10.32468/espe111",
+    "doi:10.25100/sye.vi59.15681",
+    "doi:10.25100/sye.vi59.15230",
+    "doi:10.25100/sye.vi58.14701",
+    "doi:10.15446/cuad.econ.v45n98.111335",
+    "doi:10.15446/cuad.econ.v45n98.122780",
+    "doi:10.15446/cuad.econ.v45n98.111814"
+  ]
+}
