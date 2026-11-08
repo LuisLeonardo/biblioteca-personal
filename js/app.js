@@ -329,7 +329,8 @@ function construirTextoBusqueda(
         autores,
         material.editorial || "",
         material.anio || "",
-        material.disciplina || ""
+        material.disciplina || "",
+        material.idioma || ""
     ]
         .join(" ")
         .toLowerCase();
@@ -433,7 +434,7 @@ function configurarEventos() {
 
         btnRadar.addEventListener(
             "click",
-            () => cargarRadar(true)
+            cargarRadar
         );
     }
 
@@ -477,6 +478,21 @@ function configurarEventos() {
     if (filtroRadarOA) {
 
         filtroRadarOA.addEventListener(
+            "change",
+            renderizarRadar
+        );
+    }
+
+
+    const filtroRadarIdioma =
+        document.querySelector(
+            "#filtro-radar-idioma"
+        );
+
+
+    if (filtroRadarIdioma) {
+
+        filtroRadarIdioma.addEventListener(
             "change",
             renderizarRadar
         );
@@ -676,7 +692,18 @@ function mostrarVista(
         vista === "radar"
     ) {
 
-        cargarRadar();
+        /*
+         * Cambiar de pestaña NO actualiza el Radar.
+         *
+         * Solamente cargamos las selecciones guardadas
+         * para saber qué publicaciones deben aparecer
+         * como "Pendiente".
+         *
+         * La consulta a OpenAlex y a las fuentes solamente
+         * ocurre al pulsar "Actualizar radar".
+         */
+
+        cargarSeleccionadas();
     }
 
 
@@ -777,6 +804,113 @@ function renderizarColeccion() {
                 crearFichaMaterial
             )
             .join("");
+}
+
+
+/* =========================================================
+   FILTRO DE IDIOMA DEL RADAR
+========================================================= */
+
+function coincideIdiomaRadar(
+    item,
+    idiomaFiltro
+) {
+
+    const idioma =
+        normalizarIdioma(
+            item?.idioma
+        );
+
+
+    if (!idioma) {
+        return idiomaFiltro === "otros";
+    }
+
+
+    const equivalencias = {
+
+        es: [
+            "es",
+            "esp",
+            "espanol",
+            "spanish"
+        ],
+
+        en: [
+            "en",
+            "eng",
+            "ingles",
+            "english"
+        ],
+
+        fr: [
+            "fr",
+            "fra",
+            "frances",
+            "french"
+        ],
+
+        pt: [
+            "pt",
+            "por",
+            "portugues",
+            "portuguese"
+        ],
+
+        it: [
+            "it",
+            "ita",
+            "italiano",
+            "italian"
+        ],
+
+        de: [
+            "de",
+            "deu",
+            "ger",
+            "aleman",
+            "german"
+        ]
+
+    };
+
+
+    if (
+        equivalencias[idiomaFiltro]
+            ?.includes(idioma)
+    ) {
+
+        return true;
+    }
+
+
+    const idiomasConocidos =
+        Object.values(
+            equivalencias
+        ).flat();
+
+
+    return (
+        idiomaFiltro === "otros" &&
+        !idiomasConocidos.includes(idioma)
+    );
+}
+
+
+function normalizarIdioma(
+    idioma
+) {
+
+    return String(
+        idioma || ""
+    )
+        .normalize("NFD")
+        .replace(
+            /[\u0300-\u036f]/g,
+            ""
+        )
+        .toLowerCase()
+        .trim();
 }
 
 
@@ -993,64 +1127,86 @@ function crearFichaMaterial(
    RADAR ACADÉMICO
 ========================================================= */
 
-async function cargarRadar(
-    forzar = false
-) {
-
-    const contenedor =
-        document.querySelector(
-            "#lista-radar"
-        );
-
+async function cargarRadar() {
 
     const estado =
         document.querySelector(
             "#estado-radar"
         );
 
+    const contenedor =
+        document.querySelector(
+            "#lista-radar"
+        );
 
     if (!contenedor) {
         return;
     }
 
-
-    /*
-       Si ya tenemos resultados y no estamos
-       forzando una nueva carga, no hacemos
-       otra petición innecesaria.
-    */
-
-    if (
-        radar.length > 0 &&
-        !forzar
-    ) {
-
-        renderizarFiltrosRadar();
-
-        renderizarRadar();
-
-        return;
-    }
-
-
-    contenedor.innerHTML = `
-        <div class="estado-vacio">
-            <h3>Consultando Radar académico...</h3>
-            <p>
-                Buscando las novedades más recientes.
-            </p>
-        </div>
-    `;
-
-
     if (estado) {
-
         estado.textContent =
             "Actualizando radar...";
     }
 
+    contenedor.innerHTML = `
+        <div class="estado-vacio">
+            <h3>Cargando novedades...</h3>
+            <p>
+                Consultando las fuentes seleccionadas.
+            </p>
+        </div>
+    `;
 
     try {
+
+        /*
+         * Cargar primero las novedades que ya
+         * fueron seleccionadas y están guardadas
+         * en GitHub.
+         */
+
+        const respuestaSeleccionadas =
+            await fetch(
+                RUTAS_API.radarSeleccionadas,
+                {
+                    cache: "no-store"
+                }
+            );
+
+        const datosSeleccionadas =
+            await respuestaSeleccionadas.json();
+
+        if (!respuestaSeleccionadas.ok) {
+
+            throw new Error(
+                datosSeleccionadas.error ||
+                "No se pudieron cargar las novedades seleccionadas."
+            );
+        }
+
+
+        radarSeleccionadas =
+            Array.isArray(
+                datosSeleccionadas
+            )
+                ? datosSeleccionadas
+                : Array.isArray(
+                    datosSeleccionadas.seleccionadas
+                )
+                    ? datosSeleccionadas.seleccionadas
+                    : Array.isArray(
+                        datosSeleccionadas.resultados
+                    )
+                        ? datosSeleccionadas.resultados
+                        : [];
+
+
+        /*
+         * Consultar nuevamente el Radar.
+         *
+         * ESTA ES LA ÚNICA FUNCIÓN QUE HACE
+         * LA CONSULTA A LAS FUENTES.
+         */
 
         const respuesta =
             await fetch(
@@ -1060,18 +1216,14 @@ async function cargarRadar(
                 }
             );
 
-
         const datos =
             await respuesta.json();
 
-
-        if (
-            !respuesta.ok
-        ) {
+        if (!respuesta.ok) {
 
             throw new Error(
                 datos.error ||
-                "No se pudo cargar el Radar."
+                "No se pudo actualizar el Radar."
             );
         }
 
@@ -1084,6 +1236,11 @@ async function cargarRadar(
                 : [];
 
 
+        /*
+         * Reconstruir los filtros a partir
+         * de los resultados obtenidos.
+         */
+
         renderizarFiltrosRadar();
 
         renderizarRadar();
@@ -1091,27 +1248,8 @@ async function cargarRadar(
 
         if (estado) {
 
-            const fecha =
-                datos.actualizado
-                    ? formatearFecha(
-                        datos.actualizado
-                    )
-                    : "sin fecha";
-
-
-            estado.innerHTML = `
-                <strong>
-                    ${radar.length}
-                    ${
-                        radar.length === 1
-                            ? "novedad"
-                            : "novedades"
-                    }
-                </strong>
-
-                · Última actualización:
-                ${escapeHTML(fecha)}
-            `;
+            estado.textContent =
+                `${radar.length} novedades encontradas.`;
         }
 
 
@@ -1122,23 +1260,24 @@ async function cargarRadar(
             error
         );
 
-
         contenedor.innerHTML = `
             <div class="estado-vacio">
-                <h3>No se pudo cargar el Radar</h3>
+
+                <h3>
+                    No se pudo actualizar el Radar
+                </h3>
+
                 <p>
                     ${escapeHTML(
                         error.message
                     )}
                 </p>
+
             </div>
         `;
 
-
         if (estado) {
-
-            estado.textContent =
-                "Error al actualizar el Radar.";
+            estado.textContent = "";
         }
     }
 }
@@ -1251,11 +1390,7 @@ function renderizarFiltrosRadar() {
                         <option
                             value="${escapeHTML(categoria)}"
                         >
-                            ${escapeHTML(
-                                formatearCategoria(
-                                    categoria
-                                )
-                            )}
+                            ${escapeHTML(categoria)}
                         </option>
                     `
                 )
@@ -1322,6 +1457,12 @@ function renderizarRadar() {
         );
 
 
+    const filtroIdioma =
+        document.querySelector(
+            "#filtro-radar-idioma"
+        );
+
+
     const fuente =
         filtroFuente?.value ||
         "todas";
@@ -1335,6 +1476,11 @@ function renderizarRadar() {
     const soloOA =
         filtroOA?.checked ||
         false;
+
+
+    const idioma =
+        filtroIdioma?.value ||
+        "todos";
 
 
     const resultados =
@@ -1356,10 +1502,19 @@ function renderizarRadar() {
                     item.accesoAbierto === true;
 
 
+                const coincideIdioma =
+                    idioma === "todos" ||
+                    coincideIdiomaRadar(
+                        item,
+                        idioma
+                    );
+
+
                 return (
                     coincideFuente &&
                     coincideCategoria &&
-                    coincideOA
+                    coincideOA &&
+                    coincideIdioma
                 );
             }
         );
@@ -1383,7 +1538,6 @@ function renderizarRadar() {
             </div>
         `;
 
-
         return;
     }
 
@@ -1398,19 +1552,12 @@ function renderizarRadar() {
 
 
 /* =========================================================
-   FICHA RADAR
+   FICHA DEL RADAR
 ========================================================= */
 
 function crearFichaRadar(
     item
 ) {
-
-    const seleccionada =
-        radarSeleccionadas.some(
-            seleccion =>
-                seleccion.id === item.id
-        );
-
 
     const autores =
         Array.isArray(
@@ -1419,7 +1566,8 @@ function crearFichaRadar(
             ? item.autores.join(
                 ", "
             )
-            : "Autor no registrado";
+            : item.autores ||
+              "Autor no registrado";
 
 
     const fecha =
@@ -1427,24 +1575,37 @@ function crearFichaRadar(
             ? formatearFecha(
                 item.fecha
             )
-            : "Fecha no disponible";
-
-
-    const accesoAbierto =
-        item.accesoAbierto
-            ? `
-                <span class="radar-etiqueta">
-                    Acceso abierto
-                </span>
-            `
             : "";
 
 
-    const botonSeleccion =
+    const doi =
+        item.doi ||
+        "";
+
+
+    const url =
+        item.url ||
+        item.enlace ||
+        "";
+
+
+    const accesoAbierto =
+        item.accesoAbierto === true;
+
+
+    const seleccionada =
+        radarSeleccionadas.some(
+            seleccion =>
+                String(seleccion.id) ===
+                String(item.id)
+        );
+
+
+    const botonSeleccionar =
         seleccionada
             ? `
                 <button
-                    class="boton boton-pendiente"
+                    class="boton boton-seleccionado"
                     type="button"
                     disabled
                 >
@@ -1465,14 +1626,12 @@ function crearFichaRadar(
             `;
 
 
-    const botonConsultar =
-        item.url
+    const botonConsulta =
+        url
             ? `
                 <a
                     class="boton boton-drive"
-                    href="${escapeHTML(
-                        item.url
-                    )}"
+                    href="${escapeHTML(url)}"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
@@ -1486,76 +1645,96 @@ function crearFichaRadar(
         <article
             class="material-card radar-card"
             data-id="${escapeHTML(
-                item.id
+                item.id || ""
             )}"
         >
 
             <div class="material-contenido">
 
                 <div class="material-disciplina">
+
                     ${escapeHTML(
                         item.fuente ||
-                        "Fuente desconocida"
+                        "Fuente no registrada"
                     )}
+
                 </div>
 
 
                 <h3 class="material-titulo">
+
                     ${escapeHTML(
                         item.titulo ||
                         "Título no registrado"
                     )}
+
                 </h3>
 
 
                 <p class="material-autores">
+
                     ${escapeHTML(
                         autores
                     )}
+
                 </p>
 
 
                 <p class="material-datos">
 
-                    ${escapeHTML(
-                        fecha
-                    )}
+                    ${
+                        item.categoria
+                            ? escapeHTML(
+                                formatearCategoria(
+                                    item.categoria
+                                )
+                            )
+                            : ""
+                    }
 
                     ${
-                        item.doi
-                            ? ` · DOI`
+                        fecha
+                            ? ` · ${escapeHTML(fecha)}`
+                            : ""
+                    }
+
+                    ${
+                        item.idioma
+                            ? ` · ${escapeHTML(item.idioma)}`
                             : ""
                     }
 
                 </p>
 
 
-                <div class="radar-etiquetas">
+                ${
+                    doi
+                        ? `
+                            <p class="material-datos">
+                                DOI:
+                                ${escapeHTML(doi)}
+                            </p>
+                        `
+                        : ""
+                }
 
-                    ${
-                        item.categoria
-                            ? `
-                                <span class="radar-etiqueta">
-                                    ${escapeHTML(
-                                        formatearCategoria(
-                                            item.categoria
-                                        )
-                                    )}
-                                </span>
-                            `
-                            : ""
-                    }
 
-                    ${accesoAbierto}
-
-                </div>
+                ${
+                    accesoAbierto
+                        ? `
+                            <p class="material-datos">
+                                Acceso abierto
+                            </p>
+                        `
+                        : ""
+                }
 
 
                 <div class="material-acciones">
 
-                    ${botonConsultar}
+                    ${botonConsulta}
 
-                    ${botonSeleccion}
+                    ${botonSeleccionar}
 
                 </div>
 
@@ -1567,124 +1746,7 @@ function crearFichaRadar(
 
 
 /* =========================================================
-   SELECCIONAR NOVEDAD
-========================================================= */
-
-async function seleccionarNovedad(
-    id
-) {
-
-    const item =
-        radar.find(
-            resultado =>
-                resultado.id === id
-        );
-
-
-    if (!item) {
-        return;
-    }
-
-
-    const boton =
-        document.querySelector(
-            `[data-accion="radar-seleccionar"][data-id="${CSS.escape(id)}"]`
-        );
-
-
-    if (boton) {
-
-        boton.disabled = true;
-
-        boton.textContent =
-            "Guardando...";
-    }
-
-
-    try {
-
-        const respuesta =
-            await fetch(
-                RUTAS_API.radarSeleccionar,
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body:
-                        JSON.stringify(
-                            item
-                        )
-                }
-            );
-
-
-        const datos =
-            await respuesta.json();
-
-
-        if (
-            !respuesta.ok
-        ) {
-
-            throw new Error(
-                datos.error ||
-                "No se pudo seleccionar la novedad."
-            );
-        }
-
-
-        if (
-            !radarSeleccionadas.some(
-                seleccion =>
-                    seleccion.id ===
-                    item.id
-            )
-        ) {
-
-            radarSeleccionadas.push(
-                {
-                    ...item,
-
-                    seleccionadoEn:
-                        new Date().toISOString()
-                }
-            );
-        }
-
-
-        renderizarRadar();
-
-
-    } catch (error) {
-
-        console.error(
-            "Error seleccionando novedad:",
-            error
-        );
-
-
-        alert(
-            "No se pudo guardar la selección."
-        );
-
-
-        if (boton) {
-
-            boton.disabled = false;
-
-            boton.textContent =
-                "Seleccionar";
-        }
-    }
-}
-
-
-/* =========================================================
-   CARGAR SELECCIONADAS
+   NOVEDADES SELECCIONADAS
 ========================================================= */
 
 async function cargarSeleccionadas() {
@@ -1702,10 +1764,7 @@ async function cargarSeleccionadas() {
 
     contenedor.innerHTML = `
         <div class="estado-vacio">
-            <h3>Cargando...</h3>
-            <p>
-                Recuperando tus novedades seleccionadas.
-            </p>
+            <h3>Cargando novedades seleccionadas...</h3>
         </div>
     `;
 
@@ -1731,21 +1790,41 @@ async function cargarSeleccionadas() {
 
             throw new Error(
                 datos.error ||
-                "No se pudieron cargar las seleccionadas."
+                "No se pudieron cargar las novedades seleccionadas."
             );
         }
 
 
+        /*
+         * El Worker devuelve:
+         *
+         * {
+         *     seleccionadas: [...],
+         *     total: N
+         * }
+         *
+         * También aceptamos un arreglo directo
+         * y la propiedad resultados para mantener
+         * compatibilidad.
+         */
+
         radarSeleccionadas =
             Array.isArray(
-                datos.seleccionadas
+                datos
             )
-                ? datos.seleccionadas
-                : [];
+                ? datos
+                : Array.isArray(
+                    datos.seleccionadas
+                )
+                    ? datos.seleccionadas
+                    : Array.isArray(
+                        datos.resultados
+                    )
+                        ? datos.resultados
+                        : [];
 
 
         renderizarSeleccionadas();
-
 
     } catch (error) {
 
@@ -1759,7 +1838,7 @@ async function cargarSeleccionadas() {
             <div class="estado-vacio">
 
                 <h3>
-                    No se pudieron cargar
+                    No se pudieron cargar las novedades
                 </h3>
 
                 <p>
@@ -1773,10 +1852,6 @@ async function cargarSeleccionadas() {
     }
 }
 
-
-/* =========================================================
-   RENDERIZAR SELECCIONADAS
-========================================================= */
 
 function renderizarSeleccionadas() {
 
@@ -1803,47 +1878,24 @@ function renderizarSeleccionadas() {
                 </h3>
 
                 <p>
-                    Selecciona materiales desde el Radar
-                    para conservarlos aquí.
+                    Selecciona publicaciones desde el Radar académico.
                 </p>
 
             </div>
         `;
 
-
         return;
     }
 
 
-    const ordenadas =
-        [...radarSeleccionadas]
-            .sort(
-                (a, b) =>
-                    new Date(
-                        b.seleccionadoEn ||
-                        b.fecha ||
-                        0
-                    ) -
-                    new Date(
-                        a.seleccionadoEn ||
-                        a.fecha ||
-                        0
-                    )
-            );
-
-
     contenedor.innerHTML =
-        ordenadas
+        radarSeleccionadas
             .map(
                 crearFichaSeleccionada
             )
             .join("");
 }
 
-
-/* =========================================================
-   FICHA SELECCIONADA
-========================================================= */
 
 function crearFichaSeleccionada(
     item
@@ -1856,7 +1908,8 @@ function crearFichaSeleccionada(
             ? item.autores.join(
                 ", "
             )
-            : "Autor no registrado";
+            : item.autores ||
+              "Autor no registrado";
 
 
     const fecha =
@@ -1864,17 +1917,21 @@ function crearFichaSeleccionada(
             ? formatearFecha(
                 item.fecha
             )
-            : "Fecha no disponible";
+            : "";
 
 
-    const botonConsultar =
-        item.url
+    const url =
+        item.url ||
+        item.enlace ||
+        "";
+
+
+    const botonConsulta =
+        url
             ? `
                 <a
                     class="boton boton-drive"
-                    href="${escapeHTML(
-                        item.url
-                    )}"
+                    href="${escapeHTML(url)}"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
@@ -1888,64 +1945,71 @@ function crearFichaSeleccionada(
         <article
             class="material-card radar-card"
             data-id="${escapeHTML(
-                item.id
+                item.id || ""
             )}"
         >
 
             <div class="material-contenido">
 
                 <div class="material-disciplina">
+
                     ${escapeHTML(
                         item.fuente ||
-                        "Fuente desconocida"
+                        "Fuente no registrada"
                     )}
+
                 </div>
 
 
                 <h3 class="material-titulo">
+
                     ${escapeHTML(
                         item.titulo ||
                         "Título no registrado"
                     )}
+
                 </h3>
 
 
                 <p class="material-autores">
+
                     ${escapeHTML(
                         autores
                     )}
+
                 </p>
 
 
                 <p class="material-datos">
-                    ${escapeHTML(
-                        fecha
-                    )}
-                </p>
-
-
-                <div class="radar-etiquetas">
-
-                    <span class="radar-etiqueta">
-                        Pendiente
-                    </span>
 
                     ${
-                        item.accesoAbierto
-                            ? `
-                                <span class="radar-etiqueta">
-                                    Acceso abierto
-                                </span>
-                            `
+                        item.categoria
+                            ? escapeHTML(
+                                formatearCategoria(
+                                    item.categoria
+                                )
+                            )
                             : ""
                     }
 
-                </div>
+                    ${
+                        fecha
+                            ? ` · ${escapeHTML(fecha)}`
+                            : ""
+                    }
+
+                    ${
+                        item.idioma
+                            ? ` · ${escapeHTML(item.idioma)}`
+                            : ""
+                    }
+
+                </p>
 
 
                 <div class="material-acciones">
 
-                    ${botonConsultar}
+                    ${botonConsulta}
 
 
                     <button
@@ -1953,10 +2017,10 @@ function crearFichaSeleccionada(
                         type="button"
                         data-accion="radar-eliminar-seleccion"
                         data-id="${escapeHTML(
-                            item.id
+                            item.id || ""
                         )}"
                     >
-                        Eliminar
+                        Quitar
                     </button>
 
                 </div>
@@ -1969,16 +2033,152 @@ function crearFichaSeleccionada(
 
 
 /* =========================================================
-   ELIMINAR SELECCIONADA
+   SELECCIONAR NOVEDAD
+========================================================= */
+
+async function seleccionarNovedad(
+    id
+) {
+
+    const item =
+        radar.find(
+            resultado =>
+                String(resultado.id) ===
+                String(id)
+        );
+
+
+    if (!item) {
+
+        console.error(
+            "No se encontró la novedad:",
+            id
+        );
+
+        return;
+    }
+
+
+    const boton =
+        document.querySelector(
+            `[data-accion="radar-seleccionar"][data-id="${CSS.escape(String(id))}"]`
+        );
+
+
+    if (boton) {
+
+        boton.disabled = true;
+
+        boton.textContent =
+            "Guardando...";
+    }
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                RUTAS_API.radarSeleccionar,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(item)
+                }
+            );
+
+
+        const texto =
+            await respuesta.text();
+
+
+        let datos = {};
+
+        try {
+
+            datos =
+                texto
+                    ? JSON.parse(texto)
+                    : {};
+
+        } catch {
+
+            datos = {};
+        }
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                datos.error ||
+                datos.message ||
+                "No se pudo guardar la selección."
+            );
+        }
+
+
+        /*
+         * Volver a leer el servidor.
+         * Así el frontend refleja el estado
+         * realmente guardado en GitHub.
+         */
+
+        await cargarSeleccionadas();
+
+
+        /*
+         * Actualizar las tarjetas del Radar
+         * para que el botón pase a "Pendiente".
+         */
+
+        renderizarRadar();
+
+
+    } catch (error) {
+
+        console.error(
+            "Error seleccionando novedad:",
+            error
+        );
+
+
+        alert(
+            `No se pudo guardar la selección.\n\n${error.message}`
+        );
+
+
+        if (boton) {
+
+            boton.disabled = false;
+
+            boton.textContent =
+                "Seleccionar";
+        }
+    }
+}
+
+
+/* =========================================================
+   ELIMINAR NOVEDAD SELECCIONADA
 ========================================================= */
 
 async function eliminarNovedadSeleccionada(
     id
 ) {
 
+    if (!id) {
+        return;
+    }
+
+
     const confirmar =
         confirm(
-            "¿Eliminar esta novedad de Novedades Seleccionadas?"
+            "¿Quieres quitar esta novedad de la colección seleccionada?"
         );
 
 
@@ -1991,9 +2191,7 @@ async function eliminarNovedadSeleccionada(
 
         const respuesta =
             await fetch(
-                `${RUTAS_API.radarSeleccionar}?id=${encodeURIComponent(
-                    id
-                )}`,
+                `${RUTAS_API.radarSeleccionar}?id=${encodeURIComponent(id)}`,
                 {
                     method: "DELETE"
                 }
@@ -2010,16 +2208,21 @@ async function eliminarNovedadSeleccionada(
 
             throw new Error(
                 datos.error ||
-                "No se pudo eliminar la selección."
+                "No se pudo eliminar la novedad seleccionada."
             );
         }
 
 
         radarSeleccionadas =
-            radarSeleccionadas.filter(
-                item =>
-                    item.id !== id
-            );
+            Array.isArray(
+                datos.seleccionadas
+            )
+                ? datos.seleccionadas
+                : radarSeleccionadas.filter(
+                    item =>
+                        String(item.id) !==
+                        String(id)
+                );
 
 
         renderizarSeleccionadas();
@@ -2036,35 +2239,47 @@ async function eliminarNovedadSeleccionada(
     } catch (error) {
 
         console.error(
-            "Error eliminando selección:",
+            "Error eliminando novedad:",
             error
         );
 
 
         alert(
-            "No se pudo eliminar la novedad."
+            `No se pudo eliminar la novedad: ${error.message}`
         );
     }
 }
 
 
 /* =========================================================
-   MARCAR COMO LEÍDO
+   LEÍDO
 ========================================================= */
 
 async function alternarLeido(
     id
 ) {
 
-    const boton =
-        document.querySelector(
-            `[data-accion="leido"][data-id="${CSS.escape(id)}"]`
+    if (!id) {
+        return;
+    }
+
+
+    const estaLeido =
+        leidos.includes(
+            id
         );
 
 
-    if (boton) {
-        boton.disabled = true;
-    }
+    const nuevosLeidos =
+        estaLeido
+            ? leidos.filter(
+                item =>
+                    item !== id
+            )
+            : [
+                ...leidos,
+                id
+            ];
 
 
     try {
@@ -2081,9 +2296,12 @@ async function alternarLeido(
                     },
 
                     body:
-                        JSON.stringify({
-                            id
-                        })
+                        JSON.stringify(
+                            {
+                                leidos:
+                                    nuevosLeidos
+                            }
+                        )
                 }
             );
 
@@ -2103,27 +2321,23 @@ async function alternarLeido(
         }
 
 
-        if (
+        leidos =
             Array.isArray(
                 datos.leidos
             )
-        ) {
-
-            leidos = [
-                ...new Set(
-                    datos.leidos
-                )
-            ];
-
-        } else {
-
-            actualizarLeidosLocalmente(
-                id
-            );
-        }
+                ? [...new Set(datos.leidos)]
+                : nuevosLeidos;
 
 
         actualizarContadores();
+
+
+        if (
+            vistaActual === "coleccion"
+        ) {
+
+            renderizarColeccion();
+        }
 
 
         if (
@@ -2131,72 +2345,26 @@ async function alternarLeido(
         ) {
 
             renderizarLeidos();
-
-        } else {
-
-            renderizarColeccion();
         }
 
 
     } catch (error) {
 
         console.error(
-            "Error actualizando leído:",
+            "Error actualizando lectura:",
             error
         );
 
 
         alert(
-            "No se pudo actualizar el estado de lectura."
-        );
-
-
-    } finally {
-
-        if (boton) {
-            boton.disabled = false;
-        }
-    }
-}
-
-
-function actualizarLeidosLocalmente(
-    id
-) {
-
-    const indice =
-        leidos.indexOf(
-            id
-        );
-
-
-    if (
-        indice === -1
-    ) {
-
-        leidos.push(
-            id
-        );
-
-    } else {
-
-        leidos.splice(
-            indice,
-            1
+            `No se pudo actualizar el estado: ${error.message}`
         );
     }
-
-
-    leidos = [
-        ...new Set(
-            leidos
-        )
-    ];
 }
 
 
 /* =========================================================
-   AGREGAR MATERIAL
+   FORMULARIO DE MATERIAL
 ========================================================= */
 
 async function manejarFormulario(
@@ -2206,192 +2374,96 @@ async function manejarFormulario(
     evento.preventDefault();
 
 
-    const formulario =
-        evento.currentTarget;
-
-
     const disciplina =
         document.querySelector(
             "#disciplina"
-        ).value.trim();
+        )?.value ||
+        "";
 
 
     const titulo =
         document.querySelector(
             "#titulo"
-        ).value.trim();
+        )?.value
+            ?.trim() ||
+        "";
 
 
-    const autoresTexto =
+    const autores =
         document.querySelector(
             "#autores"
-        ).value.trim();
+        )?.value
+            ?.trim() ||
+        "";
 
 
     const editorial =
         document.querySelector(
             "#editorial"
-        ).value.trim();
+        )?.value
+            ?.trim() ||
+        "";
 
 
-    const anioTexto =
+    const anio =
         document.querySelector(
             "#anio"
-        ).value.trim();
+        )?.value
+            ?.trim() ||
+        "";
 
 
     const tipo =
         document.querySelector(
             "#tipo"
-        ).value.trim();
+        )?.value ||
+        "";
 
 
-    const linkDriveTexto =
+    const linkDrive =
         document.querySelector(
             "#link-drive"
-        ).value.trim();
+        )?.value
+            ?.trim() ||
+        "";
 
 
     if (
         !disciplina ||
-        !titulo ||
-        !autoresTexto ||
-        !tipo
+        !titulo
     ) {
 
         mostrarMensajeFormulario(
-            "Completa los campos obligatorios.",
+            "La disciplina y el título son obligatorios.",
             true
         );
 
-
         return;
     }
-
-
-    let anio = "";
-
-
-    if (anioTexto) {
-
-        anio =
-            Number(
-                anioTexto
-            );
-
-
-        if (
-            !Number.isInteger(anio) ||
-            anio < 1 ||
-            anio > 2100
-        ) {
-
-            mostrarMensajeFormulario(
-                "El año no es válido.",
-                true
-            );
-
-
-            return;
-        }
-    }
-
-
-    let linkDrive = "";
-
-
-    if (
-        tipo === "digital"
-    ) {
-
-        if (!linkDriveTexto) {
-
-            mostrarMensajeFormulario(
-                "Los materiales digitales necesitan un enlace de Drive.",
-                true
-            );
-
-
-            return;
-        }
-
-
-        linkDrive =
-            urlSegura(
-                linkDriveTexto
-            );
-
-
-        if (
-            !linkDrive ||
-            !esEnlaceDrive(
-                linkDrive
-            )
-        ) {
-
-            mostrarMensajeFormulario(
-                "El enlace debe ser de Google Drive o Google Docs.",
-                true
-            );
-
-
-            return;
-        }
-    }
-
-
-    const existe =
-        catalogo.some(
-            material =>
-                normalizarTexto(
-                    material.titulo
-                ) ===
-                normalizarTexto(
-                    titulo
-                )
-        );
-
-
-    if (existe) {
-
-        mostrarMensajeFormulario(
-            "Ese título ya existe en la biblioteca.",
-            true
-        );
-
-
-        return;
-    }
-
-
-    const autores =
-        autoresTexto
-            .split(
-                /\r?\n/
-            )
-            .map(
-                autor =>
-                    autor.trim()
-            )
-            .filter(Boolean);
-
-
-    const id =
-        await generarIdUnico(
-            disciplina,
-            autores
-        );
 
 
     const nuevoMaterial = {
 
-        id,
+        id:
+            generarIdMaterial(
+                disciplina,
+                titulo
+            ),
 
         disciplina,
 
         titulo,
 
-        autores,
+        autores:
+            autores
+                ? autores
+                    .split(",")
+                    .map(
+                        autor =>
+                            autor.trim()
+                    )
+                    .filter(Boolean)
+                : [],
 
         editorial,
 
@@ -2401,21 +2473,6 @@ async function manejarFormulario(
 
         linkDrive
     };
-
-
-    const boton =
-        document.querySelector(
-            "#btn-guardar"
-        );
-
-
-    if (boton) {
-
-        boton.disabled = true;
-
-        boton.textContent =
-            "Guardando...";
-    }
 
 
     try {
@@ -2454,38 +2511,18 @@ async function manejarFormulario(
         }
 
 
-        catalogo.push({
-
-            ...nuevoMaterial,
-
-            linkDrive:
-                obtenerEnlaceDrive(
-                    nuevoMaterial
-                ),
-
-            textoBusqueda:
-                construirTextoBusqueda(
-                    nuevoMaterial
-                )
-        });
-
-
-        formulario.reset();
-
-
-        actualizarContadores();
-
-
         mostrarMensajeFormulario(
             "Material agregado correctamente.",
             false
         );
 
 
-        mostrarVista(
-            "coleccion"
-        );
+        evento.target.reset();
 
+
+        await cargarCatalogos();
+
+        actualizarContadores();
 
         renderizarColeccion();
 
@@ -2493,93 +2530,15 @@ async function manejarFormulario(
     } catch (error) {
 
         console.error(
-            "Error guardando material:",
+            "Error agregando material:",
             error
         );
 
 
         mostrarMensajeFormulario(
-            "No se pudo guardar el material. Revisa la conexión con el servidor.",
+            `No se pudo agregar el material: ${error.message}`,
             true
         );
-
-
-    } finally {
-
-        if (boton) {
-
-            boton.disabled = false;
-
-            boton.textContent =
-                "Guardar material";
-        }
-    }
-}
-
-
-/* =========================================================
-   GENERACIÓN DE IDS
-========================================================= */
-
-async function generarIdUnico(
-    disciplina,
-    autores
-) {
-
-    let baseAutor =
-        Array.isArray(autores) &&
-        autores.length > 0
-            ? autores[0]
-            : "material";
-
-
-    baseAutor =
-        crearSlug(
-            baseAutor
-        );
-
-
-    if (!baseAutor) {
-
-        baseAutor =
-            "material";
-    }
-
-
-    let numero =
-        1;
-
-
-    while (true) {
-
-        const numeroTexto =
-            String(
-                numero
-            ).padStart(
-                3,
-                "0"
-            );
-
-
-        const candidato =
-            `${baseAutor}-${numeroTexto}`;
-
-
-        const existe =
-            catalogo.some(
-                material =>
-                    material.id ===
-                    candidato
-            );
-
-
-        if (!existe) {
-
-            return candidato;
-        }
-
-
-        numero++;
     }
 }
 
@@ -2592,6 +2551,11 @@ async function eliminarMaterial(
     id
 ) {
 
+    if (!id) {
+        return;
+    }
+
+
     const material =
         catalogo.find(
             item =>
@@ -2599,14 +2563,14 @@ async function eliminarMaterial(
         );
 
 
-    if (!material) {
-        return;
-    }
+    const titulo =
+        material?.titulo ||
+        "este material";
 
 
     const confirmar =
         confirm(
-            `¿Eliminar "${material.titulo}" de la biblioteca?\n\nEsta acción no se puede deshacer.`
+            `¿Quieres eliminar "${titulo}" de la biblioteca?`
         );
 
 
@@ -2615,30 +2579,11 @@ async function eliminarMaterial(
     }
 
 
-    const boton =
-        document.querySelector(
-            `[data-accion="eliminar"][data-id="${CSS.escape(id)}"]`
-        );
-
-
-    if (boton) {
-
-        boton.disabled = true;
-
-        boton.textContent =
-            "Eliminando...";
-    }
-
-
     try {
 
         const respuesta =
             await fetch(
-                `${API_BASE}/material/${encodeURIComponent(
-                    material.disciplina
-                )}/${encodeURIComponent(
-                    id
-                )}`,
+                `${API_BASE}/material?id=${encodeURIComponent(id)}`,
                 {
                     method: "DELETE"
                 }
@@ -2669,8 +2614,8 @@ async function eliminarMaterial(
 
         leidos =
             leidos.filter(
-                materialId =>
-                    materialId !== id
+                item =>
+                    item !== id
             );
 
 
@@ -2678,14 +2623,18 @@ async function eliminarMaterial(
 
 
         if (
+            vistaActual === "coleccion"
+        ) {
+
+            renderizarColeccion();
+        }
+
+
+        if (
             vistaActual === "leidos"
         ) {
 
             renderizarLeidos();
-
-        } else {
-
-            renderizarColeccion();
         }
 
 
@@ -2698,23 +2647,14 @@ async function eliminarMaterial(
 
 
         alert(
-            "No se pudo eliminar el material."
+            `No se pudo eliminar el material: ${error.message}`
         );
-
-
-        if (boton) {
-
-            boton.disabled = false;
-
-            boton.textContent =
-                "Eliminar";
-        }
     }
 }
 
 
 /* =========================================================
-   GOOGLE DRIVE
+   DRIVE
 ========================================================= */
 
 function obtenerEnlaceDrive(
@@ -2726,39 +2666,46 @@ function obtenerEnlaceDrive(
     }
 
 
-    const posiblesEnlaces = [
-
-        material.linkDrive,
-
-        material.link_drive,
-
-        material.link,
-
-        material.url,
-
-        material.drive
-    ];
+    const posibles =
+        [
+            material.linkDrive,
+            material.drive,
+            material.urlDrive,
+            material.enlaceDrive,
+            material.link
+        ];
 
 
     for (
-        const posible
-        of posiblesEnlaces
+        const enlace
+        of posibles
     ) {
 
-        const enlace =
-            urlSegura(
-                posible
-            );
+        if (
+            typeof enlace !== "string"
+        ) {
+            continue;
+        }
+
+
+        const limpio =
+            enlace.trim();
 
 
         if (
-            enlace &&
+            !limpio
+        ) {
+            continue;
+        }
+
+
+        if (
             esEnlaceDrive(
-                enlace
+                limpio
             )
         ) {
 
-            return enlace;
+            return limpio;
         }
     }
 
@@ -2767,66 +2714,24 @@ function obtenerEnlaceDrive(
 }
 
 
-function urlSegura(
-    url
-) {
-
-    if (!url) {
-        return "";
-    }
-
-
-    try {
-
-        const texto =
-            String(
-                url
-            ).trim();
-
-
-        const enlace =
-            new URL(
-                texto
-            );
-
-
-        if (
-            enlace.protocol !== "http:" &&
-            enlace.protocol !== "https:"
-        ) {
-
-            return "";
-        }
-
-
-        return enlace.href;
-
-    } catch {
-
-        return "";
-    }
-}
-
-
 function esEnlaceDrive(
-    url
+    enlace
 ) {
-
-    if (!url) {
-        return false;
-    }
-
 
     try {
 
-        const enlace =
+        const url =
             new URL(
-                url
+                enlace
             );
 
 
-        return DOMINIOS_DRIVE.includes(
-            enlace.hostname.toLowerCase()
+        return DOMINIOS_DRIVE.some(
+            dominio =>
+                url.hostname === dominio ||
+                url.hostname.endsWith(
+                    `.${dominio}`
+                )
         );
 
     } catch {
@@ -2837,62 +2742,87 @@ function esEnlaceDrive(
 
 
 /* =========================================================
-   UTILIDADES
+   IDENTIFICADORES
 ========================================================= */
+
+function generarIdMaterial(
+    disciplina,
+    titulo
+) {
+
+    const base =
+        [
+            disciplina,
+            titulo,
+            Date.now(),
+            Math.random()
+        ]
+        .join("-");
+
+
+    return hashTexto(
+        base
+    );
+}
+
 
 function generarIdTemporal(
     disciplina,
     titulo
 ) {
 
-    return (
-        `${disciplina}-${crearSlug(
+    return hashTexto(
+        [
+            disciplina,
             titulo
-        )}`
+        ]
+        .join("-")
     );
 }
 
 
-function crearSlug(
+function hashTexto(
     texto
 ) {
 
-    return normalizarTexto(
-        texto
-    )
-        .replace(
-            /[^a-z0-9]+/g,
-            "-"
-        )
-        .replace(
-            /^-+|-+$/g,
-            ""
-        )
-        .slice(
-            0,
-            60
-        );
+    let hash =
+        0;
+
+
+    for (
+        let i = 0;
+        i < texto.length;
+        i++
+    ) {
+
+        hash =
+            (
+                (
+                    hash << 5
+                ) -
+                hash
+            ) +
+            texto.charCodeAt(i);
+
+
+        hash |=
+            0;
+    }
+
+
+    return (
+        Math.abs(
+            hash
+        ).toString(36) +
+        "-" +
+        Date.now().toString(36)
+    );
 }
 
 
-function normalizarTexto(
-    texto
-) {
-
-    return String(
-        texto || ""
-    )
-        .normalize(
-            "NFD"
-        )
-        .replace(
-            /[\u0300-\u036f]/g,
-            ""
-        )
-        .toLowerCase()
-        .trim();
-}
-
+/* =========================================================
+   UTILIDADES
+========================================================= */
 
 function escapeHTML(
     valor
@@ -2924,17 +2854,18 @@ function escapeHTML(
 }
 
 
-/* =========================================================
-   RADAR: UTILIDADES
-========================================================= */
-
 function formatearFecha(
     fecha
 ) {
 
+    if (!fecha) {
+        return "";
+    }
+
+
     try {
 
-        const fechaObjeto =
+        const fechaObj =
             new Date(
                 fecha
             );
@@ -2942,7 +2873,7 @@ function formatearFecha(
 
         if (
             Number.isNaN(
-                fechaObjeto.getTime()
+                fechaObj.getTime()
             )
         ) {
 
@@ -2952,13 +2883,15 @@ function formatearFecha(
         }
 
 
-        return fechaObjeto.toLocaleDateString(
+        return new Intl.DateTimeFormat(
             "es-MX",
             {
                 year: "numeric",
                 month: "long",
                 day: "numeric"
             }
+        ).format(
+            fechaObj
         );
 
     } catch {
