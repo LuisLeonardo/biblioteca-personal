@@ -112,5 +112,26 @@
     "consultable": true,
     "idioma": "es",
     "seleccionadoEn": "2026-11-08T20:47:11.323Z"
+  },
+  {
+    "id": "doi:10.1093/cje/beag038",
+    "titulo": "Does performance-based public funding pay off? The UK’s Research Excellence Framework and research productivity in economics and business",
+    "autores": [
+      "Ajab Khan",
+      "Ali Sina Önder",
+      "Sercan Ozcan"
+    ],
+    "fecha": "2026-10-07",
+    "fuente": "Cambridge Journal of Economics",
+    "fuenteId": "cambridge-journal-economics",
+    "categoria": "economia-politica",
+    "pais": "Reino Unido",
+    "tipo": "article",
+    "doi": "10.1093/cje/beag038",
+    "url": "https://doi.org/10.1093/cje/beag038",
+    "accesoAbierto": true,
+    "consultable": true,
+    "idioma": "en",
+    "seleccionadoEn": "2026-11-08T20:47:18.416Z"
   }
 ]
