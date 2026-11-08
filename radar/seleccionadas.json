@@ -36,5 +36,24 @@
     "consultable": true,
     "idioma": "es",
     "seleccionadoEn": "2026-11-08T20:34:22.816Z"
+  },
+  {
+    "id": "doi:10.5354/0719-3769.2026.83383",
+    "titulo": "Geopolítica en la Cadena de Valor: Evidencia desde América Latina",
+    "autores": [
+      "Diego Solar"
+    ],
+    "fecha": "2026-04-30",
+    "fuente": "Estudios Internacionales",
+    "fuenteId": "estudios-internacionales",
+    "categoria": "relaciones-internacionales",
+    "pais": "Chile",
+    "tipo": "article",
+    "doi": "10.5354/0719-3769.2026.83383",
+    "url": "https://doi.org/10.5354/0719-3769.2026.83383",
+    "accesoAbierto": true,
+    "consultable": true,
+    "idioma": "es",
+    "seleccionadoEn": "2026-11-08T20:46:25.131Z"
   }
 ]
