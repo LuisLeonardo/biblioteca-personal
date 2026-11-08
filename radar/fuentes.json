@@ -3,21 +3,32 @@
     "maxResultadosPorFuente": 30,
     "fuentes": [
         {
-            "id": "openalex",
-            "nombre": "OpenAlex",
-            "tipo": "api",
+            "id": "revista-cepal",
+            "nombre": "Revista CEPAL",
+            "categoria": "revista",
+            "pais": "Regional",
+            "institucion": "CEPAL",
+            "issn": "0252-0257",
             "activa": true
         },
         {
-            "id": "crossref",
-            "nombre": "Crossref",
-            "tipo": "api",
+            "id": "trimestre-economico",
+            "nombre": "El Trimestre Económico",
+            "categoria": "revista",
+            "pais": "México",
+            "institucion": "Fondo de Cultura Económica",
+            "issn": "0041-3011",
+            "issnElectronico": "2448-718X",
             "activa": true
         },
         {
-            "id": "doaj",
-            "nombre": "DOAJ",
-            "tipo": "api",
+            "id": "investigacion-economica",
+            "nombre": "Investigación Económica",
+            "categoria": "revista",
+            "pais": "México",
+            "institucion": "UNAM",
+            "issn": "0185-1667",
+            "issnElectronico": "0374-5511",
             "activa": true
         }
     ]
