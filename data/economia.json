@@ -11,7 +11,8 @@
     {
         "id": "kalecki-001",
         "titulo": "Aspectos políticos del pleno empleo",
-        "autores": ["Michal Kalecki"],
+        "autores": ["Michal Kalecki"
+        ],
         "editorial": "Revista de Economía Crítica",
         "anio": 2011,
         "tipo": "digital",
@@ -20,7 +21,9 @@
     {
         "id": "lopez-gayosso-001",
         "titulo": "Caracterización del proceso de financiarización en empresas productivas de México",
-        "autores": ["Paola López Gayosso", "Everardo Chiapa Aguillón"],
+        "autores": ["Paola López Gayosso", "Everardo Chiapa Aguillón",
+            "Paola López Gayosso",
+            "Everardo Chiapa Aguillón"],
         "editorial": "Vértice Universitario",
         "anio": 2026,
         "tipo": "digital",
