@@ -261,7 +261,7 @@
             "tipo": "organismo",
             "categoria": "organismos-internacionales",
             "pais": "América Latina",
-            "activa": false,
+            "activa": true,
             "prioridad": 1
         },
         {
@@ -270,7 +270,7 @@
             "tipo": "organismo",
             "categoria": "organismos-internacionales",
             "pais": "América Latina",
-            "activa": false,
+            "activa": true,
             "prioridad": 1
         },
         {
@@ -279,7 +279,7 @@
             "tipo": "organismo",
             "categoria": "organismos-internacionales",
             "pais": "Internacional",
-            "activa": false,
+            "activa": true,
             "prioridad": 1
         },
         {
@@ -288,7 +288,7 @@
             "tipo": "organismo",
             "categoria": "organismos-internacionales",
             "pais": "Internacional",
-            "activa": false,
+            "activa": true,
             "prioridad": 1
         },
         {
@@ -297,7 +297,7 @@
             "tipo": "organismo",
             "categoria": "organismos-internacionales",
             "pais": "Internacional",
-            "activa": false,
+            "activa": true,
             "prioridad": 1
         },
 
@@ -308,7 +308,7 @@
             "categoria": "relaciones-internacionales",
             "pais": "Reino Unido",
             "issn": "0020-5850",
-            "activa": false,
+            "activa": true,
             "prioridad": 1
         },
         {
@@ -318,7 +318,7 @@
             "categoria": "seguridad-internacional",
             "pais": "Estados Unidos",
             "issn": "0162-2889",
-            "activa": false,
+            "activa": true,
             "prioridad": 1
         },
         {
@@ -328,7 +328,7 @@
             "categoria": "relaciones-internacionales",
             "pais": "Reino Unido",
             "issn": "0260-2105",
-            "activa": false,
+            "activa": true,
             "prioridad": 1
         },
         {
@@ -338,7 +338,7 @@
             "categoria": "relaciones-internacionales",
             "pais": "Estados Unidos",
             "issn": "1521-9488",
-            "activa": false,
+            "activa": true,
             "prioridad": 1
         },
         {
@@ -348,7 +348,7 @@
             "categoria": "paz-conflicto-seguridad",
             "pais": "Noruega",
             "issn": "0022-3433",
-            "activa": false,
+            "activa": true,
             "prioridad": 1
         },
         {
@@ -358,7 +358,7 @@
             "categoria": "geopolitica",
             "pais": "Reino Unido",
             "issn": "0962-6298",
-            "activa": false,
+            "activa": true,
             "prioridad": 1
         },
         {
@@ -368,7 +368,7 @@
             "categoria": "geopolitica",
             "pais": "Reino Unido",
             "issn": "1465-0045",
-            "activa": false,
+            "activa": true,
             "prioridad": 1
         },
         {
@@ -378,7 +378,7 @@
             "categoria": "politica-exterior-geopolitica",
             "pais": "Estados Unidos",
             "issn": "0015-7120",
-            "activa": false,
+            "activa": true,
             "prioridad": 1
         },
         {
@@ -388,7 +388,7 @@
             "categoria": "politica-latinoamericana",
             "pais": "América Latina",
             "issn": "1531-426X",
-            "activa": false,
+            "activa": true,
             "prioridad": 1
         },
         {
@@ -398,7 +398,7 @@
             "categoria": "relaciones-internacionales",
             "pais": "Chile",
             "issn": "0719-3769",
-            "activa": false,
+            "activa": true,
             "prioridad": 1
         },
         {
@@ -408,7 +408,7 @@
             "categoria": "relaciones-internacionales",
             "pais": "México",
             "issn": "0185-013X",
-            "activa": false,
+            "activa": true,
             "prioridad": 1
         },
         {
@@ -418,7 +418,7 @@
             "categoria": "politica-exterior",
             "pais": "México",
             "issn": "0185-6022",
-            "activa": false,
+            "activa": true,
             "prioridad": 1
         },
 
@@ -428,7 +428,7 @@
             "tipo": "organismo",
             "categoria": "banco-central-politica-monetaria",
             "pais": "México",
-            "activa": false,
+            "activa": true,
             "prioridad": 1
         }
     ]
