@@ -154,5 +154,25 @@
     "consultable": true,
     "idioma": "en",
     "seleccionadoEn": "2026-11-08T20:51:00.220Z"
+  },
+  {
+    "id": "doi:10.1016/j.jmateco.2026.103302",
+    "titulo": "Equilibrium and incomplete information",
+    "autores": [
+      "Christian W. Bach",
+      "Andrés Perea"
+    ],
+    "fecha": "2026-09-30",
+    "fuente": "Journal of Mathematical Economics",
+    "fuenteId": "journal-mathematical-economics",
+    "categoria": "economia-matematica",
+    "pais": "Internacional",
+    "tipo": "article",
+    "doi": "10.1016/j.jmateco.2026.103302",
+    "url": "https://doi.org/10.1016/j.jmateco.2026.103302",
+    "accesoAbierto": true,
+    "consultable": true,
+    "idioma": "en",
+    "seleccionadoEn": "2026-11-08T20:51:13.296Z"
   }
 ]
