@@ -692,18 +692,22 @@ function mostrarVista(
         vista === "radar"
     ) {
 
+        cargarSeleccionadas();
+
+
         /*
-         * Cambiar de pestaña NO actualiza el Radar.
-         *
-         * Solamente cargamos las selecciones guardadas
-         * para saber qué publicaciones deben aparecer
-         * como "Pendiente".
-         *
-         * La consulta a OpenAlex y a las fuentes solamente
-         * ocurre al pulsar "Actualizar radar".
+         * Si el Radar ya fue cargado previamente,
+         * lo mostramos inmediatamente.
          */
 
-        cargarSeleccionadas();
+        if (
+            radar.length > 0
+        ) {
+
+            renderizarFiltrosRadar();
+
+            renderizarRadar();
+        }
     }
 
 
@@ -1139,109 +1143,242 @@ async function cargarRadar() {
             "#lista-radar"
         );
 
+    const boton =
+        document.querySelector(
+            "#btn-actualizar-radar"
+        );
+
+
     if (!contenedor) {
         return;
     }
 
-    if (estado) {
-        estado.textContent =
-            "Actualizando radar...";
+
+    if (boton) {
+        boton.disabled = true;
     }
+
+
+    if (estado) {
+
+        estado.textContent =
+            "Actualizando Radar...";
+    }
+
 
     contenedor.innerHTML = `
         <div class="estado-vacio">
-            <h3>Cargando novedades...</h3>
+            <h3>Consultando novedades...</h3>
             <p>
                 Consultando las fuentes seleccionadas.
             </p>
         </div>
     `;
 
+
     try {
 
         /*
-         * Cargar primero las novedades que ya
-         * fueron seleccionadas y están guardadas
-         * en GitHub.
+         * Primero cargamos las novedades seleccionadas.
+         * Esto permite que las publicaciones seleccionadas
+         * aparezcan como "Pendiente".
          */
 
-        const respuestaSeleccionadas =
-            await fetch(
-                RUTAS_API.radarSeleccionadas,
-                {
-                    cache: "no-store"
-                }
-            );
-
-        const datosSeleccionadas =
-            await respuestaSeleccionadas.json();
-
-        if (!respuestaSeleccionadas.ok) {
-
-            throw new Error(
-                datosSeleccionadas.error ||
-                "No se pudieron cargar las novedades seleccionadas."
-            );
-        }
-
-
-        radarSeleccionadas =
-            Array.isArray(
-                datosSeleccionadas
-            )
-                ? datosSeleccionadas
-                : Array.isArray(
-                    datosSeleccionadas.seleccionadas
-                )
-                    ? datosSeleccionadas.seleccionadas
-                    : Array.isArray(
-                        datosSeleccionadas.resultados
-                    )
-                        ? datosSeleccionadas.resultados
-                        : [];
+        await cargarSeleccionadas();
 
 
         /*
-         * Consultar nuevamente el Radar.
+         * El Worker determina dinámicamente
+         * cuántos lotes existen.
          *
-         * ESTA ES LA ÚNICA FUNCIÓN QUE HACE
-         * LA CONSULTA A LAS FUENTES.
+         * No dejamos el número de lotes fijado
+         * manualmente en el frontend.
          */
 
-        const respuesta =
-            await fetch(
-                RUTAS_API.radar,
-                {
-                    cache: "no-store"
+        const resultadosTotales = [];
+
+        let totalLotes = null;
+
+
+        for (
+            let lote = 0;
+            totalLotes === null || lote < totalLotes;
+            lote++
+        ) {
+
+            if (estado) {
+
+                if (totalLotes === null) {
+
+                    estado.textContent =
+                        "Actualizando Radar...";
+
+                } else {
+
+                    estado.textContent =
+                        `Actualizando Radar... lote ${lote + 1} de ${totalLotes}`;
+
                 }
-            );
+            }
 
-        const datos =
-            await respuesta.json();
 
-        if (!respuesta.ok) {
+            const respuesta =
+                await fetch(
+                    `${RUTAS_API.radar}?lote=${lote}`,
+                    {
+                        cache: "no-store"
+                    }
+                );
 
-            throw new Error(
-                datos.error ||
-                "No se pudo actualizar el Radar."
+
+            const datos =
+                await respuesta.json();
+
+
+            if (!respuesta.ok) {
+
+                throw new Error(
+                    datos.error ||
+                    datos.detalle ||
+                    `Error HTTP ${respuesta.status} en el lote ${lote + 1}.`
+                );
+            }
+
+
+            /*
+             * El primer lote informa cuántos lotes
+             * existen realmente.
+             */
+
+            if (
+                Number.isInteger(
+                    datos.totalLotes
+                ) &&
+                datos.totalLotes > 0
+            ) {
+
+                totalLotes =
+                    datos.totalLotes;
+
+            } else if (
+                totalLotes === null
+            ) {
+
+                /*
+                 * Respaldo por seguridad.
+                 */
+
+                totalLotes = 1;
+            }
+
+
+            const resultadosLote =
+                Array.isArray(
+                    datos.resultados
+                )
+                    ? datos.resultados
+                    : [];
+
+
+            resultadosTotales.push(
+                ...resultadosLote
             );
         }
+
+
+        /*
+         * Eliminar duplicados entre lotes.
+         *
+         * El Worker normalmente ya evita duplicados,
+         * pero dos fuentes distintas pueden devolver
+         * el mismo trabajo.
+         */
+
+        const mapa =
+            new Map();
+
+
+        resultadosTotales.forEach(
+            item => {
+
+                if (
+                    !item ||
+                    typeof item !== "object"
+                ) {
+                    return;
+                }
+
+
+                const clave =
+                    String(
+                        item.id ||
+                        item.doi ||
+                        [
+                            item.titulo || "",
+                            item.fecha || "",
+                            item.fuenteNombre || ""
+                        ].join("|")
+                    );
+
+
+                if (
+                    !mapa.has(
+                        clave
+                    )
+                ) {
+
+                    mapa.set(
+                        clave,
+                        item
+                    );
+                }
+            }
+        );
 
 
         radar =
-            Array.isArray(
-                datos.resultados
-            )
-                ? datos.resultados
-                : [];
+            Array.from(
+                mapa.values()
+            );
 
 
         /*
-         * Reconstruir los filtros a partir
-         * de los resultados obtenidos.
+         * Ordenar por fecha,
+         * de más reciente a más antiguo.
+         */
+
+        radar.sort(
+            (a, b) => {
+
+                const fechaA =
+                    String(
+                        a.fecha || ""
+                    );
+
+
+                const fechaB =
+                    String(
+                        b.fecha || ""
+                    );
+
+
+                return fechaB.localeCompare(
+                    fechaA
+                );
+            }
+        );
+
+
+        /*
+         * Reconstruir los filtros.
          */
 
         renderizarFiltrosRadar();
+
+
+        /*
+         * Mostrar todos los resultados.
+         */
 
         renderizarRadar();
 
@@ -1249,7 +1386,7 @@ async function cargarRadar() {
         if (estado) {
 
             estado.textContent =
-                `${radar.length} novedades encontradas.`;
+                `Radar actualizado: ${radar.length} novedades encontradas.`;
         }
 
 
@@ -1260,24 +1397,50 @@ async function cargarRadar() {
             error
         );
 
-        contenedor.innerHTML = `
-            <div class="estado-vacio">
 
-                <h3>
-                    No se pudo actualizar el Radar
-                </h3>
+        /*
+         * Si ya tenemos resultados, los conservamos.
+         * Si no tenemos ninguno, mostramos el error.
+         */
 
-                <p>
-                    ${escapeHTML(
-                        error.message
-                    )}
-                </p>
+        if (
+            radar.length === 0
+        ) {
 
-            </div>
-        `;
+            contenedor.innerHTML = `
+                <div class="estado-vacio">
+
+                    <h3>
+                        No se pudo actualizar el Radar
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(
+                            error.message
+                        )}
+                    </p>
+
+                </div>
+            `;
+
+        } else {
+
+            renderizarRadar();
+        }
+
 
         if (estado) {
-            estado.textContent = "";
+
+            estado.textContent =
+                radar.length > 0
+                    ? `Radar actualizado parcialmente: ${radar.length} novedades.`
+                    : "";
+        }
+
+    } finally {
+
+        if (boton) {
+            boton.disabled = false;
         }
     }
 }
@@ -1301,6 +1464,12 @@ function renderizarFiltrosRadar() {
         );
 
 
+    const filtroIdioma =
+        document.querySelector(
+            "#filtro-radar-idioma"
+        );
+
+
     if (
         !filtroFuente ||
         !filtroCategoria
@@ -1309,21 +1478,43 @@ function renderizarFiltrosRadar() {
     }
 
 
+    /*
+     * Guardamos los valores actuales.
+     *
+     * Si todavía no existe una selección,
+     * usamos explícitamente los valores neutros.
+     */
+
+    const fuenteActual =
+        filtroFuente.value ||
+        "todas";
+
+
+    const categoriaActual =
+        filtroCategoria.value ||
+        "todas";
+
+
+    const idiomaActual =
+        filtroIdioma?.value ||
+        "todos";
+
+
     const fuentes =
         [
             ...new Set(
                 radar
                     .map(
                         item =>
-                            item.fuente
+                            item.fuenteNombre
                     )
                     .filter(Boolean)
             )
         ]
         .sort(
             (a, b) =>
-                a.localeCompare(
-                    b,
+                String(a).localeCompare(
+                    String(b),
                     "es"
                 )
         );
@@ -1342,19 +1533,11 @@ function renderizarFiltrosRadar() {
         ]
         .sort(
             (a, b) =>
-                a.localeCompare(
-                    b,
+                String(a).localeCompare(
+                    String(b),
                     "es"
                 )
         );
-
-
-    const fuenteActual =
-        filtroFuente.value;
-
-
-    const categoriaActual =
-        filtroCategoria.value;
 
 
     filtroFuente.innerHTML = `
@@ -1399,7 +1582,12 @@ function renderizarFiltrosRadar() {
     `;
 
 
+    /*
+     * Restaurar fuente si todavía existe.
+     */
+
     if (
+        fuenteActual !== "" &&
         fuentes.includes(
             fuenteActual
         )
@@ -1407,10 +1595,20 @@ function renderizarFiltrosRadar() {
 
         filtroFuente.value =
             fuenteActual;
+
+    } else {
+
+        filtroFuente.value =
+            "todas";
     }
 
 
+    /*
+     * Restaurar categoría si todavía existe.
+     */
+
     if (
+        categoriaActual !== "" &&
         categorias.includes(
             categoriaActual
         )
@@ -1418,6 +1616,44 @@ function renderizarFiltrosRadar() {
 
         filtroCategoria.value =
             categoriaActual;
+
+    } else {
+
+        filtroCategoria.value =
+            "todas";
+    }
+
+
+    /*
+     * El idioma ya está definido en index.html.
+     */
+
+    if (filtroIdioma) {
+
+        const opcionesIdioma =
+            [
+                ...filtroIdioma.options
+            ]
+            .map(
+                opcion =>
+                    opcion.value
+            );
+
+
+        if (
+            opcionesIdioma.includes(
+                idiomaActual
+            )
+        ) {
+
+            filtroIdioma.value =
+                idiomaActual;
+
+        } else {
+
+            filtroIdioma.value =
+                "todos";
+        }
     }
 }
 
@@ -1463,6 +1699,10 @@ function renderizarRadar() {
         );
 
 
+    /*
+     * Valores neutros.
+     */
+
     const fuente =
         filtroFuente?.value ||
         "todas";
@@ -1474,8 +1714,7 @@ function renderizarRadar() {
 
 
     const soloOA =
-        filtroOA?.checked ||
-        false;
+        filtroOA?.checked === true;
 
 
     const idioma =
@@ -1488,11 +1727,13 @@ function renderizarRadar() {
             item => {
 
                 const coincideFuente =
+                    fuente === "" ||
                     fuente === "todas" ||
-                    item.fuente === fuente;
+                    item.fuenteNombre === fuente;
 
 
                 const coincideCategoria =
+                    categoria === "" ||
                     categoria === "todas" ||
                     item.categoria === categoria;
 
@@ -1503,6 +1744,7 @@ function renderizarRadar() {
 
 
                 const coincideIdioma =
+                    idioma === "" ||
                     idioma === "todos" ||
                     coincideIdiomaRadar(
                         item,
@@ -1541,6 +1783,11 @@ function renderizarRadar() {
         return;
     }
 
+
+    /*
+     * crearFichaRadar devuelve HTML como texto,
+     * por lo que se inserta mediante innerHTML.
+     */
 
     contenedor.innerHTML =
         resultados
@@ -1596,8 +1843,12 @@ function crearFichaRadar(
     const seleccionada =
         radarSeleccionadas.some(
             seleccion =>
-                String(seleccion.id) ===
-                String(item.id)
+                String(
+                    seleccion.id
+                ) ===
+                String(
+                    item.id
+                )
         );
 
 
@@ -1654,7 +1905,7 @@ function crearFichaRadar(
                 <div class="material-disciplina">
 
                     ${escapeHTML(
-                        item.fuente ||
+                        item.fuenteNombre ||
                         "Fuente no registrada"
                     )}
 
@@ -1757,18 +2008,6 @@ async function cargarSeleccionadas() {
         );
 
 
-    if (!contenedor) {
-        return;
-    }
-
-
-    contenedor.innerHTML = `
-        <div class="estado-vacio">
-            <h3>Cargando novedades seleccionadas...</h3>
-        </div>
-    `;
-
-
     try {
 
         const respuesta =
@@ -1795,19 +2034,6 @@ async function cargarSeleccionadas() {
         }
 
 
-        /*
-         * El Worker devuelve:
-         *
-         * {
-         *     seleccionadas: [...],
-         *     total: N
-         * }
-         *
-         * También aceptamos un arreglo directo
-         * y la propiedad resultados para mantener
-         * compatibilidad.
-         */
-
         radarSeleccionadas =
             Array.isArray(
                 datos
@@ -1824,7 +2050,11 @@ async function cargarSeleccionadas() {
                         : [];
 
 
-        renderizarSeleccionadas();
+        if (contenedor) {
+
+            renderizarSeleccionadas();
+        }
+
 
     } catch (error) {
 
@@ -1834,21 +2064,24 @@ async function cargarSeleccionadas() {
         );
 
 
-        contenedor.innerHTML = `
-            <div class="estado-vacio">
+        if (contenedor) {
 
-                <h3>
-                    No se pudieron cargar las novedades
-                </h3>
+            contenedor.innerHTML = `
+                <div class="estado-vacio">
 
-                <p>
-                    ${escapeHTML(
-                        error.message
-                    )}
-                </p>
+                    <h3>
+                        No se pudieron cargar las novedades
+                    </h3>
 
-            </div>
-        `;
+                    <p>
+                        ${escapeHTML(
+                            error.message
+                        )}
+                    </p>
+
+                </div>
+            `;
+        }
     }
 }
 
@@ -1954,7 +2187,7 @@ function crearFichaSeleccionada(
                 <div class="material-disciplina">
 
                     ${escapeHTML(
-                        item.fuente ||
+                        item.fuenteNombre ||
                         "Fuente no registrada"
                     )}
 
@@ -2043,8 +2276,12 @@ async function seleccionarNovedad(
     const item =
         radar.find(
             resultado =>
-                String(resultado.id) ===
-                String(id)
+                String(
+                    resultado.id
+                ) ===
+                String(
+                    id
+                )
         );
 
 
@@ -2088,7 +2325,9 @@ async function seleccionarNovedad(
                     },
 
                     body:
-                        JSON.stringify(item)
+                        JSON.stringify(
+                            item
+                        )
                 }
             );
 
@@ -2098,6 +2337,7 @@ async function seleccionarNovedad(
 
 
         let datos = {};
+
 
         try {
 
@@ -2112,7 +2352,9 @@ async function seleccionarNovedad(
         }
 
 
-        if (!respuesta.ok) {
+        if (
+            !respuesta.ok
+        ) {
 
             throw new Error(
                 datos.error ||
@@ -2122,19 +2364,8 @@ async function seleccionarNovedad(
         }
 
 
-        /*
-         * Volver a leer el servidor.
-         * Así el frontend refleja el estado
-         * realmente guardado en GitHub.
-         */
-
         await cargarSeleccionadas();
 
-
-        /*
-         * Actualizar las tarjetas del Radar
-         * para que el botón pase a "Pendiente".
-         */
 
         renderizarRadar();
 
@@ -2220,8 +2451,12 @@ async function eliminarNovedadSeleccionada(
                 ? datos.seleccionadas
                 : radarSeleccionadas.filter(
                     item =>
-                        String(item.id) !==
-                        String(id)
+                        String(
+                            item.id
+                        ) !==
+                        String(
+                            id
+                        )
                 );
 
 
