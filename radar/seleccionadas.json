@@ -1,4 +1,21 @@
-{
-    "ids": [],
-    "seleccionadas": []
-}
+[
+  {
+    "id": "doi:10.15446/cuad.econ.v45n98.125674",
+    "titulo": "Un ciclo de crecimiento con cambio técnico endógeno: Teoría y simulación para Estados Unidos (1960-2019)",
+    "autores": [
+      "John Cajas Guijarro"
+    ],
+    "fecha": "2026-09-09",
+    "fuente": "Cuadernos de Economía",
+    "fuenteId": "cuadernos-de-economia",
+    "categoria": "economia",
+    "pais": "Colombia",
+    "tipo": "article",
+    "doi": "10.15446/cuad.econ.v45n98.125674",
+    "url": "https://doi.org/10.15446/cuad.econ.v45n98.125674",
+    "accesoAbierto": true,
+    "consultable": true,
+    "idioma": "en",
+    "seleccionadoEn": "2026-11-08T20:32:49.508Z"
+  }
+]
