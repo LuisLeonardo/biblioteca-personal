@@ -35,6 +35,7 @@ document.addEventListener(
    ========================================================= */
 
 async function iniciar() {
+
     configurarEventos();
 
     await cargarCatalogos();
@@ -50,6 +51,7 @@ async function iniciar() {
    ========================================================= */
 
 async function cargarCatalogos() {
+
     mostrarEstadoCarga();
 
     const resultados =
@@ -157,10 +159,12 @@ async function cargarCatalogos() {
     );
 }
 
+
 async function cargarJSON(
     ruta,
     nombre
 ) {
+
     const respuesta =
         await fetch(
             ruta,
@@ -169,20 +173,28 @@ async function cargarJSON(
             }
         );
 
+
     if (!respuesta.ok) {
+
         throw new Error(
             `No se pudo cargar ${nombre}: ${respuesta.status}`
         );
     }
 
+
     const datos =
         await respuesta.json();
 
-    if (!Array.isArray(datos)) {
+
+    if (
+        !Array.isArray(datos)
+    ) {
+
         throw new Error(
             `${nombre} no contiene un arreglo válido.`
         );
     }
+
 
     return datos;
 }
@@ -197,8 +209,10 @@ function construirCatalogoCompleto(
     matematicas,
     otros
 ) {
+
     const mapa =
         new Map();
+
 
     incorporarCatalogo(
         mapa,
@@ -206,17 +220,20 @@ function construirCatalogoCompleto(
         "economia"
     );
 
+
     incorporarCatalogo(
         mapa,
         matematicas,
         "matematicas"
     );
 
+
     incorporarCatalogo(
         mapa,
         otros,
         "otros"
     );
+
 
     return Array.from(
         mapa.values()
@@ -229,20 +246,24 @@ function incorporarCatalogo(
     materiales,
     disciplina
 ) {
+
     if (
         !Array.isArray(materiales)
     ) {
         return;
     }
 
+
     materiales.forEach(
         material => {
+
             if (
                 !material ||
                 typeof material !== "object"
             ) {
                 return;
             }
+
 
             const id =
                 material.id ||
@@ -251,10 +272,12 @@ function incorporarCatalogo(
                     material.titulo
                 );
 
+
             const linkDrive =
                 obtenerEnlaceDrive(
                     material
                 );
+
 
             mapa.set(
                 id,
@@ -284,12 +307,14 @@ function incorporarCatalogo(
 function construirTextoBusqueda(
     material
 ) {
+
     const autores =
         Array.isArray(
             material.autores
         )
             ? material.autores.join(" ")
             : material.autores || "";
+
 
     return [
         material.titulo || "",
@@ -315,9 +340,11 @@ function configurarEventos() {
         )
         .forEach(
             boton => {
+
                 boton.addEventListener(
                     "click",
                     () => {
+
                         mostrarVista(
                             boton.dataset.vista
                         );
@@ -332,18 +359,24 @@ function configurarEventos() {
             "#busqueda"
         );
 
+
     if (busqueda) {
+
         busqueda.addEventListener(
             "input",
             () => {
+
                 clearTimeout(
                     temporizadorBusqueda
                 );
 
+
                 temporizadorBusqueda =
                     setTimeout(
                         () => {
+
                             renderizarColeccion();
+
                         },
                         150
                     );
@@ -357,7 +390,9 @@ function configurarEventos() {
             "#filtro-disciplina"
         );
 
+
     if (filtro) {
+
         filtro.addEventListener(
             "change",
             renderizarColeccion
@@ -370,7 +405,9 @@ function configurarEventos() {
             "#form-material"
         );
 
+
     if (formulario) {
+
         formulario.addEventListener(
             "submit",
             manejarFormulario
@@ -394,14 +431,20 @@ function manejarClickGlobal(
             "[data-accion='leido']"
         );
 
+
     if (botonLeido) {
 
         const id =
             botonLeido.dataset.id;
 
+
         if (id) {
-            alternarLeido(id);
+
+            alternarLeido(
+                id
+            );
         }
+
 
         return;
     }
@@ -412,28 +455,18 @@ function manejarClickGlobal(
             "[data-accion='eliminar']"
         );
 
+
     if (botonEliminar) {
 
         const id =
             botonEliminar.dataset.id;
 
-        if (id) {
-            eliminarMaterial(id);
-        }
-    }
-}
-
-    const botonEliminar =
-        evento.target.closest(
-            "[data-accion='eliminar']"
-        );
-
-    if (botonEliminar) {
-        const id =
-            botonEliminar.dataset.id;
 
         if (id) {
-            eliminarMaterial(id);
+
+            eliminarMaterial(
+                id
+            );
         }
     }
 }
@@ -446,6 +479,7 @@ function manejarClickGlobal(
 function mostrarVista(
     vista
 ) {
+
     vistaActual =
         vista;
 
@@ -456,6 +490,7 @@ function mostrarVista(
         )
         .forEach(
             seccion => {
+
                 seccion.classList.remove(
                     "activa"
                 );
@@ -468,7 +503,9 @@ function mostrarVista(
             `vista-${vista}`
         );
 
+
     if (seccionActiva) {
+
         seccionActiva.classList.add(
             "activa"
         );
@@ -481,6 +518,7 @@ function mostrarVista(
         )
         .forEach(
             boton => {
+
                 boton.classList.remove(
                     "activo"
                 );
@@ -493,7 +531,9 @@ function mostrarVista(
             `.nav-btn[data-vista="${vista}"]`
         );
 
+
     if (botonActivo) {
+
         botonActivo.classList.add(
             "activo"
         );
@@ -503,6 +543,7 @@ function mostrarVista(
     if (
         vista === "coleccion"
     ) {
+
         renderizarColeccion();
     }
 
@@ -510,6 +551,7 @@ function mostrarVista(
     if (
         vista === "leidos"
     ) {
+
         renderizarLeidos();
     }
 }
@@ -520,10 +562,12 @@ function mostrarVista(
    ========================================================= */
 
 function renderizarColeccion() {
+
     const contenedor =
         document.querySelector(
             "#lista-coleccion"
         );
+
 
     if (!contenedor) {
         return;
@@ -534,6 +578,7 @@ function renderizarColeccion() {
         document.querySelector(
             "#busqueda"
         );
+
 
     const filtro =
         document.querySelector(
@@ -579,6 +624,7 @@ function renderizarColeccion() {
     if (
         resultados.length === 0
     ) {
+
         contenedor.innerHTML = `
             <div class="estado-vacio">
                 <h3>No se encontraron materiales</h3>
@@ -587,6 +633,7 @@ function renderizarColeccion() {
                 </p>
             </div>
         `;
+
 
         return;
     }
@@ -606,10 +653,12 @@ function renderizarColeccion() {
    ========================================================= */
 
 function renderizarLeidos() {
+
     const contenedor =
         document.querySelector(
             "#lista-leidos"
         );
+
 
     if (!contenedor) {
         return;
@@ -628,6 +677,7 @@ function renderizarLeidos() {
     if (
         materialesLeidos.length === 0
     ) {
+
         contenedor.innerHTML = `
             <div class="estado-vacio">
                 <h3>Aún no hay materiales leídos</h3>
@@ -636,6 +686,7 @@ function renderizarLeidos() {
                 </p>
             </div>
         `;
+
 
         return;
     }
@@ -706,17 +757,17 @@ function crearFichaMaterial(
 
 
     const botonEliminar = `
-    <button
-        class="boton boton-eliminar"
-        type="button"
-        data-accion="eliminar"
-        data-id="${escapeHTML(
-            material.id
-        )}"
-    >
-        Eliminar
-    </button>
-`;
+        <button
+            class="boton boton-eliminar"
+            type="button"
+            data-accion="eliminar"
+            data-id="${escapeHTML(
+                material.id
+            )}"
+        >
+            Eliminar
+        </button>
+    `;
 
 
     return `
@@ -838,9 +889,10 @@ async function alternarLeido(
                             "application/json"
                     },
 
-                    body: JSON.stringify({
-                        id
-                    })
+                    body:
+                        JSON.stringify({
+                            id
+                        })
                 }
             );
 
@@ -849,7 +901,10 @@ async function alternarLeido(
             await respuesta.json();
 
 
-        if (!respuesta.ok) {
+        if (
+            !respuesta.ok
+        ) {
+
             throw new Error(
                 datos.error ||
                 "No se pudo actualizar el estado de lectura."
@@ -862,12 +917,15 @@ async function alternarLeido(
                 datos.leidos
             )
         ) {
+
             leidos = [
                 ...new Set(
                     datos.leidos
                 )
             ];
+
         } else {
+
             actualizarLeidosLocalmente(
                 id
             );
@@ -880,10 +938,14 @@ async function alternarLeido(
         if (
             vistaActual === "leidos"
         ) {
+
             renderizarLeidos();
+
         } else {
+
             renderizarColeccion();
         }
+
 
     } catch (error) {
 
@@ -892,9 +954,11 @@ async function alternarLeido(
             error
         );
 
+
         alert(
             "No se pudo actualizar el estado de lectura."
         );
+
 
     } finally {
 
@@ -910,14 +974,21 @@ function actualizarLeidosLocalmente(
 ) {
 
     const indice =
-        leidos.indexOf(id);
+        leidos.indexOf(
+            id
+        );
 
 
     if (
         indice === -1
     ) {
-        leidos.push(id);
+
+        leidos.push(
+            id
+        );
+
     } else {
+
         leidos.splice(
             indice,
             1
@@ -925,12 +996,11 @@ function actualizarLeidosLocalmente(
     }
 
 
-    leidos =
-        [
-            ...new Set(
-                leidos
-            )
-        ];
+    leidos = [
+        ...new Set(
+            leidos
+        )
+    ];
 }
 
 
@@ -997,10 +1067,12 @@ async function manejarFormulario(
         !autoresTexto ||
         !tipo
     ) {
+
         mostrarMensajeFormulario(
             "Completa los campos obligatorios.",
             true
         );
+
 
         return;
     }
@@ -1028,6 +1100,7 @@ async function manejarFormulario(
                 true
             );
 
+
             return;
         }
     }
@@ -1046,6 +1119,7 @@ async function manejarFormulario(
                 "Los materiales digitales necesitan un enlace de Drive.",
                 true
             );
+
 
             return;
         }
@@ -1068,6 +1142,7 @@ async function manejarFormulario(
                 "El enlace debe ser de Google Drive o Google Docs.",
                 true
             );
+
 
             return;
         }
@@ -1092,6 +1167,7 @@ async function manejarFormulario(
             "Ese título ya existe en la biblioteca.",
             true
         );
+
 
         return;
     }
@@ -1143,7 +1219,9 @@ async function manejarFormulario(
 
 
     if (boton) {
+
         boton.disabled = true;
+
         boton.textContent =
             "Guardando...";
     }
@@ -1174,7 +1252,10 @@ async function manejarFormulario(
             await respuesta.json();
 
 
-        if (!respuesta.ok) {
+        if (
+            !respuesta.ok
+        ) {
+
             throw new Error(
                 datos.error ||
                 "No se pudo guardar el material."
@@ -1217,6 +1298,7 @@ async function manejarFormulario(
 
         renderizarColeccion();
 
+
     } catch (error) {
 
         console.error(
@@ -1230,10 +1312,13 @@ async function manejarFormulario(
             true
         );
 
+
     } finally {
 
         if (boton) {
+
             boton.disabled = false;
+
             boton.textContent =
                 "Guardar material";
         }
@@ -1242,16 +1327,7 @@ async function manejarFormulario(
 
 
 /* =========================================================
-   GENERACIÓN DE IDs
-   =========================================================
-
-   Formato:
-
-   autor-001
-   autor-002
-   banco-de-mexico-001
-
-   Si hay varios autores, se usa el primer autor.
+   GENERACIÓN DE IDS
    ========================================================= */
 
 async function generarIdUnico(
@@ -1273,13 +1349,10 @@ async function generarIdUnico(
 
 
     if (!baseAutor) {
+
         baseAutor =
             "material";
     }
-
-
-    const base =
-        baseAutor;
 
 
     let numero =
@@ -1298,7 +1371,7 @@ async function generarIdUnico(
 
 
         const candidato =
-            `${base}-${numeroTexto}`;
+            `${baseAutor}-${numeroTexto}`;
 
 
         const existe =
@@ -1310,6 +1383,7 @@ async function generarIdUnico(
 
 
         if (!existe) {
+
             return candidato;
         }
 
@@ -1321,12 +1395,6 @@ async function generarIdUnico(
 
 /* =========================================================
    ELIMINAR MATERIAL
-   =========================================================
-
-   El Worker actual todavía NO tiene endpoint DELETE.
-
-   Por eso esta función queda preparada, pero no intenta
-   borrar algo que el servidor todavía no puede borrar.
    ========================================================= */
 
 async function eliminarMaterial(
@@ -1363,8 +1431,11 @@ async function eliminarMaterial(
 
 
     if (boton) {
+
         boton.disabled = true;
-        boton.textContent = "Eliminando...";
+
+        boton.textContent =
+            "Eliminando...";
     }
 
 
@@ -1374,7 +1445,9 @@ async function eliminarMaterial(
             await fetch(
                 `${API_BASE}/material/${encodeURIComponent(
                     material.disciplina
-                )}/${encodeURIComponent(id)}`,
+                )}/${encodeURIComponent(
+                    id
+                )}`,
                 {
                     method: "DELETE"
                 }
@@ -1385,7 +1458,10 @@ async function eliminarMaterial(
             await respuesta.json();
 
 
-        if (!respuesta.ok) {
+        if (
+            !respuesta.ok
+        ) {
+
             throw new Error(
                 datos.error ||
                 "No se pudo eliminar el material."
@@ -1413,8 +1489,11 @@ async function eliminarMaterial(
         if (
             vistaActual === "leidos"
         ) {
+
             renderizarLeidos();
+
         } else {
+
             renderizarColeccion();
         }
 
@@ -1426,14 +1505,18 @@ async function eliminarMaterial(
             error
         );
 
+
         alert(
             "No se pudo eliminar el material."
         );
 
 
         if (boton) {
+
             boton.disabled = false;
-            boton.textContent = "Eliminar";
+
+            boton.textContent =
+                "Eliminar";
         }
     }
 }
@@ -1483,6 +1566,7 @@ function obtenerEnlaceDrive(
                 enlace
             )
         ) {
+
             return enlace;
         }
     }
@@ -1519,6 +1603,7 @@ function urlSegura(
             enlace.protocol !== "http:" &&
             enlace.protocol !== "https:"
         ) {
+
             return "";
         }
 
@@ -1680,12 +1765,14 @@ function actualizarContadores() {
 
 
     if (contadorTotal) {
+
         contadorTotal.textContent =
             total;
     }
 
 
     if (contadorLeidos) {
+
         contadorLeidos.textContent =
             totalLeidos;
     }
