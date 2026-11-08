@@ -1,58 +1,87 @@
+/* =====================================================
+   BIBLIOTECA PERSONAL · EDICIÓN "DINÁMICA ESTRUCTURAL"
+   Gama completa de cafés: espresso, castaño, cobre y
+   pergamino. Pensada para un economista heterodoxo de
+   tradición poskeynesiana: archivo académico, tipografía
+   humanista, numeración romana y una matriz de
+   insumo-producto como emblema del encabezado.
+
+   Compatibilidad total: mismos selectores, IDs y clases
+   que las versiones anteriores. Sin url() ni @import.
+   No requiere cambios en index.html ni en app.js.
+===================================================== */
+
+
 /* =================================
-   CONFIGURACIÓN GENERAL
-   (mismos selectores, IDs y clases que tu CSS original;
-   sin url() ni @import: ninguna ruta entre carpetas cambia)
+   PALETA Y VARIABLES
 ================================= */
 
 :root {
-    --fondo: #eceee9;
-    --superficie: #ffffff;
-    --superficie-2: #f6f7f4;
-    --texto: #18201b;
-    --texto-secundario: #626d65;
-    --principal: #1f5a3d;
-    --principal-hover: #164430;
-    --principal-suave: #e3efe7;
-    --sobre-principal: #ffffff;
-    --borde: #dde1d8;
-    --borde-fuerte: #bcc6b9;
-    --leido: #d6ebdc;
-    --leido-texto: #1d5a34;
-    --encabezado-fondo: #17402c;
-    --encabezado-texto: #f1f6f2;
-    --anillo: rgba(31, 90, 61, 0.22);
-    --sombra: 0 1px 2px rgba(20, 40, 28, 0.06), 0 10px 28px -14px rgba(20, 40, 28, 0.25);
-    --peligro: #a63a2c;
-    --peligro-suave: #f8e7e4;
-    --radio: 12px;
-    --radio-chico: 8px;
+    --fondo: #e9ddc7;
+    --superficie: #f8f1e3;
+    --superficie-2: #f0e6d2;
+    --texto: #2b1a10;
+    --texto-secundario: #6f5742;
+    --principal: #7a4220;
+    --principal-hover: #55290f;
+    --principal-suave: #ecdcc3;
+    --sobre-principal: #fbf4e6;
+    --borde: #d8c6a8;
+    --borde-fuerte: #b59d7b;
+    --leido: #5a3219;
+    --leido-texto: #fbf4e6;
+    --encabezado-fondo: #25150b;
+    --encabezado-texto: #f3e7d0;
+    --anillo: rgba(122, 66, 32, 0.26);
+    --peligro: #9c2f1e;
+    --peligro-suave: #f2dcd3;
+
+    --acento: #96501f;
+    --cobre: #c8884a;
+    --cinta: #cbb593;
+
+    --sombra: 0 1px 2px rgba(60, 35, 15, 0.1), 0 14px 30px -16px rgba(60, 35, 15, 0.42);
+
+    --radio: 4px;
+    --radio-chico: 3px;
+
     --fuente-texto: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
-    --fuente-titulo: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --fuente-titulo: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", "Hoefler Text", Georgia, serif;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --fondo: #0f1411;
-        --superficie: #171e19;
-        --superficie-2: #1c251f;
-        --texto: #e8ede9;
-        --texto-secundario: #9aa59d;
-        --principal: #6fcf97;
-        --principal-hover: #8adcab;
-        --principal-suave: #1f3a2b;
-        --sobre-principal: #0c1a12;
-        --borde: #26302a;
-        --borde-fuerte: #3a4a40;
-        --leido: #1f3a2b;
-        --leido-texto: #8fdcae;
-        --encabezado-fondo: #0b2217;
-        --encabezado-texto: #e8f1ea;
-        --anillo: rgba(111, 207, 151, 0.28);
+        --fondo: #1a110a;
+        --superficie: #251a11;
+        --superficie-2: #2e2116;
+        --texto: #efe2cc;
+        --texto-secundario: #b19a7e;
+        --principal: #d9a56b;
+        --principal-hover: #ecbf88;
+        --principal-suave: #3a2918;
+        --sobre-principal: #1a0f07;
+        --borde: #3a2a1c;
+        --borde-fuerte: #5a4430;
+        --leido: #d9a56b;
+        --leido-texto: #1a0f07;
+        --encabezado-fondo: #120a05;
+        --encabezado-texto: #f0e3cb;
+        --anillo: rgba(217, 165, 107, 0.32);
         --peligro: #ff9d8e;
-        --peligro-suave: #3a1f1b;
-        --sombra: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 28px -14px rgba(0, 0, 0, 0.6);
+        --peligro-suave: #3a201b;
+
+        --acento: #e0a46c;
+        --cobre: #d9a56b;
+        --cinta: #5a4430;
+
+        --sombra: 0 1px 2px rgba(0, 0, 0, 0.55), 0 14px 30px -16px rgba(0, 0, 0, 0.9);
     }
 }
+
+
+/* =================================
+   BASE
+================================= */
 
 * {
     box-sizing: border-box;
@@ -65,12 +94,19 @@ html {
 }
 
 body {
-    background: var(--fondo);
+    background-color: var(--fondo);
+    background-image: radial-gradient(circle at 50% -8%, rgba(255, 250, 235, 0.55), transparent 55%);
     color: var(--texto);
     font-family: var(--fuente-texto);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-image: radial-gradient(circle at 50% -8%, rgba(217, 165, 107, 0.07), transparent 55%);
+    }
 }
 
 ::selection {
@@ -79,51 +115,125 @@ body {
 }
 
 :focus-visible {
-    outline: 3px solid var(--principal);
+    outline: 3px solid var(--cobre);
     outline-offset: 2px;
 }
 
 
 /* =================================
    ENCABEZADO
-   Lo memorable: un cuaderno rayado en verde profundo
+   Espresso con una matriz de insumo-producto:
+   la diagonal llena y flujos entre sectores
 ================================= */
 
 .encabezado {
+    position: relative;
+    overflow: hidden;
     background-color: var(--encabezado-fondo);
     background-image:
-        repeating-linear-gradient(
-            to bottom,
-            transparent 0,
-            transparent 35px,
-            rgba(255, 255, 255, 0.07) 35px,
-            rgba(255, 255, 255, 0.07) 36px
-        ),
-        linear-gradient(90deg, transparent 0, transparent calc(8% - 18px), rgba(243, 229, 139, 0.35) calc(8% - 18px), rgba(243, 229, 139, 0.35) calc(8% - 17px), transparent calc(8% - 17px));
+        radial-gradient(ellipse 55% 130% at 0% 0%, rgba(200, 136, 74, 0.2), transparent 65%),
+        radial-gradient(ellipse 45% 100% at 100% 100%, rgba(122, 66, 32, 0.35), transparent 70%),
+        repeating-linear-gradient(0deg, rgba(255, 235, 200, 0.018) 0, rgba(255, 235, 200, 0.018) 1px, transparent 1px, transparent 4px);
     color: var(--encabezado-texto);
-    padding: 52px 8% 44px;
+    border-bottom: 3px double rgba(200, 136, 74, 0.6);
+    padding: 68px 8% 58px;
+}
+
+/* La matriz: 6 x 6 sectores, corchetes y celdas con flujos */
+.encabezado::after {
+    content: "";
+    position: absolute;
+    right: 8%;
+    top: 50%;
+    width: 216px;
+    height: 216px;
+    transform: translateY(-50%);
+    background:
+        /* corchetes de la matriz */
+        linear-gradient(var(--cobre), var(--cobre)) 0 0 / 12px 2px no-repeat,
+        linear-gradient(var(--cobre), var(--cobre)) 100% 0 / 12px 2px no-repeat,
+        linear-gradient(var(--cobre), var(--cobre)) 0 100% / 12px 2px no-repeat,
+        linear-gradient(var(--cobre), var(--cobre)) 100% 100% / 12px 2px no-repeat,
+        linear-gradient(var(--cobre), var(--cobre)) 0 0 / 2px 100% no-repeat,
+        linear-gradient(var(--cobre), var(--cobre)) 100% 0 / 2px 100% no-repeat,
+        /* diagonal principal */
+        linear-gradient(rgba(200, 136, 74, 0.55), rgba(200, 136, 74, 0.55)) 0 0 / 36px 36px no-repeat,
+        linear-gradient(rgba(200, 136, 74, 0.55), rgba(200, 136, 74, 0.55)) 36px 36px / 36px 36px no-repeat,
+        linear-gradient(rgba(200, 136, 74, 0.55), rgba(200, 136, 74, 0.55)) 72px 72px / 36px 36px no-repeat,
+        linear-gradient(rgba(200, 136, 74, 0.55), rgba(200, 136, 74, 0.55)) 108px 108px / 36px 36px no-repeat,
+        linear-gradient(rgba(200, 136, 74, 0.55), rgba(200, 136, 74, 0.55)) 144px 144px / 36px 36px no-repeat,
+        linear-gradient(rgba(200, 136, 74, 0.55), rgba(200, 136, 74, 0.55)) 180px 180px / 36px 36px no-repeat,
+        /* flujos entre sectores */
+        linear-gradient(rgba(200, 136, 74, 0.2), rgba(200, 136, 74, 0.2)) 36px 0 / 36px 36px no-repeat,
+        linear-gradient(rgba(200, 136, 74, 0.15), rgba(200, 136, 74, 0.15)) 0 72px / 36px 36px no-repeat,
+        linear-gradient(rgba(200, 136, 74, 0.26), rgba(200, 136, 74, 0.26)) 108px 36px / 36px 36px no-repeat,
+        linear-gradient(rgba(200, 136, 74, 0.18), rgba(200, 136, 74, 0.18)) 72px 144px / 36px 36px no-repeat,
+        linear-gradient(rgba(200, 136, 74, 0.2), rgba(200, 136, 74, 0.2)) 180px 72px / 36px 36px no-repeat,
+        linear-gradient(rgba(200, 136, 74, 0.3), rgba(200, 136, 74, 0.3)) 144px 180px / 36px 36px no-repeat,
+        linear-gradient(rgba(200, 136, 74, 0.14), rgba(200, 136, 74, 0.14)) 180px 108px / 36px 36px no-repeat,
+        linear-gradient(rgba(200, 136, 74, 0.2), rgba(200, 136, 74, 0.2)) 36px 180px / 36px 36px no-repeat,
+        linear-gradient(rgba(200, 136, 74, 0.22), rgba(200, 136, 74, 0.22)) 108px 144px / 36px 36px no-repeat,
+        /* cuadrícula */
+        repeating-linear-gradient(90deg, rgba(243, 231, 208, 0.1) 0, rgba(243, 231, 208, 0.1) 1px, transparent 1px, transparent 36px),
+        repeating-linear-gradient(0deg, rgba(243, 231, 208, 0.1) 0, rgba(243, 231, 208, 0.1) 1px, transparent 1px, transparent 36px);
+    opacity: 0.95;
+    pointer-events: none;
 }
 
 .encabezado h1 {
+    position: relative;
+    z-index: 1;
     font-family: var(--fuente-titulo);
-    font-size: clamp(32px, 5vw, 52px);
-    font-weight: 700;
-    letter-spacing: -1.5px;
-    line-height: 1.08;
-    max-width: 18ch;
+    font-size: clamp(44px, 8vw, 88px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    max-width: 14ch;
+}
+
+.encabezado h1::before {
+    content: "Dinámica estructural · Colección personal";
+    display: block;
+    font-family: var(--fuente-texto);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--cobre);
+    margin-bottom: 20px;
+}
+
+.encabezado h1::after {
+    content: "";
+    display: block;
+    width: 72px;
+    height: 2px;
+    margin-top: 24px;
+    background: var(--cobre);
 }
 
 .encabezado p {
+    position: relative;
+    z-index: 1;
     color: var(--encabezado-texto);
-    opacity: 0.72;
-    font-size: 15px;
-    margin-top: 12px;
+    opacity: 0.82;
+    font-family: var(--fuente-titulo);
+    font-style: italic;
+    font-size: clamp(16px, 2.1vw, 19px);
+    margin-top: 18px;
     max-width: 60ch;
+}
+
+.encabezado p::before {
+    content: "— ";
+    color: var(--cobre);
+    font-style: normal;
 }
 
 
 /* =================================
    NAVEGACIÓN
+   Pestañas de carpeta de archivo
 ================================= */
 
 .navegacion {
@@ -131,13 +241,11 @@ body {
     top: 0;
     z-index: 10;
     display: flex;
-    gap: 28px;
-    padding: 0 8%;
-    background: var(--superficie);
-    background: color-mix(in srgb, var(--superficie) 88%, transparent);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--borde);
+    align-items: flex-end;
+    gap: 6px;
+    padding: 12px 8% 0;
+    background: var(--superficie-2);
+    box-shadow: inset 0 -1px 0 var(--borde-fuerte), 0 10px 20px -18px rgba(60, 35, 15, 0.6);
     overflow-x: auto;
     scrollbar-width: none;
 }
@@ -147,27 +255,39 @@ body {
 }
 
 .nav-btn {
-    background: none;
-    border: none;
+    background: var(--principal-suave);
+    border: 1px solid var(--borde);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
     color: var(--texto-secundario);
     cursor: pointer;
-    padding: 17px 2px;
+    padding: 11px 24px 10px;
     font: inherit;
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     white-space: nowrap;
-    border-bottom: 3px solid transparent;
-    transition: color 0.18s, border-color 0.18s;
+    transition: color 0.18s, background 0.18s, border-color 0.18s, padding 0.18s;
 }
 
 .nav-btn:hover {
     color: var(--principal);
-    border-bottom-color: var(--borde-fuerte);
+    background: var(--superficie);
+    border-color: var(--borde-fuerte);
+}
+
+.nav-btn:focus-visible {
+    outline-offset: -3px;
 }
 
 .nav-btn.activo {
-    color: var(--principal);
-    border-bottom-color: var(--principal);
+    color: var(--texto);
+    background: var(--fondo);
+    border-color: var(--borde-fuerte);
+    padding-top: 14px;
     font-weight: 700;
+    box-shadow: inset 0 3px 0 var(--acento);
 }
 
 
@@ -178,7 +298,7 @@ body {
 .contenedor {
     max-width: 1100px;
     min-height: 65vh;
-    margin: 40px auto;
+    margin: 48px auto;
     padding: 0 25px;
 }
 
@@ -188,13 +308,13 @@ body {
 
 .vista.activa {
     display: block;
-    animation: entrar-vista 0.28s ease-out;
+    animation: entrar-vista 0.34s ease-out;
 }
 
 @keyframes entrar-vista {
     from {
         opacity: 0;
-        transform: translateY(6px);
+        transform: translateY(8px);
     }
     to {
         opacity: 1;
@@ -204,11 +324,15 @@ body {
 
 .vista h2 {
     font-family: var(--fuente-titulo);
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 24px;
-    letter-spacing: -0.8px;
-    line-height: 1.2;
+    font-size: clamp(27px, 4vw, 36px);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    padding-bottom: 16px;
+    margin-bottom: 30px;
+    background:
+        linear-gradient(var(--acento), var(--acento)) left bottom / 56px 3px no-repeat,
+        linear-gradient(var(--borde-fuerte), var(--borde-fuerte)) left bottom / 100% 1px no-repeat;
 }
 
 
@@ -219,31 +343,49 @@ body {
 #busqueda,
 #filtro-disciplina {
     background: var(--superficie);
-    border: 1px solid var(--borde);
+    border: 1px solid var(--borde-fuerte);
     border-radius: var(--radio);
-    padding: 13px 16px;
+    padding: 14px 17px;
     font: inherit;
     font-size: 14px;
     color: var(--texto);
     outline: none;
-    margin-bottom: 24px;
+    margin-bottom: 26px;
     vertical-align: top;
+    box-shadow: inset 0 2px 3px rgba(60, 35, 15, 0.07);
     transition: border-color 0.18s, box-shadow 0.18s;
 }
 
 #busqueda {
     width: 65%;
     margin-right: 10px;
+    font-family: var(--fuente-titulo);
+    font-size: 16px;
 }
 
 #busqueda::placeholder {
     color: var(--texto-secundario);
-    opacity: 0.8;
+    font-style: italic;
+    opacity: 0.85;
+}
+
+#filtro-disciplina,
+#form-material select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 42px;
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--acento) 50%),
+        linear-gradient(135deg, var(--acento) 50%, transparent 50%);
+    background-position: calc(100% - 22px) 50%, calc(100% - 16px) 50%;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
 }
 
 #filtro-disciplina {
     width: 30%;
     cursor: pointer;
+    font-weight: 600;
 }
 
 #busqueda:focus,
@@ -258,7 +400,8 @@ select:focus {
 
 /* =================================
    TARJETAS DE MATERIALES
-   La barra lateral indica el estado: gris = pendiente, verde = leído
+   Hojas de archivo con margen doble y numeración romana.
+   Cinta lateral: arena = pendiente · castaño = leído
 ================================= */
 
 .lista-materiales,
@@ -266,48 +409,97 @@ select:focus {
 #lista-leidos {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
+    counter-reset: libro;
 }
 
 .mensaje-vacio {
-    padding: 40px 20px;
+    padding: 52px 24px;
     text-align: center;
     color: var(--texto-secundario);
-    font-size: 14px;
+    font-family: var(--fuente-titulo);
+    font-style: italic;
+    font-size: 16px;
     border: 1px dashed var(--borde-fuerte);
     border-radius: var(--radio);
+    background: var(--superficie-2);
+}
+
+.mensaje-vacio::before {
+    content: "⁂";
+    display: block;
+    font-style: normal;
+    font-size: 26px;
+    color: var(--acento);
+    margin-bottom: 8px;
 }
 
 .material-card {
+    counter-increment: libro;
     position: relative;
     overflow: hidden;
-    background: var(--superficie);
+    background-color: var(--superficie);
+    /* margen doble de cuaderno contable */
+    background-image:
+        linear-gradient(90deg, transparent 70px, var(--borde) 70px, var(--borde) 71px, transparent 71px, transparent 74px, var(--borde) 74px, var(--borde) 75px, transparent 75px);
     border: 1px solid var(--borde);
     border-radius: var(--radio);
-    padding: 18px 22px 18px 26px;
+    padding: 22px 26px 22px 98px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    gap: 22px;
+    box-shadow: 0 1px 0 rgba(255, 250, 235, 0.5) inset, 0 2px 6px -3px rgba(60, 35, 15, 0.22);
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s, background-color 0.2s;
 }
 
 .material-card::before {
     content: "";
     position: absolute;
     inset: 0 auto 0 0;
-    width: 5px;
-    background: var(--borde-fuerte);
+    width: 6px;
+    background: var(--cinta);
     transition: background 0.25s;
 }
 
+/* Material leído: papel envejecido y cinta castaña */
+.material-card:has(.boton-leido-activo) {
+    background-color: var(--superficie-2);
+}
+
 .material-card:has(.boton-leido-activo)::before {
-    background: var(--leido-texto);
+    background: var(--principal);
+}
+
+/* Numeración romana en el margen */
+.material-card::after {
+    content: counter(libro, upper-roman);
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    width: 58px;
+    transform: translateY(-50%);
+    text-align: center;
+    font-family: var(--fuente-titulo);
+    font-style: italic;
+    font-size: 19px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--texto-secundario);
+    opacity: 0.8;
+    pointer-events: none;
+    transition: color 0.2s, opacity 0.2s;
+}
+
+.material-card:has(.boton-leido-activo)::after {
+    color: var(--principal);
+    opacity: 1;
 }
 
 .material-card:hover {
-    border-color: var(--borde-fuerte);
+    border-color: var(--principal);
     box-shadow: var(--sombra);
+    transform: translateY(-2px);
 }
 
 .material-contenido {
@@ -316,39 +508,56 @@ select:focus {
 
 .material-disciplina {
     display: inline-block;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--principal);
-    background: var(--principal-suave);
-    padding: 2px 10px;
-    border-radius: 999px;
-    margin-bottom: 8px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--acento);
+    background: none;
+    padding: 0;
+    margin-bottom: 9px;
+}
+
+.material-disciplina::after {
+    content: "";
+    display: inline-block;
+    width: 30px;
+    height: 1px;
+    margin-left: 10px;
+    vertical-align: middle;
+    background: var(--acento);
+    opacity: 0.7;
 }
 
 .material-titulo {
     font-family: var(--fuente-titulo);
-    font-size: 18px;
+    font-size: clamp(19px, 2.4vw, 23px);
     font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 4px;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin-bottom: 5px;
     overflow-wrap: anywhere;
 }
 
 .material-autores {
-    font-size: 14px;
+    font-family: var(--fuente-titulo);
+    font-style: italic;
+    font-size: 15px;
 }
 
 .material-datos {
     color: var(--texto-secundario);
-    font-size: 13px;
-    margin-top: 2px;
+    font-size: 12.5px;
+    font-variant-numeric: oldstyle-nums;
+    letter-spacing: 0.02em;
+    margin-top: 5px;
 }
 
 .material-acciones {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 9px;
     flex-shrink: 0;
 }
 
@@ -361,13 +570,15 @@ select:focus {
     display: inline-block;
     background: var(--superficie-2);
     color: var(--texto-secundario);
-    border: 1px solid var(--borde);
-    border-radius: 999px;
-    padding: 8px 15px;
+    border: 1px solid var(--borde-fuerte);
+    border-radius: var(--radio-chico);
+    padding: 9px 16px;
     cursor: pointer;
     font: inherit;
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     text-decoration: none;
     line-height: 1.4;
     transition: background 0.18s, color 0.18s, border-color 0.18s, transform 0.12s;
@@ -380,14 +591,14 @@ select:focus {
 .boton-leido:hover {
     background: var(--principal-suave);
     color: var(--principal);
-    border-color: var(--borde-fuerte);
+    border-color: var(--principal);
 }
 
 .boton-leido-activo,
 .boton-leido-activo:hover {
     background: var(--leido);
     color: var(--leido-texto);
-    border-color: transparent;
+    border-color: var(--leido);
 }
 
 .boton-leido-activo::before {
@@ -414,6 +625,7 @@ select:focus {
 .boton-eliminar:hover {
     color: var(--peligro);
     background: var(--peligro-suave);
+    border-color: transparent;
 }
 
 
@@ -423,79 +635,119 @@ select:focus {
 
 .contador-resultados {
     color: var(--texto-secundario);
-    font-size: 13px;
-    margin: -8px 0 14px;
+    font-family: var(--fuente-titulo);
+    font-style: italic;
+    font-size: 14px;
+    font-variant-numeric: oldstyle-nums;
+    margin: -8px 0 16px;
 }
 
 .resumen-leidos {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    max-width: 420px;
+    font-family: var(--fuente-titulo);
+    font-size: 18px;
+    font-weight: 700;
+    font-variant-numeric: oldstyle-nums;
+    margin-bottom: 24px;
+    max-width: 520px;
 }
 
 .progreso {
-    height: 8px;
-    margin-top: 8px;
+    height: 12px;
+    margin-top: 10px;
     background: var(--borde);
-    border-radius: 999px;
+    border: 1px solid var(--borde-fuerte);
+    border-radius: 2px;
     overflow: hidden;
+    box-shadow: inset 0 2px 3px rgba(60, 35, 15, 0.2);
 }
 
 .progreso-barra {
     height: 100%;
-    background: var(--principal);
-    border-radius: 999px;
-    transition: width 0.4s ease;
+    background-color: var(--principal);
+    background-image:
+        linear-gradient(to bottom, rgba(255, 240, 215, 0.3), transparent 55%),
+        linear-gradient(90deg, var(--cobre), var(--principal));
+    border-radius: 0;
+    transition: width 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 
 /* =================================
    FORMULARIO
+   Ficha manuscrita con campos subrayados
 ================================= */
 
 #form-material {
     background: var(--superficie);
-    border: 1px solid var(--borde);
+    border: 1px solid var(--borde-fuerte);
+    border-top: 4px solid var(--acento);
     border-radius: var(--radio);
     box-shadow: var(--sombra);
-    padding: 30px;
-    max-width: 650px;
+    padding: 34px;
+    max-width: 680px;
     display: flex;
     flex-direction: column;
     gap: 9px;
 }
 
+#form-material::before {
+    content: "Registro de nueva obra";
+    display: block;
+    font-family: var(--fuente-titulo);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--texto-secundario);
+    padding-bottom: 12px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid var(--borde);
+}
+
 #form-material label {
-    font-size: 13px;
-    font-weight: 600;
-    margin-top: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--acento);
+    margin-top: 12px;
 }
 
 #form-material input,
 #form-material textarea,
 #form-material select {
     width: 100%;
-    padding: 12px 14px;
-    border: 1px solid var(--borde);
-    border-radius: var(--radio-chico);
-    background: var(--superficie-2);
+    padding: 12px 13px;
+    border: 1px solid transparent;
+    border-bottom: 2px solid var(--borde-fuerte);
+    border-radius: var(--radio-chico) var(--radio-chico) 0 0;
+    background-color: var(--superficie-2);
     color: var(--texto);
     font: inherit;
-    font-size: 14px;
+    font-size: 15px;
     outline: none;
-    transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+    transition: border-color 0.18s, background-color 0.18s, box-shadow 0.18s;
+}
+
+#form-material textarea {
+    min-height: 104px;
+    border-radius: var(--radio-chico);
+    border: 1px solid var(--borde);
+    border-bottom: 2px solid var(--borde-fuerte);
+    resize: vertical;
 }
 
 #form-material input:focus,
 #form-material textarea:focus,
 #form-material select:focus {
-    background: var(--superficie);
+    background-color: var(--superficie);
+    border-bottom-color: var(--principal);
+    box-shadow: 0 4px 0 -2px var(--anillo);
 }
 
-#form-material textarea {
-    min-height: 100px;
-    resize: vertical;
+#form-material input::placeholder,
+#form-material textarea::placeholder {
+    color: var(--texto-secundario);
+    font-style: italic;
+    opacity: 0.7;
 }
 
 #btn-guardar {
@@ -503,13 +755,16 @@ select:focus {
     color: var(--sobre-principal);
     border: none;
     border-radius: var(--radio-chico);
-    padding: 14px;
-    margin-top: 22px;
+    padding: 16px;
+    margin-top: 26px;
     cursor: pointer;
     font: inherit;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
-    transition: background 0.18s, transform 0.12s;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    box-shadow: 0 10px 20px -12px var(--principal), inset 0 1px 0 rgba(255, 240, 215, 0.2);
+    transition: background 0.18s, transform 0.12s, box-shadow 0.18s;
 }
 
 #btn-guardar:hover {
@@ -526,7 +781,7 @@ select:focus {
 
 #mensaje-formulario {
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--principal);
     margin-top: 8px;
     min-height: 1.6em;
@@ -535,46 +790,70 @@ select:focus {
 
 /* =================================
    PIE DE PÁGINA
+   Cierra la página con el mismo espresso del encabezado
 ================================= */
 
 .pie {
-    border-top: 1px solid var(--borde);
-    padding: 26px 8%;
-    color: var(--texto-secundario);
-    font-size: 12px;
+    background: var(--encabezado-fondo);
+    border-top: 3px double rgba(200, 136, 74, 0.6);
+    padding: 34px 8% 40px;
+    color: var(--encabezado-texto);
+    opacity: 1;
+    font-family: var(--fuente-titulo);
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 0.06em;
     text-align: center;
+}
+
+.pie p {
+    opacity: 0.75;
+}
+
+.pie::before {
+    content: "⁂";
+    display: block;
+    font-style: normal;
+    font-size: 24px;
+    color: var(--cobre);
+    margin-bottom: 8px;
 }
 
 
 /* =================================
-   DISEÑO PARA TELÉFONOS
+   DISEÑO PARA TELÉFONOS Y PANTALLAS ESTRECHAS
 ================================= */
+
+@media (max-width: 860px) {
+
+    .encabezado::after {
+        display: none;
+    }
+}
 
 @media (max-width: 650px) {
 
     .encabezado {
-        padding: 36px 6% 30px;
-        background-image: repeating-linear-gradient(
-            to bottom,
-            transparent 0,
-            transparent 35px,
-            rgba(255, 255, 255, 0.07) 35px,
-            rgba(255, 255, 255, 0.07) 36px
-        );
+        padding: 46px 6% 40px;
     }
 
     .navegacion {
-        padding: 0 6%;
-        gap: 22px;
+        padding: 10px 6% 0;
+        gap: 4px;
+    }
+
+    .nav-btn {
+        padding: 10px 16px 9px;
+        font-size: 12px;
+    }
+
+    .nav-btn.activo {
+        padding-top: 12px;
     }
 
     .contenedor {
-        margin: 28px auto;
+        margin: 32px auto;
         padding: 0 16px;
-    }
-
-    .vista h2 {
-        font-size: 24px;
     }
 
     #busqueda,
@@ -587,6 +866,21 @@ select:focus {
     .material-card {
         align-items: flex-start;
         flex-direction: column;
+        background-image: none;
+        padding: 20px 18px 18px 26px;
+    }
+
+    .material-card::after {
+        left: auto;
+        right: 14px;
+        top: 12px;
+        width: auto;
+        transform: none;
+        font-size: 15px;
+    }
+
+    .material-contenido {
+        padding-right: 42px;
     }
 
     .material-acciones {
@@ -595,7 +889,7 @@ select:focus {
     }
 
     #form-material {
-        padding: 20px;
+        padding: 24px 20px;
     }
 }
 
@@ -611,5 +905,37 @@ select:focus {
         animation: none !important;
         transition: none !important;
         scroll-behavior: auto !important;
+    }
+}
+
+
+/* =================================
+   IMPRESIÓN
+================================= */
+
+@media print {
+    .navegacion,
+    #busqueda,
+    #filtro-disciplina,
+    .material-acciones,
+    .encabezado::after {
+        display: none !important;
+    }
+
+    body {
+        background: #fff;
+        color: #000;
+    }
+
+    .encabezado,
+    .pie {
+        background: none;
+        color: #000;
+        border-color: #000;
+    }
+
+    .material-card {
+        break-inside: avoid;
+        box-shadow: none;
     }
 }
