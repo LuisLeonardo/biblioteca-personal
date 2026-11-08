@@ -5,7 +5,10 @@ const RUTAS_API = {
     economia: `${API_BASE}/catalogo/economia`,
     matematicas: `${API_BASE}/catalogo/matematicas`,
     otros: `${API_BASE}/catalogo/otros`,
-    leidos: `${API_BASE}/leidos`
+    leidos: `${API_BASE}/leidos`,
+    radar: `${API_BASE}/radar`,
+    radarSeleccionadas: `${API_BASE}/radar/seleccionadas`,
+    radarSeleccionar: `${API_BASE}/radar/seleccionar`
 };
 
 const DOMINIOS_DRIVE = [
@@ -21,18 +24,23 @@ const NOMBRES_DISCIPLINA = {
 
 let catalogo = [];
 let leidos = [];
+
+let radar = [];
+let radarSeleccionadas = [];
+
 let vistaActual = "coleccion";
 let temporizadorBusqueda = null;
+
+
+/* =========================================================
+   INICIO
+========================================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
     iniciar
 );
 
-
-/* =========================================================
-   INICIO
-   ========================================================= */
 
 async function iniciar() {
 
@@ -48,7 +56,7 @@ async function iniciar() {
 
 /* =========================================================
    CARGA DE DATOS
-   ========================================================= */
+========================================================= */
 
 async function cargarCatalogos() {
 
@@ -202,7 +210,7 @@ async function cargarJSON(
 
 /* =========================================================
    CONSTRUCCIÓN DEL CATÁLOGO
-   ========================================================= */
+========================================================= */
 
 function construirCatalogoCompleto(
     economia,
@@ -330,7 +338,7 @@ function construirTextoBusqueda(
 
 /* =========================================================
    EVENTOS
-   ========================================================= */
+========================================================= */
 
 function configurarEventos() {
 
@@ -415,6 +423,66 @@ function configurarEventos() {
     }
 
 
+    const btnRadar =
+        document.querySelector(
+            "#btn-actualizar-radar"
+        );
+
+
+    if (btnRadar) {
+
+        btnRadar.addEventListener(
+            "click",
+            () => cargarRadar(true)
+        );
+    }
+
+
+    const filtroRadarFuente =
+        document.querySelector(
+            "#filtro-radar-fuente"
+        );
+
+
+    if (filtroRadarFuente) {
+
+        filtroRadarFuente.addEventListener(
+            "change",
+            renderizarRadar
+        );
+    }
+
+
+    const filtroRadarCategoria =
+        document.querySelector(
+            "#filtro-radar-categoria"
+        );
+
+
+    if (filtroRadarCategoria) {
+
+        filtroRadarCategoria.addEventListener(
+            "change",
+            renderizarRadar
+        );
+    }
+
+
+    const filtroRadarOA =
+        document.querySelector(
+            "#filtro-radar-oa"
+        );
+
+
+    if (filtroRadarOA) {
+
+        filtroRadarOA.addEventListener(
+            "change",
+            renderizarRadar
+        );
+    }
+
+
     document.addEventListener(
         "click",
         manejarClickGlobal
@@ -468,13 +536,61 @@ function manejarClickGlobal(
                 id
             );
         }
+
+
+        return;
+    }
+
+
+    const botonSeleccionar =
+        evento.target.closest(
+            "[data-accion='radar-seleccionar']"
+        );
+
+
+    if (botonSeleccionar) {
+
+        const id =
+            botonSeleccionar.dataset.id;
+
+
+        if (id) {
+
+            seleccionarNovedad(
+                id
+            );
+        }
+
+
+        return;
+    }
+
+
+    const botonEliminarSeleccion =
+        evento.target.closest(
+            "[data-accion='radar-eliminar-seleccion']"
+        );
+
+
+    if (botonEliminarSeleccion) {
+
+        const id =
+            botonEliminarSeleccion.dataset.id;
+
+
+        if (id) {
+
+            eliminarNovedadSeleccionada(
+                id
+            );
+        }
     }
 }
 
 
 /* =========================================================
    NAVEGACIÓN
-   ========================================================= */
+========================================================= */
 
 function mostrarVista(
     vista
@@ -554,12 +670,28 @@ function mostrarVista(
 
         renderizarLeidos();
     }
+
+
+    if (
+        vista === "radar"
+    ) {
+
+        cargarRadar();
+    }
+
+
+    if (
+        vista === "seleccionadas"
+    ) {
+
+        cargarSeleccionadas();
+    }
 }
 
 
 /* =========================================================
    COLECCIÓN
-   ========================================================= */
+========================================================= */
 
 function renderizarColeccion() {
 
@@ -650,7 +782,7 @@ function renderizarColeccion() {
 
 /* =========================================================
    LEÍDOS
-   ========================================================= */
+========================================================= */
 
 function renderizarLeidos() {
 
@@ -703,7 +835,7 @@ function renderizarLeidos() {
 
 /* =========================================================
    FICHA DE MATERIAL
-   ========================================================= */
+========================================================= */
 
 function crearFichaMaterial(
     material
@@ -858,8 +990,1067 @@ function crearFichaMaterial(
 
 
 /* =========================================================
+   RADAR ACADÉMICO
+========================================================= */
+
+async function cargarRadar(
+    forzar = false
+) {
+
+    const contenedor =
+        document.querySelector(
+            "#lista-radar"
+        );
+
+
+    const estado =
+        document.querySelector(
+            "#estado-radar"
+        );
+
+
+    if (!contenedor) {
+        return;
+    }
+
+
+    /*
+       Si ya tenemos resultados y no estamos
+       forzando una nueva carga, no hacemos
+       otra petición innecesaria.
+    */
+
+    if (
+        radar.length > 0 &&
+        !forzar
+    ) {
+
+        renderizarFiltrosRadar();
+
+        renderizarRadar();
+
+        return;
+    }
+
+
+    contenedor.innerHTML = `
+        <div class="estado-vacio">
+            <h3>Consultando Radar académico...</h3>
+            <p>
+                Buscando las novedades más recientes.
+            </p>
+        </div>
+    `;
+
+
+    if (estado) {
+
+        estado.textContent =
+            "Actualizando radar...";
+    }
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                RUTAS_API.radar,
+                {
+                    cache: "no-store"
+                }
+            );
+
+
+        const datos =
+            await respuesta.json();
+
+
+        if (
+            !respuesta.ok
+        ) {
+
+            throw new Error(
+                datos.error ||
+                "No se pudo cargar el Radar."
+            );
+        }
+
+
+        radar =
+            Array.isArray(
+                datos.resultados
+            )
+                ? datos.resultados
+                : [];
+
+
+        renderizarFiltrosRadar();
+
+        renderizarRadar();
+
+
+        if (estado) {
+
+            const fecha =
+                datos.actualizado
+                    ? formatearFecha(
+                        datos.actualizado
+                    )
+                    : "sin fecha";
+
+
+            estado.innerHTML = `
+                <strong>
+                    ${radar.length}
+                    ${
+                        radar.length === 1
+                            ? "novedad"
+                            : "novedades"
+                    }
+                </strong>
+
+                · Última actualización:
+                ${escapeHTML(fecha)}
+            `;
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Error cargando Radar:",
+            error
+        );
+
+
+        contenedor.innerHTML = `
+            <div class="estado-vacio">
+                <h3>No se pudo cargar el Radar</h3>
+                <p>
+                    ${escapeHTML(
+                        error.message
+                    )}
+                </p>
+            </div>
+        `;
+
+
+        if (estado) {
+
+            estado.textContent =
+                "Error al actualizar el Radar.";
+        }
+    }
+}
+
+
+/* =========================================================
+   FILTROS DEL RADAR
+========================================================= */
+
+function renderizarFiltrosRadar() {
+
+    const filtroFuente =
+        document.querySelector(
+            "#filtro-radar-fuente"
+        );
+
+
+    const filtroCategoria =
+        document.querySelector(
+            "#filtro-radar-categoria"
+        );
+
+
+    if (
+        !filtroFuente ||
+        !filtroCategoria
+    ) {
+        return;
+    }
+
+
+    const fuentes =
+        [
+            ...new Set(
+                radar
+                    .map(
+                        item =>
+                            item.fuente
+                    )
+                    .filter(Boolean)
+            )
+        ]
+        .sort(
+            (a, b) =>
+                a.localeCompare(
+                    b,
+                    "es"
+                )
+        );
+
+
+    const categorias =
+        [
+            ...new Set(
+                radar
+                    .map(
+                        item =>
+                            item.categoria
+                    )
+                    .filter(Boolean)
+            )
+        ]
+        .sort(
+            (a, b) =>
+                a.localeCompare(
+                    b,
+                    "es"
+                )
+        );
+
+
+    const fuenteActual =
+        filtroFuente.value;
+
+
+    const categoriaActual =
+        filtroCategoria.value;
+
+
+    filtroFuente.innerHTML = `
+        <option value="todas">
+            Todas las fuentes
+        </option>
+
+        ${
+            fuentes
+                .map(
+                    fuente => `
+                        <option
+                            value="${escapeHTML(fuente)}"
+                        >
+                            ${escapeHTML(fuente)}
+                        </option>
+                    `
+                )
+                .join("")
+        }
+    `;
+
+
+    filtroCategoria.innerHTML = `
+        <option value="todas">
+            Todas las categorías
+        </option>
+
+        ${
+            categorias
+                .map(
+                    categoria => `
+                        <option
+                            value="${escapeHTML(categoria)}"
+                        >
+                            ${escapeHTML(
+                                formatearCategoria(
+                                    categoria
+                                )
+                            )}
+                        </option>
+                    `
+                )
+                .join("")
+        }
+    `;
+
+
+    if (
+        fuentes.includes(
+            fuenteActual
+        )
+    ) {
+
+        filtroFuente.value =
+            fuenteActual;
+    }
+
+
+    if (
+        categorias.includes(
+            categoriaActual
+        )
+    ) {
+
+        filtroCategoria.value =
+            categoriaActual;
+    }
+}
+
+
+/* =========================================================
+   RENDERIZAR RADAR
+========================================================= */
+
+function renderizarRadar() {
+
+    const contenedor =
+        document.querySelector(
+            "#lista-radar"
+        );
+
+
+    if (!contenedor) {
+        return;
+    }
+
+
+    const filtroFuente =
+        document.querySelector(
+            "#filtro-radar-fuente"
+        );
+
+
+    const filtroCategoria =
+        document.querySelector(
+            "#filtro-radar-categoria"
+        );
+
+
+    const filtroOA =
+        document.querySelector(
+            "#filtro-radar-oa"
+        );
+
+
+    const fuente =
+        filtroFuente?.value ||
+        "todas";
+
+
+    const categoria =
+        filtroCategoria?.value ||
+        "todas";
+
+
+    const soloOA =
+        filtroOA?.checked ||
+        false;
+
+
+    const resultados =
+        radar.filter(
+            item => {
+
+                const coincideFuente =
+                    fuente === "todas" ||
+                    item.fuente === fuente;
+
+
+                const coincideCategoria =
+                    categoria === "todas" ||
+                    item.categoria === categoria;
+
+
+                const coincideOA =
+                    !soloOA ||
+                    item.accesoAbierto === true;
+
+
+                return (
+                    coincideFuente &&
+                    coincideCategoria &&
+                    coincideOA
+                );
+            }
+        );
+
+
+    if (
+        resultados.length === 0
+    ) {
+
+        contenedor.innerHTML = `
+            <div class="estado-vacio">
+
+                <h3>
+                    No hay novedades con estos filtros
+                </h3>
+
+                <p>
+                    Prueba modificando los filtros del Radar.
+                </p>
+
+            </div>
+        `;
+
+
+        return;
+    }
+
+
+    contenedor.innerHTML =
+        resultados
+            .map(
+                crearFichaRadar
+            )
+            .join("");
+}
+
+
+/* =========================================================
+   FICHA RADAR
+========================================================= */
+
+function crearFichaRadar(
+    item
+) {
+
+    const seleccionada =
+        radarSeleccionadas.some(
+            seleccion =>
+                seleccion.id === item.id
+        );
+
+
+    const autores =
+        Array.isArray(
+            item.autores
+        )
+            ? item.autores.join(
+                ", "
+            )
+            : "Autor no registrado";
+
+
+    const fecha =
+        item.fecha
+            ? formatearFecha(
+                item.fecha
+            )
+            : "Fecha no disponible";
+
+
+    const accesoAbierto =
+        item.accesoAbierto
+            ? `
+                <span class="radar-etiqueta">
+                    Acceso abierto
+                </span>
+            `
+            : "";
+
+
+    const botonSeleccion =
+        seleccionada
+            ? `
+                <button
+                    class="boton boton-pendiente"
+                    type="button"
+                    disabled
+                >
+                    Pendiente
+                </button>
+            `
+            : `
+                <button
+                    class="boton boton-seleccionar"
+                    type="button"
+                    data-accion="radar-seleccionar"
+                    data-id="${escapeHTML(
+                        item.id
+                    )}"
+                >
+                    Seleccionar
+                </button>
+            `;
+
+
+    const botonConsultar =
+        item.url
+            ? `
+                <a
+                    class="boton boton-drive"
+                    href="${escapeHTML(
+                        item.url
+                    )}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Consultar
+                </a>
+            `
+            : "";
+
+
+    return `
+        <article
+            class="material-card radar-card"
+            data-id="${escapeHTML(
+                item.id
+            )}"
+        >
+
+            <div class="material-contenido">
+
+                <div class="material-disciplina">
+                    ${escapeHTML(
+                        item.fuente ||
+                        "Fuente desconocida"
+                    )}
+                </div>
+
+
+                <h3 class="material-titulo">
+                    ${escapeHTML(
+                        item.titulo ||
+                        "Título no registrado"
+                    )}
+                </h3>
+
+
+                <p class="material-autores">
+                    ${escapeHTML(
+                        autores
+                    )}
+                </p>
+
+
+                <p class="material-datos">
+
+                    ${escapeHTML(
+                        fecha
+                    )}
+
+                    ${
+                        item.doi
+                            ? ` · DOI`
+                            : ""
+                    }
+
+                </p>
+
+
+                <div class="radar-etiquetas">
+
+                    ${
+                        item.categoria
+                            ? `
+                                <span class="radar-etiqueta">
+                                    ${escapeHTML(
+                                        formatearCategoria(
+                                            item.categoria
+                                        )
+                                    )}
+                                </span>
+                            `
+                            : ""
+                    }
+
+                    ${accesoAbierto}
+
+                </div>
+
+
+                <div class="material-acciones">
+
+                    ${botonConsultar}
+
+                    ${botonSeleccion}
+
+                </div>
+
+            </div>
+
+        </article>
+    `;
+}
+
+
+/* =========================================================
+   SELECCIONAR NOVEDAD
+========================================================= */
+
+async function seleccionarNovedad(
+    id
+) {
+
+    const item =
+        radar.find(
+            resultado =>
+                resultado.id === id
+        );
+
+
+    if (!item) {
+        return;
+    }
+
+
+    const boton =
+        document.querySelector(
+            `[data-accion="radar-seleccionar"][data-id="${CSS.escape(id)}"]`
+        );
+
+
+    if (boton) {
+
+        boton.disabled = true;
+
+        boton.textContent =
+            "Guardando...";
+    }
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                RUTAS_API.radarSeleccionar,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(
+                            item
+                        )
+                }
+            );
+
+
+        const datos =
+            await respuesta.json();
+
+
+        if (
+            !respuesta.ok
+        ) {
+
+            throw new Error(
+                datos.error ||
+                "No se pudo seleccionar la novedad."
+            );
+        }
+
+
+        if (
+            !radarSeleccionadas.some(
+                seleccion =>
+                    seleccion.id ===
+                    item.id
+            )
+        ) {
+
+            radarSeleccionadas.push(
+                {
+                    ...item,
+
+                    seleccionadoEn:
+                        new Date().toISOString()
+                }
+            );
+        }
+
+
+        renderizarRadar();
+
+
+    } catch (error) {
+
+        console.error(
+            "Error seleccionando novedad:",
+            error
+        );
+
+
+        alert(
+            "No se pudo guardar la selección."
+        );
+
+
+        if (boton) {
+
+            boton.disabled = false;
+
+            boton.textContent =
+                "Seleccionar";
+        }
+    }
+}
+
+
+/* =========================================================
+   CARGAR SELECCIONADAS
+========================================================= */
+
+async function cargarSeleccionadas() {
+
+    const contenedor =
+        document.querySelector(
+            "#lista-seleccionadas"
+        );
+
+
+    if (!contenedor) {
+        return;
+    }
+
+
+    contenedor.innerHTML = `
+        <div class="estado-vacio">
+            <h3>Cargando...</h3>
+            <p>
+                Recuperando tus novedades seleccionadas.
+            </p>
+        </div>
+    `;
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                RUTAS_API.radarSeleccionadas,
+                {
+                    cache: "no-store"
+                }
+            );
+
+
+        const datos =
+            await respuesta.json();
+
+
+        if (
+            !respuesta.ok
+        ) {
+
+            throw new Error(
+                datos.error ||
+                "No se pudieron cargar las seleccionadas."
+            );
+        }
+
+
+        radarSeleccionadas =
+            Array.isArray(
+                datos.seleccionadas
+            )
+                ? datos.seleccionadas
+                : [];
+
+
+        renderizarSeleccionadas();
+
+
+    } catch (error) {
+
+        console.error(
+            "Error cargando seleccionadas:",
+            error
+        );
+
+
+        contenedor.innerHTML = `
+            <div class="estado-vacio">
+
+                <h3>
+                    No se pudieron cargar
+                </h3>
+
+                <p>
+                    ${escapeHTML(
+                        error.message
+                    )}
+                </p>
+
+            </div>
+        `;
+    }
+}
+
+
+/* =========================================================
+   RENDERIZAR SELECCIONADAS
+========================================================= */
+
+function renderizarSeleccionadas() {
+
+    const contenedor =
+        document.querySelector(
+            "#lista-seleccionadas"
+        );
+
+
+    if (!contenedor) {
+        return;
+    }
+
+
+    if (
+        radarSeleccionadas.length === 0
+    ) {
+
+        contenedor.innerHTML = `
+            <div class="estado-vacio">
+
+                <h3>
+                    No hay novedades seleccionadas
+                </h3>
+
+                <p>
+                    Selecciona materiales desde el Radar
+                    para conservarlos aquí.
+                </p>
+
+            </div>
+        `;
+
+
+        return;
+    }
+
+
+    const ordenadas =
+        [...radarSeleccionadas]
+            .sort(
+                (a, b) =>
+                    new Date(
+                        b.seleccionadoEn ||
+                        b.fecha ||
+                        0
+                    ) -
+                    new Date(
+                        a.seleccionadoEn ||
+                        a.fecha ||
+                        0
+                    )
+            );
+
+
+    contenedor.innerHTML =
+        ordenadas
+            .map(
+                crearFichaSeleccionada
+            )
+            .join("");
+}
+
+
+/* =========================================================
+   FICHA SELECCIONADA
+========================================================= */
+
+function crearFichaSeleccionada(
+    item
+) {
+
+    const autores =
+        Array.isArray(
+            item.autores
+        )
+            ? item.autores.join(
+                ", "
+            )
+            : "Autor no registrado";
+
+
+    const fecha =
+        item.fecha
+            ? formatearFecha(
+                item.fecha
+            )
+            : "Fecha no disponible";
+
+
+    const botonConsultar =
+        item.url
+            ? `
+                <a
+                    class="boton boton-drive"
+                    href="${escapeHTML(
+                        item.url
+                    )}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Consultar
+                </a>
+            `
+            : "";
+
+
+    return `
+        <article
+            class="material-card radar-card"
+            data-id="${escapeHTML(
+                item.id
+            )}"
+        >
+
+            <div class="material-contenido">
+
+                <div class="material-disciplina">
+                    ${escapeHTML(
+                        item.fuente ||
+                        "Fuente desconocida"
+                    )}
+                </div>
+
+
+                <h3 class="material-titulo">
+                    ${escapeHTML(
+                        item.titulo ||
+                        "Título no registrado"
+                    )}
+                </h3>
+
+
+                <p class="material-autores">
+                    ${escapeHTML(
+                        autores
+                    )}
+                </p>
+
+
+                <p class="material-datos">
+                    ${escapeHTML(
+                        fecha
+                    )}
+                </p>
+
+
+                <div class="radar-etiquetas">
+
+                    <span class="radar-etiqueta">
+                        Pendiente
+                    </span>
+
+                    ${
+                        item.accesoAbierto
+                            ? `
+                                <span class="radar-etiqueta">
+                                    Acceso abierto
+                                </span>
+                            `
+                            : ""
+                    }
+
+                </div>
+
+
+                <div class="material-acciones">
+
+                    ${botonConsultar}
+
+
+                    <button
+                        class="boton boton-eliminar"
+                        type="button"
+                        data-accion="radar-eliminar-seleccion"
+                        data-id="${escapeHTML(
+                            item.id
+                        )}"
+                    >
+                        Eliminar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+    `;
+}
+
+
+/* =========================================================
+   ELIMINAR SELECCIONADA
+========================================================= */
+
+async function eliminarNovedadSeleccionada(
+    id
+) {
+
+    const confirmar =
+        confirm(
+            "¿Eliminar esta novedad de Novedades Seleccionadas?"
+        );
+
+
+    if (!confirmar) {
+        return;
+    }
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                `${RUTAS_API.radarSeleccionar}?id=${encodeURIComponent(
+                    id
+                )}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        const datos =
+            await respuesta.json();
+
+
+        if (
+            !respuesta.ok
+        ) {
+
+            throw new Error(
+                datos.error ||
+                "No se pudo eliminar la selección."
+            );
+        }
+
+
+        radarSeleccionadas =
+            radarSeleccionadas.filter(
+                item =>
+                    item.id !== id
+            );
+
+
+        renderizarSeleccionadas();
+
+
+        if (
+            vistaActual === "radar"
+        ) {
+
+            renderizarRadar();
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Error eliminando selección:",
+            error
+        );
+
+
+        alert(
+            "No se pudo eliminar la novedad."
+        );
+    }
+}
+
+
+/* =========================================================
    MARCAR COMO LEÍDO
-   ========================================================= */
+========================================================= */
 
 async function alternarLeido(
     id
@@ -1006,7 +2197,7 @@ function actualizarLeidosLocalmente(
 
 /* =========================================================
    AGREGAR MATERIAL
-   ========================================================= */
+========================================================= */
 
 async function manejarFormulario(
     evento
@@ -1328,7 +2519,7 @@ async function manejarFormulario(
 
 /* =========================================================
    GENERACIÓN DE IDS
-   ========================================================= */
+========================================================= */
 
 async function generarIdUnico(
     disciplina,
@@ -1395,7 +2586,7 @@ async function generarIdUnico(
 
 /* =========================================================
    ELIMINAR MATERIAL
-   ========================================================= */
+========================================================= */
 
 async function eliminarMaterial(
     id
@@ -1524,7 +2715,7 @@ async function eliminarMaterial(
 
 /* =========================================================
    GOOGLE DRIVE
-   ========================================================= */
+========================================================= */
 
 function obtenerEnlaceDrive(
     material
@@ -1647,7 +2838,7 @@ function esEnlaceDrive(
 
 /* =========================================================
    UTILIDADES
-   ========================================================= */
+========================================================= */
 
 function generarIdTemporal(
     disciplina,
@@ -1734,8 +2925,78 @@ function escapeHTML(
 
 
 /* =========================================================
+   RADAR: UTILIDADES
+========================================================= */
+
+function formatearFecha(
+    fecha
+) {
+
+    try {
+
+        const fechaObjeto =
+            new Date(
+                fecha
+            );
+
+
+        if (
+            Number.isNaN(
+                fechaObjeto.getTime()
+            )
+        ) {
+
+            return String(
+                fecha
+            );
+        }
+
+
+        return fechaObjeto.toLocaleDateString(
+            "es-MX",
+            {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            }
+        );
+
+    } catch {
+
+        return String(
+            fecha
+        );
+    }
+}
+
+
+function formatearCategoria(
+    categoria
+) {
+
+    if (!categoria) {
+        return "";
+    }
+
+
+    return String(
+        categoria
+    )
+        .replace(
+            /-/g,
+            " "
+        )
+        .replace(
+            /\b\w/g,
+            letra =>
+                letra.toUpperCase()
+        );
+}
+
+
+/* =========================================================
    CONTADORES
-   ========================================================= */
+========================================================= */
 
 function actualizarContadores() {
 
@@ -1781,7 +3042,7 @@ function actualizarContadores() {
 
 /* =========================================================
    MENSAJES
-   ========================================================= */
+========================================================= */
 
 function mostrarMensajeFormulario(
     mensaje,
@@ -1829,7 +3090,7 @@ function mostrarMensajeFormulario(
 
 /* =========================================================
    ESTADOS DE CARGA
-   ========================================================= */
+========================================================= */
 
 function mostrarEstadoCarga() {
 
