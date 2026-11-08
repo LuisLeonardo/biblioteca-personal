@@ -395,6 +395,7 @@ function manejarClickGlobal(
         );
 
     if (botonLeido) {
+
         const id =
             botonLeido.dataset.id;
 
@@ -405,6 +406,22 @@ function manejarClickGlobal(
         return;
     }
 
+
+    const botonEliminar =
+        evento.target.closest(
+            "[data-accion='eliminar']"
+        );
+
+    if (botonEliminar) {
+
+        const id =
+            botonEliminar.dataset.id;
+
+        if (id) {
+            eliminarMaterial(id);
+        }
+    }
+}
 
     const botonEliminar =
         evento.target.closest(
@@ -688,21 +705,18 @@ function crearFichaMaterial(
             : "";
 
 
-    const botonEliminar =
-        material.agregado
-            ? `
-                <button
-                    class="boton boton-eliminar"
-                    type="button"
-                    data-accion="eliminar"
-                    data-id="${escapeHTML(
-                        material.id
-                    )}"
-                >
-                    Eliminar
-                </button>
-            `
-            : "";
+    const botonEliminar = `
+    <button
+        class="boton boton-eliminar"
+        type="button"
+        data-accion="eliminar"
+        data-id="${escapeHTML(
+            material.id
+        )}"
+    >
+        Eliminar
+    </button>
+`;
 
 
     return `
@@ -1331,9 +1345,97 @@ async function eliminarMaterial(
     }
 
 
-    alert(
-        "La eliminación desde la biblioteca todavía no está habilitada. Los materiales se eliminan directamente del catálogo de GitHub hasta que añadamos el endpoint DELETE."
-    );
+    const confirmar =
+        confirm(
+            `¿Eliminar "${material.titulo}" de la biblioteca?\n\nEsta acción no se puede deshacer.`
+        );
+
+
+    if (!confirmar) {
+        return;
+    }
+
+
+    const boton =
+        document.querySelector(
+            `[data-accion="eliminar"][data-id="${CSS.escape(id)}"]`
+        );
+
+
+    if (boton) {
+        boton.disabled = true;
+        boton.textContent = "Eliminando...";
+    }
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                `${API_BASE}/material/${encodeURIComponent(
+                    material.disciplina
+                )}/${encodeURIComponent(id)}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        const datos =
+            await respuesta.json();
+
+
+        if (!respuesta.ok) {
+            throw new Error(
+                datos.error ||
+                "No se pudo eliminar el material."
+            );
+        }
+
+
+        catalogo =
+            catalogo.filter(
+                item =>
+                    item.id !== id
+            );
+
+
+        leidos =
+            leidos.filter(
+                materialId =>
+                    materialId !== id
+            );
+
+
+        actualizarContadores();
+
+
+        if (
+            vistaActual === "leidos"
+        ) {
+            renderizarLeidos();
+        } else {
+            renderizarColeccion();
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Error eliminando material:",
+            error
+        );
+
+        alert(
+            "No se pudo eliminar el material."
+        );
+
+
+        if (boton) {
+            boton.disabled = false;
+            boton.textContent = "Eliminar";
+        }
+    }
 }
 
 
