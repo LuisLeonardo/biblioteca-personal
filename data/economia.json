@@ -507,17 +507,5 @@
         "anio": 1984,
         "tipo": "digital",
         "linkDrive": "https://drive.google.com/file/d/1VmP5DjyvX5mLpwzeI7eHHcB8Ni33pPg4/view?usp=sharing"
-    },
-    {
-        "id": "luis-leonardo-001",
-        "disciplina": "economia",
-        "titulo": "Prueba",
-        "autores": [
-            "Luis Leonardo"
-        ],
-        "editorial": "",
-        "anio": "",
-        "tipo": "fisico",
-        "linkDrive": ""
     }
 ]
