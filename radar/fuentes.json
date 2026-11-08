@@ -1,6 +1,6 @@
 {
   "actualizacionDias": 7,
-  "maxResultadosPorFuente": 20,
+  "maxResultadosPorFuente": 3,
   "fuentes": [
     {
       "id": "revista-cepal",
@@ -8,7 +8,7 @@
       "tipo": "revista",
       "categoria": "economia-desarrollo",
       "pais": "Chile",
-      "issn": "0251-2920",
+      "issn": "0252-0257",
       "activa": true,
       "prioridad": 1
     },
@@ -48,7 +48,7 @@
       "tipo": "revista",
       "categoria": "economia-internacional",
       "pais": "España",
-      "issn": "2340-4264",
+      "issn": "1576-0162",
       "activa": true,
       "prioridad": 2
     },
@@ -432,7 +432,7 @@
       "tipo": "revista",
       "categoria": "politica-economica",
       "pais": "Colombia",
-      "issn": "2665-1327",
+      "issn": "0120-4483",
       "activa": true,
       "prioridad": 1
     },
@@ -455,6 +455,56 @@
       "issn": "1657-6357",
       "activa": true,
       "prioridad": 2
+    },
+    {
+      "id": "revista-mexicana-sociologia",
+      "nombre": "Revista Mexicana de Sociología",
+      "tipo": "revista",
+      "categoria": "sociologia",
+      "pais": "México",
+      "issn": "0188-2503",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "politica-y-gobierno",
+      "nombre": "Política y Gobierno",
+      "tipo": "revista",
+      "categoria": "ciencia-politica",
+      "pais": "México",
+      "issn": "1665-2037",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "colombia-internacional",
+      "nombre": "Colombia Internacional",
+      "tipo": "revista",
+      "categoria": "relaciones-internacionales",
+      "pais": "Colombia",
+      "issn": "0121-5612",
+      "activa": true,
+      "prioridad": 1
+    },
+    {
+      "id": "revista-historia-economica",
+      "nombre": "Revista de Historia Económica",
+      "tipo": "revista",
+      "categoria": "historia-economica",
+      "pais": "España",
+      "issn": "0212-6109",
+      "activa": true,
+      "prioridad": 2
+    },
+    {
+      "id": "cambridge-journal-economics",
+      "nombre": "Cambridge Journal of Economics",
+      "tipo": "revista",
+      "categoria": "economia-politica",
+      "pais": "Reino Unido",
+      "issn": "0309-166X",
+      "activa": true,
+      "prioridad": 1
     }
   ]
 }
