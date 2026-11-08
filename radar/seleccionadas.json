@@ -93,5 +93,24 @@
     "consultable": true,
     "idioma": "es",
     "seleccionadoEn": "2026-11-08T20:46:40.362Z"
+  },
+  {
+    "id": "doi:10.25100/sye.vi58.14451",
+    "titulo": "Informalidad laboral de jóvenes en Colombia",
+    "autores": [
+      "Roberto Mauricio Sánchez Torres"
+    ],
+    "fecha": "2026-08-25",
+    "fuente": "Sociedad y Economía",
+    "fuenteId": "sociedad-y-economia",
+    "categoria": "economia-ciencias-sociales",
+    "pais": "Colombia",
+    "tipo": "article",
+    "doi": "10.25100/sye.vi58.14451",
+    "url": "https://doi.org/10.25100/sye.vi58.14451",
+    "accesoAbierto": true,
+    "consultable": true,
+    "idioma": "es",
+    "seleccionadoEn": "2026-11-08T20:47:11.323Z"
   }
 ]
