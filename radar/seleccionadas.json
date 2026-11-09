@@ -75,5 +75,50 @@
     "consultable": true,
     "idioma": "es",
     "seleccionadoEn": "2026-11-08T21:03:26.943Z"
+  },
+  {
+    "id": "titulo:perspectivas economicas de america latina 2026 hacia una mejor integracion en una economia global cambiante resumen|autor:|fecha:2026-11-04",
+    "titulo": "Perspectivas económicas de América Latina 2026: hacia una mejor integración en una economía global cambiante. Resumen",
+    "autores": "",
+    "fecha": "2026-11-04",
+    "url": "https://hdl.handle.net/11362/90474",
+    "doi": "",
+    "idioma": "es",
+    "accesoAbierto": true,
+    "fuenteId": "cepal-recursos-naturales",
+    "fuenteNombre": "Serie Recursos Naturales y Desarrollo",
+    "categoria": "Otros",
+    "tipo": "book",
+    "openalexId": "https://openalex.org/W7225446271"
+  },
+  {
+    "id": "doi:10.15446/cuad.econ.v45n98.129692",
+    "titulo": "La economía ante la complejidad: preguntas, métodos y nuevos desafíos",
+    "autores": "Jonathan Daniel Gómez-Zapata",
+    "fecha": "2026-09-09",
+    "url": "https://doi.org/10.15446/cuad.econ.v45n98.129692",
+    "doi": "https://doi.org/10.15446/cuad.econ.v45n98.129692",
+    "idioma": "es",
+    "accesoAbierto": true,
+    "fuenteId": "cuadernos-economia",
+    "fuenteNombre": "Cuadernos de Economía",
+    "categoria": "Otros",
+    "tipo": "articulo",
+    "openalexId": "https://openalex.org/W7212305960"
+  },
+  {
+    "id": "doi:10.18356/16820908-2025-147-3",
+    "titulo": "Encuentro entre Kaldor y Dosi: una aproximación a la estructura tecnológica de la producción regional",
+    "autores": "United Nations Economic Commission for Latin America and the Caribbean, Sérgio Felipe Melo da Silva, Douglas Alencar, Wallace Marcelino Pereira, Camila de Moura Vogt",
+    "fecha": "2025-12-31",
+    "url": "https://doi.org/10.18356/16820908-2025-147-3",
+    "doi": "https://doi.org/10.18356/16820908-2025-147-3",
+    "idioma": "es",
+    "accesoAbierto": false,
+    "fuenteId": "revista-cepal",
+    "fuenteNombre": "Revista CEPAL",
+    "categoria": "Otros",
+    "tipo": "articulo",
+    "openalexId": "https://openalex.org/W7164877976"
   }
 ]
