@@ -2490,106 +2490,74 @@ async function eliminarNovedadSeleccionada(
    LEÍDO
 ========================================================= */
 
-async function alternarLeido(
-    id
-) {
+async function alternarLeido(id) {
+    if (!id) return;
 
-    if (!id) {
-        return;
-    }
+    const estaLeido = leidos.includes(id);
 
-
-    const estaLeido =
-        leidos.includes(
-            id
-        );
-
-
-    const nuevosLeidos =
-        estaLeido
-            ? leidos.filter(
-                item =>
-                    item !== id
-            )
-            : [
-                ...leidos,
-                id
-            ];
-
+    const nuevoEstado = !estaLeido;
 
     try {
-
         const respuesta =
             await fetch(
                 RUTAS_API.leidos,
                 {
                     method: "POST",
-
                     headers: {
-                        "Content-Type":
-                            "application/json"
+                        "Content-Type": "application/json"
                     },
-
-                    body:
-                        JSON.stringify(
-                            {
-                                leidos:
-                                    nuevosLeidos
-                            }
-                        )
+                    body: JSON.stringify({
+                        id: id,
+                        leido: nuevoEstado
+                    })
                 }
             );
-
 
         const datos =
             await respuesta.json();
 
-
-        if (
-            !respuesta.ok
-        ) {
-
+        if (!respuesta.ok) {
             throw new Error(
                 datos.error ||
                 "No se pudo actualizar el estado de lectura."
             );
         }
 
-
-        leidos =
-            Array.isArray(
-                datos.leidos
-            )
-                ? [...new Set(datos.leidos)]
-                : nuevosLeidos;
-
+        if (Array.isArray(datos.leidos)) {
+            leidos =
+                [...new Set(datos.leidos)];
+        } else {
+            if (nuevoEstado) {
+                leidos = [
+                    ...new Set([
+                        ...leidos,
+                        id
+                    ])
+                ];
+            } else {
+                leidos =
+                    leidos.filter(
+                        item =>
+                            item !== id
+                    );
+            }
+        }
 
         actualizarContadores();
 
-
-        if (
-            vistaActual === "coleccion"
-        ) {
-
+        if (vistaActual === "coleccion") {
             renderizarColeccion();
         }
 
-
-        if (
-            vistaActual === "leidos"
-        ) {
-
+        if (vistaActual === "leidos") {
             renderizarLeidos();
         }
 
-
     } catch (error) {
-
         console.error(
             "Error actualizando lectura:",
             error
         );
-
 
         alert(
             `No se pudo actualizar el estado: ${error.message}`
