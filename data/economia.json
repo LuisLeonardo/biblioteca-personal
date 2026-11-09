@@ -664,17 +664,5 @@
     "anio": 2009,
     "tipo": "fisico",
     "linkDrive": ""
-  },
-  {
-    "id": "d45skp-mw9d4jxz",
-    "disciplina": "economia",
-    "titulo": "Prueba",
-    "autores": [
-      "Luis L"
-    ],
-    "editorial": "",
-    "anio": "",
-    "tipo": "fisico",
-    "linkDrive": ""
   }
 ]
