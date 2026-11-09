@@ -406,5 +406,160 @@
         "anio": 1984,
         "tipo": "digital",
         "linkDrive": "https://drive.google.com/file/d/1VmP5DjyvX5mLpwzeI7eHHcB8Ni33pPg4/view?usp=sharing"
-    }
+    },
+  {
+    "id": "teoria-general-ocupacion-interes-dinero",
+    "disciplina": "Economía",
+    "titulo": "Teoría general de la ocupación, el interés y el dinero",
+    "autores": [
+      "John Maynard Keynes"
+    ],
+    "editorial": "Fondo de Cultura Económica",
+    "anio": 2025,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "cgv-metodologia-teoria-debates",
+    "disciplina": "Economía",
+    "titulo": "Cadenas globales de valor: metodología, teoría y debates",
+    "autores": [
+      "Enrique Dussel Peters"
+    ],
+    "editorial": "Universidad Nacional Autónoma de México",
+    "anio": 2018,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "cien-anos-banco-mexico-breve-historia",
+    "disciplina": "Economía",
+    "titulo": "Cien años del Banco de México: una breve historia",
+    "autores": [
+      "María Eugenia Romero Sotelo"
+    ],
+    "editorial": "Universidad Nacional Autónoma de México",
+    "anio": 2025,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "globalizacion-vs-desarrollo",
+    "disciplina": "Economía",
+    "titulo": "Globalización vs. desarrollo",
+    "autores": [
+      "Etelberto Ortiz Cruz"
+    ],
+    "editorial": "Universidad Autónoma Metropolitana",
+    "anio": 2012,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "teoria-experiencia-desarrollo-economico",
+    "disciplina": "Economía",
+    "titulo": "Teoría y experiencia del desarrollo económico",
+    "autores": [
+      "Mark Gersovitz"
+    ],
+    "editorial": "Fondo de Cultura Económica",
+    "anio": 1985,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "teoria-crecimiento-economico-dixit",
+    "disciplina": "Economía",
+    "titulo": "La teoría del crecimiento económico",
+    "autores": [
+      "A. K. Dixit"
+    ],
+    "editorial": "Fondo de Cultura Económica",
+    "anio": 1987,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "prefacio-nueva-economia-politica",
+    "disciplina": "Economía",
+    "titulo": "Prefacio a una nueva economía política",
+    "autores": [
+      "Celso Furtado"
+    ],
+    "editorial": "Siglo XXI Editores",
+    "anio": 1978,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "desigualdad-del-mundo",
+    "disciplina": "Economía",
+    "titulo": "La desigualdad del mundo",
+    "autores": [
+      "Pierre-Noël Giraud"
+    ],
+    "editorial": "Fondo de Cultura Económica",
+    "anio": 2001,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "cooperacion-internacional-conflicto-covid19",
+    "disciplina": "Economía",
+    "titulo": "Cooperación internacional y conflicto ante la crisis del COVID-19",
+    "autores": [
+      "Beatriz Nadia Pérez Rodríguez",
+      "Ana Teresa Gutiérrez del Cid"
+    ],
+    "editorial": "Universidad Autónoma Metropolitana",
+    "anio": 2022,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "globalizacion-causas-perspectivas",
+    "disciplina": "Economía",
+    "titulo": "Globalización: causas y perspectivas",
+    "autores": [],
+    "editorial": "Universidad Autónoma Metropolitana",
+    "anio": 2012,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "teoria-economica-retrospeccion",
+    "disciplina": "Economía",
+    "titulo": "Teoría económica en retrospección",
+    "autores": [
+      "Mark Blaug"
+    ],
+    "editorial": "Fondo de Cultura Económica",
+    "anio": 2001,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "heterodoxia-ensayos-teoria-economica",
+    "disciplina": "Economía",
+    "titulo": "Heterodoxia: ensayos de teoría económica",
+    "autores": [
+      "José Guillermo Peláez Gramajo"
+    ],
+    "editorial": "Universidad Autónoma Metropolitana",
+    "anio": 2012,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "reencuentro-macroeconomia-politica-keynes",
+    "disciplina": "Economía",
+    "titulo": "Un reencuentro con la macroeconomía y la política económica de J. M. Keynes",
+    "autores": [
+      "Etelberto Ortiz Cruz"
+    ],
+    "editorial": "Universidad Autónoma Metropolitana",
+    "anio": 2009,
+    "tipo": "fisico",
+    "linkDrive": ""
+  }
 ]
