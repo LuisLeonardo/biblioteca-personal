@@ -2798,9 +2798,33 @@ async function eliminarMaterial(
         );
 
 
+    if (!material) {
+
+        alert(
+            "No se encontró el material en el catálogo."
+        );
+
+        return;
+    }
+
+
     const titulo =
-        material?.titulo ||
+        material.titulo ||
         "este material";
+
+
+    const disciplina =
+        material.disciplina;
+
+
+    if (!disciplina) {
+
+        alert(
+            "No se pudo eliminar el material: el material no tiene disciplina."
+        );
+
+        return;
+    }
 
 
     const confirmar =
@@ -2818,7 +2842,7 @@ async function eliminarMaterial(
 
         const respuesta =
             await fetch(
-                `${API_BASE}/material?id=${encodeURIComponent(id)}`,
+                `${API_BASE}/material?id=${encodeURIComponent(id)}&disciplina=${encodeURIComponent(disciplina)}`,
                 {
                     method: "DELETE"
                 }
@@ -2886,7 +2910,6 @@ async function eliminarMaterial(
         );
     }
 }
-
 
 /* =========================================================
    DRIVE
