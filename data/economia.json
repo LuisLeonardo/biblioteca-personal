@@ -1,410 +1,527 @@
 [
-    {
-        "id": "cepal-001",
-        "titulo": "Articulación productiva y Cadenas Globales de Valor",
-        "autores": ["CEPAL"],
-        "editorial": "",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1mfxZ9UsuW8m5-nCGPFTcYBIFhXD0kphE/view?usp=drive_link"
-    },
-    {
-        "id": "kalecki-001",
-        "titulo": "Aspectos políticos del pleno empleo",
-        "autores": ["Michal Kalecki"
-        ],
-        "editorial": "Revista de Economía Crítica",
-        "anio": 2011,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/11BfUmJLKr4LhiWRnkzPB8mcZMoAK47rT/view?usp=drive_link"
-    },
-    {
-        "id": "lopez-gayosso-001",
-        "titulo": "Caracterización del proceso de financiarización en empresas productivas de México",
-        "autores": ["Paola López Gayosso", "Everardo Chiapa Aguillón",
-            "Paola López Gayosso",
-            "Everardo Chiapa Aguillón"],
-        "editorial": "Vértice Universitario",
-        "anio": 2026,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1QPdHXinS-PtImj4tKP4TiEB12a7h0Z6j/view?usp=drive_link"
-    },
-    {
-        "id": "morones-carrillo-001",
-        "titulo": "Crecimiento económico en México: restricción por la balanza de pagos",
-        "autores": ["Ana Lourdes Morones Carrillo"],
-        "editorial": "Ensayos. Revista de Economía",
-        "anio": 2016,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1TXSXpR4LKVKPw5-5HmhhKYyKmeCzG1t8/view?usp=drive_link"
-    },
-    {
-        "id": "rodriguez-garcia-001",
-        "titulo": "Determinación del umbral de pobreza en Guanajuato: un enfoque innovador mediante la ley de Engel y el criterio de la segunda derivada",
-        "autores": ["Juan Manuel Rodríguez García", "Sergio Ernesto Medina Cuellar", "Marco Antonio Sánchez Jiménez"],
-        "editorial": "Acta Universitaria",
-        "anio": 2026,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1ohkFUUUNZb4B9mcvhe35Bh8M5I8TBBH4/view?usp=drive_link"
-    },
-    {
-        "id": "benetti-001",
-        "titulo": "Economía monetaria-economía de trueque: la cuestión de la unidad de cuenta común",
-        "autores": ["Carlo Benetti"],
-        "editorial": "Lecturas de Economía",
-        "anio": 1990,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1Uxo-BSW8IO-PXmxt5LKC34-d4Ufd2d4e/view?usp=drive_link"
-    },
-    {
-        "id": "banco-de-mexico-001",
-        "titulo": "Efectos de la Política Monetaria sobre la Economía",
-        "autores": ["Banco de México"],
-        "editorial": "Banco de México",
-        "anio": 2022,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1WdwvzqSQkfQhCWVBXPGsHJ5NNjr26jsZ/view?usp=drive_link"
-    },
-    {
-        "id": "prebisch-001",
-        "titulo": "El desarrollo económico de la América Latina y algunos de sus principales problemas",
-        "autores": ["Raúl Prebisch"],
-        "editorial": "CEPAL",
-        "anio": 2012,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1BAwo-ZYl7PLhUz_zWn181nSwvU3c39Cs/view?usp=drive_link"
-    },
-    {
-        "id": "noyola-001",
-        "titulo": "El desarrollo económico y la inflación en México y otros países latinoamericanos",
-        "autores": ["Juan Noyola Vázquez"],
-        "editorial": "Ola Financiera (UNAM)",
-        "anio": 2009,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1GNiCH6gRu0h-O0Hqi4hpLaOftfewJjZJ/view?usp=drive_link"
-    },
-    {
-        "id": "trevignani-001",
-        "titulo": "El desarrollo encadenado: un análisis crítico del enfoque de Cadenas Globales de Valor",
-        "autores": ["Manuel Facundo Trevignani", "Víctor Ramiro Fernández"],
-        "editorial": "Ediciones UNL",
-        "anio": 2025,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1qH9BSfvsF-zdDdJRXfOagACkqmkRjWvQ/view?usp=drive_link"
-    },
-    {
-        "id": "banco-de-mexico-002",
-        "titulo": "El mercado de valores gubernamentales en México",
-        "autores": ["Banco de México"],
-        "editorial": "Banco de México",
-        "anio": 2014,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/18BwB_32t6ePaYRVqjq81joeiU_063V1S/view?usp=drive_link"
-    },
-    {
-        "id": "friedman-001",
-        "titulo": "El papel de la política monetaria",
-        "autores": ["Milton Friedman"],
-        "editorial": "Información Comercial Española (ICE)",
-        "anio": 1969,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1jFLdP5dG5yGe4pmhHx7ggAkFygdayqWk/view?usp=drive_link"
-    },
-    {
-        "id": "kalecki-002",
-        "titulo": "El problema del financiamiento del desarrollo económico",
-        "autores": ["Michal Kalecki"],
-        "editorial": "El Trimestre Económico",
-        "anio": 1954,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1erVjtuyPnKRA8rqiHjZRMZRF54sTWm_d/view?usp=drive_link"
-    },
-    {
-        "id": "abeles-001",
-        "titulo": "Estudios sobre financierización en América Latina",
-        "autores": ["Martín Abeles", "Esteban Pérez Caldentey", "Sebastián Valdecantos"],
-        "editorial": "CEPAL",
-        "anio": 2018,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1dUjGfsMF8ceodb-2oVy4eGNoIDh-lvbP/view?usp=drive_link"
-    },
-    {
-        "id": "florez-rios-001",
-        "titulo": "Evolución de la Teoría Financiera en el Siglo XX",
-        "autores": ["Luz Stella Flórez Ríos"],
-        "editorial": "Ecos de Economía",
-        "anio": 2008,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/11aEMovWEZt_w3R9N3H-qsjx3dHPm8HtO/view?usp=drive_link"
-    },
-    {
-        "id": "yasuhara-001",
-        "titulo": "Inestabilidad financiera en América Latina desde la perspectiva Kaleckiana y Minskyana",
-        "autores": ["Tsuyoshi Yasuhara"],
-        "editorial": "Problemas del Desarrollo (UNAM)",
-        "anio": 2013,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1AeIYMMBDy4aA4sTIoFbcUIdHIDnCFr3B/view?usp=drive_link"
-    },
-    {
-        "id": "carlos-j-001",
-        "titulo": "Inflación desbordada: temores sin fundamentos",
-        "autores": ["Carlos J"],
-        "editorial": "",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1i0GzlpmqTmMr95bP1g9KjAAcPYLqnQHE/view?usp=drive_link"
-    },
-    {
-        "id": "basave-carrillo-001",
-        "titulo": "Innovación y desarrollo. Una mirada global para entender las multinacionales en América Latina",
-        "autores": ["Jorge Basave", "Jorge Carrillo"],
-        "editorial": "Universidad Nacional Autónoma de México, Instituto de Investigaciones Económicas; El Colegio de la Frontera Norte",
-        "anio": 2017,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1bjoG1vOzKSolNx2F5TS557htjpt-AN4k/view?usp=drive_link"
-    },
-    {
-        "id": "diaz-mata-001",
-        "titulo": "Introducción al mercado bursátil: invierta en la bolsa de valores",
-        "autores": ["Alfredo Díaz Mata", "Víctor Manuel Aguilera"],
-        "editorial": "McGraw Hill Interamericana Editores",
-        "anio": 2013,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1cBwJRw2Qp9RMq1ybnvCefTh0hUW3dMHT/view?usp=drive_link"
-    },
-    {
-        "id": "moguillansky-001",
-        "titulo": "Inversión y volatilidad financiera: América Latina en los inicios del nuevo milenio",
-        "autores": ["Graciela Moguillansky"],
-        "editorial": "",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1-zupBpfyv4VkTJABEkk8YyG6MDVbo8yJ/view?usp=drive_link"
-    },
-    {
-        "id": "alvarez-porcile-prado-001",
-        "titulo": "Kalecki encuentra a Prebisch: cambio estructural y conflicto distributivo en la periferia",
-        "autores": ["Jorge Álvarez", "Gabriel Porcile", "Svante Prado"],
-        "editorial": "El Trimestre Económico",
-        "anio": 2026,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1L5AXJjJsHxqdZ-5EJch8LH9fEn2EPMRR/view?usp=drive_link"
-    },
-    {
-        "id": "toporowski-001",
-        "titulo": "Kalecki y la visión estructuralista del desarrollo económico",
-        "autores": ["Jan Toporowski"],
-        "editorial": "El Trimestre Económico",
-        "anio": 2026,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1KIXoSao8bohTHg__GtQGWxhRf-xlPo0W/view?usp=drive_link"
-    },
-    {
-        "id": "manuelito-correia-jimenez-001",
-        "titulo": "La crisis sub-prime en Estados Unidos y la regulación y supervisión financiera: lecciones para América Latina y el Caribe",
-        "autores": ["Sandra Manuelito", "Filipa Correia", "Luis Felipe Jiménez"],
-        "editorial": "CEPAL",
-        "anio": 2009,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1XYAc8TMbAObh0_xa0jasOBFWtguKFhd1/view?usp=drive_link"
-    },
-    {
-        "id": "medialdea-sanabria-001",
-        "titulo": "La financiarización de la economía mundial: hacia una caracterización",
-        "autores": ["Bibiana Medialdea García", "Antonio Sanabria Martín"],
-        "editorial": "",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1iuIy2fczXILzKXRQ5mdFaipOakaMx9zd/view?usp=drive_link"
-    },
-    {
-        "id": "ocegueda-001",
-        "titulo": "La hipótesis de crecimiento restringido por balanza de pagos. Una evaluación de la economía mexicana 1960-1997",
-        "autores": ["Juan Manuel Ocegueda Hernández"],
-        "editorial": "Investigación Económica",
-        "anio": 2000,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1lrcUiqk_2xOK49aJJT3-ZccCsbC3BHtb/view?usp=drive_link"
-    },
-    {
-        "id": "rossi-001",
-        "titulo": "La hipótesis de eficiencia en los mercados de acciones: el caso del mercado de valores de Buenos Aires",
-        "autores": ["Martín A. Rossi"],
-        "editorial": "",
-        "anio": 2000,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1DISQoP1XQoDObkP0J-bnlAkmpFSN2wNd/view?usp=drive_link"
-    },
-    {
-        "id": "minsky-001",
-        "titulo": "La hipótesis de la inestabilidad financiera",
-        "autores": ["Hyman P. Minsky"],
-        "editorial": "",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1zjgXglsXH7X6xRRhWt9XKCacgVX2FrL3/view?usp=drive_link"
-    },
-    {
-        "id": "sunkel-001",
-        "titulo": "La inflación chilena: un enfoque heterodoxo",
-        "autores": ["Osvaldo Sunkel"],
-        "editorial": "El Trimestre Económico",
-        "anio": 1958,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1b10ipRFQqUNulJdDuqs1eb13WghFalgJ/view?usp=drive_link"
-    },
-    {
-        "id": "palley-001",
-        "titulo": "La macroeconomía de la financiarización: un enfoque de etapas del desarrollo",
-        "autores": ["Thomas I. Palley"],
-        "editorial": "",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1WQPNxZOTcagV9cgwDGjXPOSMisgcJMWq/view?usp=drive_link"
-    },
-    {
-        "id": "mantey-001",
-        "titulo": "La política de la banca central en la teoría y en la práctica",
-        "autores": ["Guadalupe Mántey"],
-        "editorial": "CEPAL",
-        "anio": 2012,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/17cWuQrZJadHjiD-q3gRCPJWNQxcCGf2_/view?usp=drive_link"
-    },
-    {
-        "id": "sraffa-001",
-        "titulo": "Las leyes de los rendimientos en condiciones de competencia",
-        "autores": ["Piero Sraffa"],
-        "editorial": "",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1qxLpTRMoxpyQhy8KKQEW61OYrG4XsK51/view?usp=drive_link"
-    },
-    {
-        "id": "minsky-002",
-        "titulo": "Los factores financieros en la teoría económica del capitalismo",
-        "autores": ["Hyman P. Minsky"],
-        "editorial": "",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1kCArplRo9VfrEkKYc1waIlPl69GZdbU5/view?usp=drive_link"
-    },
-    {
-        "id": "manuelito-jimenez-001",
-        "titulo": "Los mercados financieros en América Latina y el financiamiento de la inversión",
-        "autores": ["Sandra Manuelito", "Luis Felipe Jiménez"],
-        "editorial": "CEPAL",
-        "anio": 2010,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/125iWM_NszWJXRaSaZhTzv_XxsUT4yRnT/view?usp=drive_link"
-    },
-    {
-        "id": "morales-anderson-001",
-        "titulo": "Mercados financieros e instrumentos de inversión en México",
-        "autores": ["Ricardo Cristhian Morales", "Alexander Anderson"],
-        "editorial": "",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1iPCbWHDOrbbY_OwxYQ3rmZl9zG-RfWj2/view?usp=drive_link"
-    },
-    {
-        "id": "kaldor-001",
-        "titulo": "Impuesto al gasto",
-        "autores": ["Nicholas Kaldor"],
-        "editorial": "",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1ruNJwWM0RRMo8gAFzxwUSbEwFeEBEEs6/view?usp=drive_link"
-    },
-    {
-        "id": "kregel-001",
-        "titulo": "Para prevenir otra crisis: las lecciones olvidadas de Minsky 10 años después de Lehman",
-        "autores": ["Jan Kregel"],
-        "editorial": "",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1tEH816xM6OH15O_DyQBV-pg-dA0eF2Lz/view?usp=drive_link"
-    },
-    {
-        "id": "ramos-001",
-        "titulo": "Políticas de estabilización y ajuste en el Cono Sur, 1974-1983",
-        "autores": ["Joseph Ramos"],
-        "editorial": "",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1YxAdSZvbKWUM-lu4U8pxPGn3RdNqrRsO/view?usp=drive_link"
-    },
-    {
-        "id": "ayllon-benitez-001",
-        "titulo": "Predicción del Índice Nacional de Precios al Consumidor en México",
-        "autores": ["Julio César Ayllon-Benítez"],
-        "editorial": "",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/15DQyQif66x37uVbz0-MsQTMf9eQskUFM/view?usp=drive_link"
-    },
-    {
-        "id": "revista-cepal-148-001",
-        "titulo": "Revista CEPAL No. 148",
-        "autores": ["Miguel Torres"],
-        "editorial": "CEPAL",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1p-GJQzJqE9GQyQ798giez9udscXaqvaf/view?usp=drive_link"
-    },
-    {
-        "id": "kalecki-003",
-        "titulo": "Salario nominal y salario real",
-        "autores": ["Michal Kalecki"],
-        "editorial": "",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1RROhmCgfZps6-7YIHf4pPHcybikTOu_u/view?usp=drive_link"
-    },
-    {
-        "id": "sraffa-002",
-        "titulo": "Sobre las relaciones entre coste y cantidad producida",
-        "autores": ["Piero Sraffa"],
-        "editorial": "",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1v7ys2bbHEbIHTPsjxRMHdA3gkM57pOh-/view?usp=drive_link"
-    },
-    {
-        "id": "roca-001",
-        "titulo": "Teorías de la inflación",
-        "autores": ["Richard Roca"],
-        "editorial": "",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1DcY_w6uvHpmZbGz9Sutqlx1484jl_s0H/view?usp=drive_link"
-    },
-    {
-        "id": "piegay-rochon-001",
-        "titulo": "Teorías monetarias poskeynesianas: una aproximación de la escuela francesa",
-        "autores": ["Pierre Piégay", "Louis-Philippe Rochon"],
-        "editorial": "",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1ASLfK5jyyqfrBfFS95eb26_FwNE9Cys7/view?usp=drive_link"
-    },
-    {
-        "id": "pasinetti-001",
-        "titulo": "Una formulación matemática del sistema ricardiano",
-        "autores": ["Luigi L. Pasinetti"],
-        "editorial": "",
-        "anio": "",
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1c4jujDDtRnhqk7IAm1kT5w7OLIZNo8xO/view?usp=drive_link"
-    },
-    {
-        "id": "pasinetti-002",
-        "titulo": "Lecciones de teoría de la producción",
-        "autores": ["Luigi L. Pasinetti"],
-        "editorial": "Fondo de Cultura Económica",
-        "anio": 1984,
-        "tipo": "digital",
-        "linkDrive": "https://drive.google.com/file/d/1VmP5DjyvX5mLpwzeI7eHHcB8Ni33pPg4/view?usp=sharing"
-    }
+  {
+    "id": "cepal-001",
+    "titulo": "Articulación productiva y Cadenas Globales de Valor",
+    "autores": [
+      "CEPAL"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1mfxZ9UsuW8m5-nCGPFTcYBIFhXD0kphE/view?usp=drive_link"
+  },
+  {
+    "id": "kalecki-001",
+    "titulo": "Aspectos políticos del pleno empleo",
+    "autores": [
+      "Michal Kalecki"
+    ],
+    "editorial": "Revista de Economía Crítica",
+    "anio": 2011,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/11BfUmJLKr4LhiWRnkzPB8mcZMoAK47rT/view?usp=drive_link"
+  },
+  {
+    "id": "lopez-gayosso-001",
+    "titulo": "Caracterización del proceso de financiarización en empresas productivas de México",
+    "autores": [
+      "Paola López Gayosso",
+      "Everardo Chiapa Aguillón",
+      "Paola López Gayosso",
+      "Everardo Chiapa Aguillón"
+    ],
+    "editorial": "Vértice Universitario",
+    "anio": 2026,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1QPdHXinS-PtImj4tKP4TiEB12a7h0Z6j/view?usp=drive_link"
+  },
+  {
+    "id": "morones-carrillo-001",
+    "titulo": "Crecimiento económico en México: restricción por la balanza de pagos",
+    "autores": [
+      "Ana Lourdes Morones Carrillo"
+    ],
+    "editorial": "Ensayos. Revista de Economía",
+    "anio": 2016,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1TXSXpR4LKVKPw5-5HmhhKYyKmeCzG1t8/view?usp=drive_link"
+  },
+  {
+    "id": "rodriguez-garcia-001",
+    "titulo": "Determinación del umbral de pobreza en Guanajuato: un enfoque innovador mediante la ley de Engel y el criterio de la segunda derivada",
+    "autores": [
+      "Juan Manuel Rodríguez García",
+      "Sergio Ernesto Medina Cuellar",
+      "Marco Antonio Sánchez Jiménez"
+    ],
+    "editorial": "Acta Universitaria",
+    "anio": 2026,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1ohkFUUUNZb4B9mcvhe35Bh8M5I8TBBH4/view?usp=drive_link"
+  },
+  {
+    "id": "benetti-001",
+    "titulo": "Economía monetaria-economía de trueque: la cuestión de la unidad de cuenta común",
+    "autores": [
+      "Carlo Benetti"
+    ],
+    "editorial": "Lecturas de Economía",
+    "anio": 1990,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1Uxo-BSW8IO-PXmxt5LKC34-d4Ufd2d4e/view?usp=drive_link"
+  },
+  {
+    "id": "banco-de-mexico-001",
+    "titulo": "Efectos de la Política Monetaria sobre la Economía",
+    "autores": [
+      "Banco de México"
+    ],
+    "editorial": "Banco de México",
+    "anio": 2022,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1WdwvzqSQkfQhCWVBXPGsHJ5NNjr26jsZ/view?usp=drive_link"
+  },
+  {
+    "id": "prebisch-001",
+    "titulo": "El desarrollo económico de la América Latina y algunos de sus principales problemas",
+    "autores": [
+      "Raúl Prebisch"
+    ],
+    "editorial": "CEPAL",
+    "anio": 2012,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1BAwo-ZYl7PLhUz_zWn181nSwvU3c39Cs/view?usp=drive_link"
+  },
+  {
+    "id": "noyola-001",
+    "titulo": "El desarrollo económico y la inflación en México y otros países latinoamericanos",
+    "autores": [
+      "Juan Noyola Vázquez"
+    ],
+    "editorial": "Ola Financiera (UNAM)",
+    "anio": 2009,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1GNiCH6gRu0h-O0Hqi4hpLaOftfewJjZJ/view?usp=drive_link"
+  },
+  {
+    "id": "trevignani-001",
+    "titulo": "El desarrollo encadenado: un análisis crítico del enfoque de Cadenas Globales de Valor",
+    "autores": [
+      "Manuel Facundo Trevignani",
+      "Víctor Ramiro Fernández"
+    ],
+    "editorial": "Ediciones UNL",
+    "anio": 2025,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1qH9BSfvsF-zdDdJRXfOagACkqmkRjWvQ/view?usp=drive_link"
+  },
+  {
+    "id": "banco-de-mexico-002",
+    "titulo": "El mercado de valores gubernamentales en México",
+    "autores": [
+      "Banco de México"
+    ],
+    "editorial": "Banco de México",
+    "anio": 2014,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/18BwB_32t6ePaYRVqjq81joeiU_063V1S/view?usp=drive_link"
+  },
+  {
+    "id": "friedman-001",
+    "titulo": "El papel de la política monetaria",
+    "autores": [
+      "Milton Friedman"
+    ],
+    "editorial": "Información Comercial Española (ICE)",
+    "anio": 1969,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1jFLdP5dG5yGe4pmhHx7ggAkFygdayqWk/view?usp=drive_link"
+  },
+  {
+    "id": "kalecki-002",
+    "titulo": "El problema del financiamiento del desarrollo económico",
+    "autores": [
+      "Michal Kalecki"
+    ],
+    "editorial": "El Trimestre Económico",
+    "anio": 1954,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1erVjtuyPnKRA8rqiHjZRMZRF54sTWm_d/view?usp=drive_link"
+  },
+  {
+    "id": "abeles-001",
+    "titulo": "Estudios sobre financierización en América Latina",
+    "autores": [
+      "Martín Abeles",
+      "Esteban Pérez Caldentey",
+      "Sebastián Valdecantos"
+    ],
+    "editorial": "CEPAL",
+    "anio": 2018,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1dUjGfsMF8ceodb-2oVy4eGNoIDh-lvbP/view?usp=drive_link"
+  },
+  {
+    "id": "florez-rios-001",
+    "titulo": "Evolución de la Teoría Financiera en el Siglo XX",
+    "autores": [
+      "Luz Stella Flórez Ríos"
+    ],
+    "editorial": "Ecos de Economía",
+    "anio": 2008,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/11aEMovWEZt_w3R9N3H-qsjx3dHPm8HtO/view?usp=drive_link"
+  },
+  {
+    "id": "yasuhara-001",
+    "titulo": "Inestabilidad financiera en América Latina desde la perspectiva Kaleckiana y Minskyana",
+    "autores": [
+      "Tsuyoshi Yasuhara"
+    ],
+    "editorial": "Problemas del Desarrollo (UNAM)",
+    "anio": 2013,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1AeIYMMBDy4aA4sTIoFbcUIdHIDnCFr3B/view?usp=drive_link"
+  },
+  {
+    "id": "carlos-j-001",
+    "titulo": "Inflación desbordada: temores sin fundamentos",
+    "autores": [
+      "Carlos J"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1i0GzlpmqTmMr95bP1g9KjAAcPYLqnQHE/view?usp=drive_link"
+  },
+  {
+    "id": "basave-carrillo-001",
+    "titulo": "Innovación y desarrollo. Una mirada global para entender las multinacionales en América Latina",
+    "autores": [
+      "Jorge Basave",
+      "Jorge Carrillo"
+    ],
+    "editorial": "Universidad Nacional Autónoma de México, Instituto de Investigaciones Económicas; El Colegio de la Frontera Norte",
+    "anio": 2017,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1bjoG1vOzKSolNx2F5TS557htjpt-AN4k/view?usp=drive_link"
+  },
+  {
+    "id": "diaz-mata-001",
+    "titulo": "Introducción al mercado bursátil: invierta en la bolsa de valores",
+    "autores": [
+      "Alfredo Díaz Mata",
+      "Víctor Manuel Aguilera"
+    ],
+    "editorial": "McGraw Hill Interamericana Editores",
+    "anio": 2013,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1cBwJRw2Qp9RMq1ybnvCefTh0hUW3dMHT/view?usp=drive_link"
+  },
+  {
+    "id": "moguillansky-001",
+    "titulo": "Inversión y volatilidad financiera: América Latina en los inicios del nuevo milenio",
+    "autores": [
+      "Graciela Moguillansky"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1-zupBpfyv4VkTJABEkk8YyG6MDVbo8yJ/view?usp=drive_link"
+  },
+  {
+    "id": "alvarez-porcile-prado-001",
+    "titulo": "Kalecki encuentra a Prebisch: cambio estructural y conflicto distributivo en la periferia",
+    "autores": [
+      "Jorge Álvarez",
+      "Gabriel Porcile",
+      "Svante Prado"
+    ],
+    "editorial": "El Trimestre Económico",
+    "anio": 2026,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1L5AXJjJsHxqdZ-5EJch8LH9fEn2EPMRR/view?usp=drive_link"
+  },
+  {
+    "id": "toporowski-001",
+    "titulo": "Kalecki y la visión estructuralista del desarrollo económico",
+    "autores": [
+      "Jan Toporowski"
+    ],
+    "editorial": "El Trimestre Económico",
+    "anio": 2026,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1KIXoSao8bohTHg__GtQGWxhRf-xlPo0W/view?usp=drive_link"
+  },
+  {
+    "id": "manuelito-correia-jimenez-001",
+    "titulo": "La crisis sub-prime en Estados Unidos y la regulación y supervisión financiera: lecciones para América Latina y el Caribe",
+    "autores": [
+      "Sandra Manuelito",
+      "Filipa Correia",
+      "Luis Felipe Jiménez"
+    ],
+    "editorial": "CEPAL",
+    "anio": 2009,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1XYAc8TMbAObh0_xa0jasOBFWtguKFhd1/view?usp=drive_link"
+  },
+  {
+    "id": "medialdea-sanabria-001",
+    "titulo": "La financiarización de la economía mundial: hacia una caracterización",
+    "autores": [
+      "Bibiana Medialdea García",
+      "Antonio Sanabria Martín"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1iuIy2fczXILzKXRQ5mdFaipOakaMx9zd/view?usp=drive_link"
+  },
+  {
+    "id": "ocegueda-001",
+    "titulo": "La hipótesis de crecimiento restringido por balanza de pagos. Una evaluación de la economía mexicana 1960-1997",
+    "autores": [
+      "Juan Manuel Ocegueda Hernández"
+    ],
+    "editorial": "Investigación Económica",
+    "anio": 2000,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1lrcUiqk_2xOK49aJJT3-ZccCsbC3BHtb/view?usp=drive_link"
+  },
+  {
+    "id": "rossi-001",
+    "titulo": "La hipótesis de eficiencia en los mercados de acciones: el caso del mercado de valores de Buenos Aires",
+    "autores": [
+      "Martín A. Rossi"
+    ],
+    "editorial": "",
+    "anio": 2000,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1DISQoP1XQoDObkP0J-bnlAkmpFSN2wNd/view?usp=drive_link"
+  },
+  {
+    "id": "minsky-001",
+    "titulo": "La hipótesis de la inestabilidad financiera",
+    "autores": [
+      "Hyman P. Minsky"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1zjgXglsXH7X6xRRhWt9XKCacgVX2FrL3/view?usp=drive_link"
+  },
+  {
+    "id": "sunkel-001",
+    "titulo": "La inflación chilena: un enfoque heterodoxo",
+    "autores": [
+      "Osvaldo Sunkel"
+    ],
+    "editorial": "El Trimestre Económico",
+    "anio": 1958,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1b10ipRFQqUNulJdDuqs1eb13WghFalgJ/view?usp=drive_link"
+  },
+  {
+    "id": "palley-001",
+    "titulo": "La macroeconomía de la financiarización: un enfoque de etapas del desarrollo",
+    "autores": [
+      "Thomas I. Palley"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1WQPNxZOTcagV9cgwDGjXPOSMisgcJMWq/view?usp=drive_link"
+  },
+  {
+    "id": "mantey-001",
+    "titulo": "La política de la banca central en la teoría y en la práctica",
+    "autores": [
+      "Guadalupe Mántey"
+    ],
+    "editorial": "CEPAL",
+    "anio": 2012,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/17cWuQrZJadHjiD-q3gRCPJWNQxcCGf2_/view?usp=drive_link"
+  },
+  {
+    "id": "sraffa-001",
+    "titulo": "Las leyes de los rendimientos en condiciones de competencia",
+    "autores": [
+      "Piero Sraffa"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1qxLpTRMoxpyQhy8KKQEW61OYrG4XsK51/view?usp=drive_link"
+  },
+  {
+    "id": "minsky-002",
+    "titulo": "Los factores financieros en la teoría económica del capitalismo",
+    "autores": [
+      "Hyman P. Minsky"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1kCArplRo9VfrEkKYc1waIlPl69GZdbU5/view?usp=drive_link"
+  },
+  {
+    "id": "manuelito-jimenez-001",
+    "titulo": "Los mercados financieros en América Latina y el financiamiento de la inversión",
+    "autores": [
+      "Sandra Manuelito",
+      "Luis Felipe Jiménez"
+    ],
+    "editorial": "CEPAL",
+    "anio": 2010,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/125iWM_NszWJXRaSaZhTzv_XxsUT4yRnT/view?usp=drive_link"
+  },
+  {
+    "id": "morales-anderson-001",
+    "titulo": "Mercados financieros e instrumentos de inversión en México",
+    "autores": [
+      "Ricardo Cristhian Morales",
+      "Alexander Anderson"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1iPCbWHDOrbbY_OwxYQ3rmZl9zG-RfWj2/view?usp=drive_link"
+  },
+  {
+    "id": "kaldor-001",
+    "titulo": "Impuesto al gasto",
+    "autores": [
+      "Nicholas Kaldor"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1ruNJwWM0RRMo8gAFzxwUSbEwFeEBEEs6/view?usp=drive_link"
+  },
+  {
+    "id": "kregel-001",
+    "titulo": "Para prevenir otra crisis: las lecciones olvidadas de Minsky 10 años después de Lehman",
+    "autores": [
+      "Jan Kregel"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1tEH816xM6OH15O_DyQBV-pg-dA0eF2Lz/view?usp=drive_link"
+  },
+  {
+    "id": "ramos-001",
+    "titulo": "Políticas de estabilización y ajuste en el Cono Sur, 1974-1983",
+    "autores": [
+      "Joseph Ramos"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1YxAdSZvbKWUM-lu4U8pxPGn3RdNqrRsO/view?usp=drive_link"
+  },
+  {
+    "id": "ayllon-benitez-001",
+    "titulo": "Predicción del Índice Nacional de Precios al Consumidor en México",
+    "autores": [
+      "Julio César Ayllon-Benítez"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/15DQyQif66x37uVbz0-MsQTMf9eQskUFM/view?usp=drive_link"
+  },
+  {
+    "id": "revista-cepal-148-001",
+    "titulo": "Revista CEPAL No. 148",
+    "autores": [
+      "Miguel Torres"
+    ],
+    "editorial": "CEPAL",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1p-GJQzJqE9GQyQ798giez9udscXaqvaf/view?usp=drive_link"
+  },
+  {
+    "id": "kalecki-003",
+    "titulo": "Salario nominal y salario real",
+    "autores": [
+      "Michal Kalecki"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1RROhmCgfZps6-7YIHf4pPHcybikTOu_u/view?usp=drive_link"
+  },
+  {
+    "id": "sraffa-002",
+    "titulo": "Sobre las relaciones entre coste y cantidad producida",
+    "autores": [
+      "Piero Sraffa"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1v7ys2bbHEbIHTPsjxRMHdA3gkM57pOh-/view?usp=drive_link"
+  },
+  {
+    "id": "roca-001",
+    "titulo": "Teorías de la inflación",
+    "autores": [
+      "Richard Roca"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1DcY_w6uvHpmZbGz9Sutqlx1484jl_s0H/view?usp=drive_link"
+  },
+  {
+    "id": "piegay-rochon-001",
+    "titulo": "Teorías monetarias poskeynesianas: una aproximación de la escuela francesa",
+    "autores": [
+      "Pierre Piégay",
+      "Louis-Philippe Rochon"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1ASLfK5jyyqfrBfFS95eb26_FwNE9Cys7/view?usp=drive_link"
+  },
+  {
+    "id": "pasinetti-001",
+    "titulo": "Una formulación matemática del sistema ricardiano",
+    "autores": [
+      "Luigi L. Pasinetti"
+    ],
+    "editorial": "",
+    "anio": "",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1c4jujDDtRnhqk7IAm1kT5w7OLIZNo8xO/view?usp=drive_link"
+  },
+  {
+    "id": "pasinetti-002",
+    "titulo": "Lecciones de teoría de la producción",
+    "autores": [
+      "Luigi L. Pasinetti"
+    ],
+    "editorial": "Fondo de Cultura Económica",
+    "anio": 1984,
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1VmP5DjyvX5mLpwzeI7eHHcB8Ni33pPg4/view?usp=sharing"
+  },
+  {
+    "id": "njitxa-mw8lb4db",
+    "disciplina": "economia",
+    "titulo": "Teoría General de la Ocupación, el Interés y el Dinero",
+    "autores": [
+      "J.  M. Keynes"
+    ],
+    "editorial": "Fondo de Cultura Económica",
+    "anio": "2023",
+    "tipo": "fisico",
+    "linkDrive": ""
+  }
 ]
