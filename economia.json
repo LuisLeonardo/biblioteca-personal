@@ -561,5 +561,168 @@
     "anio": 2025,
     "tipo": "fisico",
     "linkDrive": ""
-}
+},
+{
+    "id": "mexico-desarrollo-con-pobreza-enrique-padilla",
+    "titulo": "México: desarrollo con pobreza",
+    "autores": [
+      "Enrique Padilla Aragón"
+    ],
+    "editorial": "Siglo XXI Editores",
+    "anio": 1971,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "economia-politica-migraciones-mexico-estados-unidos-novelo",
+    "titulo": "Hacia la economía política de las migraciones México-Estados Unidos",
+    "autores": [
+      "Federico Novelo Urdanivia"
+    ],
+    "editorial": "UAM",
+    "anio": 2007,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "introduccion-estudio-economia-publica-retchkiman",
+    "titulo": "Introducción al estudio de la economía pública",
+    "autores": [
+      "Benjamín Retchkiman K."
+    ],
+    "editorial": "UNAM",
+    "anio": 1972,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "economia-mexicana-estructura-crecimiento-reynolds",
+    "titulo": "La economía mexicana: su estructura y crecimiento en el siglo XX",
+    "autores": [
+      "Clark W. Reynolds"
+    ],
+    "editorial": "FCE",
+    "anio": 1970,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "brasil-construccion-interrumpida-celso-furtado",
+    "titulo": "Brasil: la construcción interrumpida",
+    "autores": [
+      "Celso Furtado"
+    ],
+    "editorial": "FCE",
+    "anio": 1992,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "introduccion-economia-contemporanea-g-soule",
+    "titulo": "Introducción a la economía contemporánea",
+    "autores": [
+      "G. Soule"
+    ],
+    "editorial": "FCE",
+    "anio": 1950,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "comentarios-tres-tomos-capital-tomo-ii-rosenberg",
+    "titulo": "Comentarios a los tres tomos de El Capital: tomo II",
+    "autores": [
+      "David Rosenberg"
+    ],
+    "editorial": "Ediciones Quinto Sol",
+    "anio": 1985,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "por-una-cancha-pareja-velez-monroy",
+    "titulo": "Por una cancha pareja",
+    "autores": [
+      "Roberto Vélez",
+      "Luis Monroy-Gómez-Franco"
+    ],
+    "editorial": "Centro de Estudios Espinosa Yglesias",
+    "anio": 2024,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "lazos-fuertes-lazos-debiles-inglis",
+    "titulo": "Lazos fuertes, lazos débiles",
+    "autores": [
+      "Patrick Inglis"
+    ],
+    "editorial": "Centro de Estudios Espinosa Yglesias",
+    "anio": 2025,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "politica-economica-social-desarrollo-novelo",
+    "titulo": "Por una política económica y social para el desarrollo de México",
+    "autores": [
+      "Federico Novelo Urdanivia"
+    ],
+    "editorial": "UAM",
+    "anio": 2006,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "investigacion-economica-vol-lxix",
+    "titulo": "Investigación Económica, vol. LXIX",
+    "autores": [],
+    "editorial": "UNAM",
+    "anio": 2010,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "trimestre-economico-vol-lxx",
+    "titulo": "El Trimestre Económico, vol. LXX",
+    "autores": [],
+    "editorial": "FCE",
+    "anio": 2003,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "economia-teoria-y-practica-constantino",
+    "titulo": "Economía: teoría y práctica",
+    "autores": [
+      "Roberto M. Constantino Toto"
+    ],
+    "editorial": "UAM",
+    "anio": 2001,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "sistema-innovacion-sector-agropecuario-mexico",
+    "titulo": "Sistema de innovación del sector agropecuario en México",
+    "autores": [
+      "Alexandre O. Vera-Cruz",
+      "Gabriela Dutrénit"
+    ],
+    "editorial": "UAM",
+    "anio": 2016,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "fundamentos-economia-jose-silvestre-mendez",
+    "titulo": "Fundamentos de economía",
+    "autores": [
+      "José Silvestre Méndez Morales"
+    ],
+    "editorial": "McGraw-Hill",
+    "anio": 1993,
+    "tipo": "fisico",
+    "linkDrive": ""
+  }
 ]
