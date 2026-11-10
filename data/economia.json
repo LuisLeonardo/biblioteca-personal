@@ -664,5 +664,96 @@
     "anio": 2009,
     "tipo": "fisico",
     "linkDrive": ""
+  },
+   {
+    "id": "geografia-economica-pierre-george",
+    "titulo": "Geografía económica",
+    "autores": [
+      "Pierre George"
+    ],
+    "editorial": "Ariel",
+    "anio": 1976,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "crisis-monetarias-j-kahn",
+    "titulo": "Las crisis monetarias",
+    "autores": [
+      "J. Kahn"
+    ],
+    "editorial": "Ediciones de Cultura Popular",
+    "anio": 1974,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "nearshoring-bendicion-invade-mexico-armando-zuniga",
+    "titulo": "El nearshoring: la bendición que invade México",
+    "autores": [
+      "Armando Zúñiga Salinas"
+    ],
+    "editorial": "COPARMEX",
+    "anio": "",
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "mexico-disputa-por-nacion-cordero-tello",
+    "titulo": "México, la disputa por la nación",
+    "autores": [
+      "Rolando Cordera",
+      "Carlos Tello"
+    ],
+    "editorial": "Siglo XXI Editores",
+    "anio": 1985,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "introduccion-economia-enfoque-estructuralista-barros-lessa",
+    "titulo": "Introducción a la economía: un enfoque estructuralista",
+    "autores": [
+      "Antonio Barros de Castro",
+      "Francisco Eduardo Lessa"
+    ],
+    "editorial": "Siglo XXI Editores",
+    "anio": 1982,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "quimera-desarrollo-mexicano-bozo-constantino",
+    "titulo": "La quimera del desarrollo mexicano",
+    "autores": [
+      "Carlos A. Bozo Bernal",
+      "Roberto M. Constantino Toto"
+    ],
+    "editorial": "UAM",
+    "anio": 2010,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "macroeconomia-moderna-leroy-miller",
+    "titulo": "Macroeconomía moderna",
+    "autores": [
+      "Leroy Miller"
+    ],
+    "editorial": "Harla",
+    "anio": 1995,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "industria-software-baja-california-jalisco-hualde",
+    "titulo": "La industria del software en Baja California y Jalisco",
+    "autores": [
+      "Alfredo Hualde Alfaro"
+    ],
+    "editorial": "UAM / El Colegio de la Frontera Norte",
+    "anio": 2010,
+    "tipo": "fisico",
+    "linkDrive": ""
   }
 ]
