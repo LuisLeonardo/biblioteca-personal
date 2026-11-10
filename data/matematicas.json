@@ -46,5 +46,95 @@
         "anio": "",
         "tipo": "digital",
         "linkDrive": "https://drive.google.com/file/d/1VUiVz6hACOYvogj26CcgoivRbFiuJE3M/view?usp=drive_link"
-    }
+    },
+     {
+    "id": "geometria-wentworth-smith",
+    "titulo": "Geometría",
+    "autores": [
+      "Wentworth",
+      "Smith"
+    ],
+    "editorial": "",
+    "anio": 1915,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "matematicas-algebra-lineal-unam-economia",
+    "titulo": "Matemáticas: álgebra lineal",
+    "autores": [
+      "Facultad de Economía, UNAM"
+    ],
+    "editorial": "UNAM",
+    "anio": 1980,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "geometria-analitica-diputacion-barcelona",
+    "titulo": "Geometría analítica",
+    "autores": [
+      "Escuela de Trabajo de la Diputación Provincial de Barcelona"
+    ],
+    "editorial": "",
+    "anio": 1957,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "reflexiones-finiseculares-matematicas-ciencias-sociales",
+    "titulo": "Reflexiones finiseculares: las matemáticas en las ciencias sociales",
+    "autores": [
+      "María Alejandro Carrillo"
+    ],
+    "editorial": "UAM",
+    "anio": 2000,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "introduccion-analisis-rn-baca-gutierrez",
+    "titulo": "Introducción al análisis de R^n",
+    "autores": [
+      "Gloria Idalia Baca",
+      "José de Jesús Gutiérrez"
+    ],
+    "editorial": "UAM",
+    "anio": 2015,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "econometria-basica-damodar-gujarati",
+    "titulo": "Econometría básica",
+    "autores": [
+      "Damodar Gujarati"
+    ],
+    "editorial": "McGraw-Hill",
+    "anio": 1986,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "estadistica-aplicada-negocios-economia-webster",
+    "titulo": "Estadística aplicada a los negocios y la economía",
+    "autores": [
+      "Allen L. Webster"
+    ],
+    "editorial": "McGraw-Hill",
+    "anio": 2001,
+    "tipo": "fisico",
+    "linkDrive": ""
+  },
+  {
+    "id": "matematicas-aplicadas-administracion-economia-budnick",
+    "titulo": "Matemáticas aplicadas para administración, economía y ciencias sociales",
+    "autores": [
+      "Frank S. Budnick"
+    ],
+    "editorial": "McGraw-Hill",
+    "anio": 1992,
+    "tipo": "fisico",
+    "linkDrive": ""
+  }
 ]
