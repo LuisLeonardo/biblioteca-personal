@@ -120,5 +120,20 @@
     "categoria": "Otros",
     "tipo": "articulo",
     "openalexId": "https://openalex.org/W7164877976"
+  },
+  {
+    "id": "doi:10.1086/744936",
+    "titulo": "Noisy Global Value Chains",
+    "autores": "Ha Bui, Zhen Huo, Andrei A. Levchenko, Nitya Pandalai-Nayar",
+    "fecha": "2026-11-13",
+    "url": "https://doi.org/10.1086/744936",
+    "doi": "https://doi.org/10.1086/744936",
+    "idioma": "en",
+    "accesoAbierto": false,
+    "fuenteId": "journal-political-economy",
+    "fuenteNombre": "Journal of Political Economy",
+    "categoria": "Otros",
+    "tipo": "articulo",
+    "openalexId": "https://openalex.org/W7226016432"
   }
 ]
