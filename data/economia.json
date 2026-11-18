@@ -665,7 +665,7 @@
     "tipo": "fisico",
     "linkDrive": ""
   },
-   {
+  {
     "id": "geografia-economica-pierre-george",
     "titulo": "Geografía económica",
     "autores": [
@@ -918,6 +918,17 @@
     "anio": 1993,
     "tipo": "fisico",
     "linkDrive": ""
-  }    
-  
+  },
+  {
+    "id": "ssao6v-mwmiof1i",
+    "disciplina": "economia",
+    "titulo": "Análisis económico Input-Output",
+    "autores": [
+      "W. Leontief"
+    ],
+    "editorial": "Biblioteca de economía",
+    "anio": "1985",
+    "tipo": "fisico",
+    "linkDrive": ""
+  }
 ]
