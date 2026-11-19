@@ -930,5 +930,17 @@
     "anio": "1985",
     "tipo": "fisico",
     "linkDrive": ""
+  },
+  {
+    "id": "ii2jq6-mwntci49",
+    "disciplina": "economia",
+    "titulo": "Nuevas estructuras productivas de países en desarrollo: Creciente dependencia y precios incorrectos",
+    "autores": [
+      "Noemí Levy Orlik"
+    ],
+    "editorial": "Departamento de producción económica UAM",
+    "anio": "2012",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1buUTqbX7XuKGM-F3E-jDBUUR7BC8YzmJ/view?usp=sharing"
   }
 ]
