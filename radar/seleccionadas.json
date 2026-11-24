@@ -135,5 +135,20 @@
     "categoria": "Otros",
     "tipo": "articulo",
     "openalexId": "https://openalex.org/W7226016432"
+  },
+  {
+    "id": "doi:10.1080/09538259.2026.2763774",
+    "titulo": "Fictions of Monetary Stability: Sterilization, Fiscal Costs, and the Real Function of the Bank of Mexico (2000–2024)",
+    "autores": "Adalberto Figueroa Vélez",
+    "fecha": "2026-11-18",
+    "url": "https://doi.org/10.1080/09538259.2026.2763774",
+    "doi": "https://doi.org/10.1080/09538259.2026.2763774",
+    "idioma": "en",
+    "accesoAbierto": false,
+    "fuenteId": "review-political-economy",
+    "fuenteNombre": "Review of Political Economy",
+    "categoria": "Otros",
+    "tipo": "articulo",
+    "openalexId": "https://openalex.org/W7235910002"
   }
 ]
