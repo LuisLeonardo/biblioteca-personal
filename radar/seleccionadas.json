@@ -150,5 +150,20 @@
     "categoria": "Otros",
     "tipo": "articulo",
     "openalexId": "https://openalex.org/W7235910002"
+  },
+  {
+    "id": "doi:10.1093/restud/rdag132",
+    "titulo": "The Labor Demand and Labor Supply Channels of Monetary Policy",
+    "autores": "Sebastian Graves, Christopher Huckfeldt, Eric T. Swanson",
+    "fecha": "2026-11-25",
+    "url": "https://doi.org/10.1093/restud/rdag132",
+    "doi": "https://doi.org/10.1093/restud/rdag132",
+    "idioma": "en",
+    "accesoAbierto": true,
+    "fuenteId": "review-economic-studies",
+    "fuenteNombre": "Review of Economic Studies",
+    "categoria": "Otros",
+    "tipo": "articulo",
+    "openalexId": "https://openalex.org/W4387480496"
   }
 ]
