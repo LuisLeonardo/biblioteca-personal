@@ -165,5 +165,20 @@
     "categoria": "Otros",
     "tipo": "articulo",
     "openalexId": "https://openalex.org/W4387480496"
+  },
+  {
+    "id": "doi:10.37811/cl_rcm.v10i5.26907",
+    "titulo": "La tasa de interés y su desempeño empresarial en méxico: un análisis del periodo 2000-2025",
+    "autores": "Ramiro Martínez Cruz, Jaime Antonio Ruíz Hernández, Diego Emiliano Camacho Márquez",
+    "fecha": "2026-11-23",
+    "url": "https://doi.org/10.37811/cl_rcm.v10i5.26907",
+    "doi": "https://doi.org/10.37811/cl_rcm.v10i5.26907",
+    "idioma": "es",
+    "accesoAbierto": true,
+    "fuenteId": "cepal-estudios-perspectivas-mexico",
+    "fuenteNombre": "Serie Estudios y Perspectivas - México",
+    "categoria": "Otros",
+    "tipo": "articulo",
+    "openalexId": "https://openalex.org/W7238769653"
   }
 ]
