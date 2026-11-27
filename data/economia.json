@@ -1294,5 +1294,17 @@
     "anio": "2012",
     "tipo": "digital",
     "linkDrive": "https://drive.google.com/file/d/1gdyU0SBcqScgHHV6NJCNstQTN9myfJOF/view?usp=drive_link"
+  },
+  {
+    "id": "7xk5yf-mwzl8sm6",
+    "disciplina": "economia",
+    "titulo": "A stock-flow consistent model of the Portuguese economy",
+    "autores": [
+      "Pedro O. Pratas e Sousa"
+    ],
+    "editorial": "University Institute of Lisbon",
+    "anio": "2015",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1e6qIi_nrABAohKiBwp2vS-9zadAIrd-L/view?usp=drive_link"
   }
 ]
