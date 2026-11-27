@@ -1427,5 +1427,17 @@
     "anio": "2003",
     "tipo": "digital",
     "linkDrive": "https://drive.google.com/file/d/1C5nDTd4pawcmExPuQfKqQSfAe_6vx-w4/view?usp=drive_link"
+  },
+  {
+    "id": "ub8pwj-mwzmzrta",
+    "disciplina": "economia",
+    "titulo": "Análisis de una generalización del modelo de crecimiento cíclico de Goodwin",
+    "autores": [
+      "Jorge Falagán Mota"
+    ],
+    "editorial": "Cuadernos de economía",
+    "anio": "2002",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1ASxK_M8uziL5uFGrAJ384lVlbgkHqiRE/view?usp=drive_link"
   }
 ]
