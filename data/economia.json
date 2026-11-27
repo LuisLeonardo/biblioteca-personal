@@ -1451,5 +1451,17 @@
     "anio": "1988",
     "tipo": "digital",
     "linkDrive": "https://drive.google.com/file/d/19LeNBt8v0PDpCL-iuvNxTrK2hAic_x9Y/view?usp=drive_link"
+  },
+  {
+    "id": "1itmmu-mwzn2v1t",
+    "disciplina": "economia",
+    "titulo": "Las razones de Keynes",
+    "autores": [
+      "Hyman Minsky"
+    ],
+    "editorial": "Fondo de Cultura Económica",
+    "anio": "1987",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/13Ok347W8o4qdUYvJuRXYn05oEB7RgtKW/view?usp=drive_link"
   }
 ]
