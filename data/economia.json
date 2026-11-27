@@ -1391,5 +1391,17 @@
     "anio": "1985",
     "tipo": "digital",
     "linkDrive": "https://drive.google.com/file/d/1M8W_Vv-fvKJP_eqWXyLzhPjoJDbRbhBs/view?usp=drive_link"
+  },
+  {
+    "id": "kbomj2-mwzlu1oc",
+    "disciplina": "economia",
+    "titulo": "Economía postkeynesiana",
+    "autores": [
+      "Alfred S. Eichner"
+    ],
+    "editorial": "Hermann Blume",
+    "anio": "1984",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1Fry4LSMMNIwDaVGcVQL_PbQuFP8slORD/view?usp=drive_link"
   }
 ]
