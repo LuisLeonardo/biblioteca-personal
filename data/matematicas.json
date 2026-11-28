@@ -184,5 +184,17 @@
     "anio": "2010",
     "tipo": "digital",
     "linkDrive": "https://drive.google.com/file/d/1JYSFnwWSgy8-cwUR8ZMwCpmOUHGVn2bI/view?usp=drive_link"
+  },
+  {
+    "id": "6wemhp-mwzndjsv",
+    "disciplina": "matematicas",
+    "titulo": "Dominar la Econometría: El camino que va de la causa al efecto",
+    "autores": [
+      "Joshua D. Angrist\nJörn-Steffen Pischke"
+    ],
+    "editorial": "Antoni Bosch editor",
+    "anio": "2016",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1-xmhJb1dSGMysD3A0z2-Re_7dRckfkqi/view?usp=drive_link"
   }
 ]
