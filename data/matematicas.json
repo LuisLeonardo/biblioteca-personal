@@ -160,5 +160,17 @@
     "anio": "2021",
     "tipo": "digital",
     "linkDrive": "https://drive.google.com/file/d/1Xs4VqzP-Z7KF-yBnNAvEclhtF2dhu3fZ/view?usp=drive_link"
+  },
+  {
+    "id": "ah0ojg-mwznak2z",
+    "disciplina": "matematicas",
+    "titulo": "Learning Microeconometrics with R (2021)",
+    "autores": [
+      "Christopher P. Adams."
+    ],
+    "editorial": "Chapman & Hall/CRC",
+    "anio": "2021",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1RLybqat4n-3139p2biv9tADW78gQW8ys/view?usp=drive_link"
   }
 ]
