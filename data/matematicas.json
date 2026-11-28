@@ -172,5 +172,17 @@
     "anio": "2021",
     "tipo": "digital",
     "linkDrive": "https://drive.google.com/file/d/1RLybqat4n-3139p2biv9tADW78gQW8ys/view?usp=drive_link"
+  },
+  {
+    "id": "b2vtk4-mwznbyg1",
+    "disciplina": "matematicas",
+    "titulo": "Introducción a la econometría. Un enfoque moderno (Cuarta edición )",
+    "autores": [
+      "Jeffrey M. Wooldridge"
+    ],
+    "editorial": "Cengage Learning",
+    "anio": "2010",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1JYSFnwWSgy8-cwUR8ZMwCpmOUHGVn2bI/view?usp=drive_link"
   }
 ]
