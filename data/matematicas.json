@@ -148,5 +148,17 @@
     "anio": "",
     "tipo": "digital",
     "linkDrive": "https://drive.google.com/file/d/1hLsdfYGcWggopnUtDLuJKz47KxcpsAEl/view?usp=drive_link"
+  },
+  {
+    "id": "txi1b2-mwzn97f5",
+    "disciplina": "matematicas",
+    "titulo": "Introducción al análisis de sistemas dinámicos (Segunda edición)",
+    "autores": [
+      "Gonzalo Edwards Guzmán"
+    ],
+    "editorial": "",
+    "anio": "2021",
+    "tipo": "digital",
+    "linkDrive": "https://drive.google.com/file/d/1Xs4VqzP-Z7KF-yBnNAvEclhtF2dhu3fZ/view?usp=drive_link"
   }
 ]
